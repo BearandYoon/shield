@@ -6,7 +6,7 @@ export const config: any = {
 
   menu_speed: 200,
 
-  smartSkin: "smart-style-0",
+  smartSkin: "smart-style-2",
 
 
   skins: [
