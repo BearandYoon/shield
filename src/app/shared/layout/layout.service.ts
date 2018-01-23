@@ -8,9 +8,9 @@ declare var $:any;
 
 
 const store = {
-  smartSkin: localStorage.getItem('sm-skin') || config.smartSkin,
+  smartSkin: config.smartSkin,
   skin: config.skins.find((_skin) => {
-    return _skin.name == (localStorage.getItem('sm-skin') || config.smartSkin)
+    return _skin.name == config.smartSkin
   }),
   skins: config.skins,
   fixedHeader: true,
