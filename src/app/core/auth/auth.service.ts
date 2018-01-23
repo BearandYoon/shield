@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
-
+import {Md5} from 'ts-md5/dist/md5';
 import { CorsHttpService } from '../api/cors-http.service';
 import {UserStorageService} from "../storage/storage.service";
-import {Router} from "@angular/router";
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs/Observable";
 import 'rxjs/add/observable/throw';
@@ -11,10 +10,11 @@ import { environment } from '../../../environments/environment';
 @Injectable()
 export class AuthService {
 
-    constructor(private router: Router, private http: HttpClient, private storage: UserStorageService) {}
+    constructor(private http: HttpClient, private storage: UserStorageService) {}
 
     login(data) {
-        return this.http.post(environment.baseUrl + '/system.user.login/', JSON.stringify(data))
+        const body = { username: data.username, password_md5: Md5.hashStr(data.password) };
+        return this.http.post(environment.baseUrl + '/system.user.login/', JSON.stringify(body))
             .do(res => {
                 this.storage.save(res);
             })
@@ -30,8 +30,6 @@ export class AuthService {
     }
 
     private handleError(data:any) {
-        console.log(data);
-        console.log(data.error.request.error);
         let errMsg = (data.error && data.error.request  && data.error.request.error) ? data.error.request.error :  'Server error';
         console.error(errMsg); // log to console
         return Observable.throw(errMsg);
