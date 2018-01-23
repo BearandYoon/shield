@@ -40,7 +40,6 @@ import {UnauthGuardService} from "./guards/unauth-guard";
     VoiceRecognitionService,
     SoundService,
 
-    CorsHttpService,
     AuthService,
     UserStorageService,
 
