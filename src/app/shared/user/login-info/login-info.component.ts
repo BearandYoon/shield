@@ -17,10 +17,9 @@ export class LoginInfoComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.userService.getLoginInfo().subscribe(user => {
-      this.user = user
-    })
-
+    // this.userService.getLoginInfo().subscribe(user => {
+    //   this.user = user
+    // })
   }
 
   toggleShortcut() {

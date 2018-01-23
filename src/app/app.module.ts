@@ -48,7 +48,6 @@ type StoreType = {
 
     ModalModule.forRoot(),
 
-
     CoreModule,
     SmartadminLayoutModule,
 

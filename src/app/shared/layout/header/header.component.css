@@ -1,0 +1,33 @@
+header {
+    background: #000 !important;
+}
+
+header .menu .text span {
+    display: block;
+    color: #fff;
+}
+
+header .menu .text span.username {
+    font-size: 13px !important;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+#logo {
+    margin: 0;
+}
+
+#logo-group img {
+    display: block;
+    max-height: 39px;
+    max-width: 200px;
+    width: auto;
+    margin: 5px;
+}
+
+.btn-header>:first-child>a {
+    background: 0 0;
+    border: none;
+    color: #fff;
+    border-radius: 50%;
+}

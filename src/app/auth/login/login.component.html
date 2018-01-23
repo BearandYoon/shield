@@ -1,0 +1,51 @@
+<header id="header" class="animated fadeInDown">
+
+  <div id="logo-group">
+    <span id="logo"> <img src="assets/img/logo.png" alt="SmartAdmin"> </span>
+  </div>
+
+</header>
+<div id="main" role="main" class="animated fadeInDown">
+
+  <div id="content" class="container">
+    <div class="row">
+      <div class="col-xs-12 col-sm-12 col-md-6 col-md-offset-3 col-lg-4 col-lg-offset-4">
+        <div class="well no-padding">
+          <form class="smart-form client-form" [formGroup]="loginForm" (submit)="login(loginForm.value)">
+            <header>
+              Sign In
+            </header>
+            <fieldset>
+              <section>
+                <label class="label">Username</label>
+                <label class="input"> <i class="icon-append fa fa-user"></i>
+                  <input type="email" name="username" formControlName="username" data-smart-validate-input="" data-required="" data-email="" data-message-required="Please enter your email address" data-message-email="Please enter a VALID email address">
+                  <b class="tooltip tooltip-top-right"><i class="fa fa-user txt-color-teal"></i>
+                    Please enter email address/username</b></label>
+              </section>
+              <section>
+                <label class="label">Password</label>
+                <label class="input">
+                  <i class="icon-append fa fa-lock"></i>
+                  <input type="password" name="password" formControlName="password_md5" data-smart-validate-input="" data-required="" data-minlength="3" data-maxnlength="20" data-message="Please enter your email password">
+                  <b class="tooltip tooltip-top-right">
+                    <i class="fa fa-lock txt-color-teal"></i>
+                    Enter your password
+                  </b>
+                </label>
+              </section>
+              <section *ngIf="error">
+                <div class="alert alert-danger fadeIn">{{error}}</div>
+              </section>
+            </fieldset>
+            <footer>
+              <button type="submit" class="btn btn-primary" [disabled]="!loginForm.valid">
+                Sign in
+              </button>
+            </footer>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

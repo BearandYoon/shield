@@ -1,0 +1,19 @@
+#header {
+    background: #000 !important;
+}
+
+#logo {
+    margin: 0;
+}
+
+#logo-group img {
+    display: block;
+    max-height: 39px;
+    max-width: 200px;
+    width: auto;
+    margin: 5px;
+}
+
+#main {
+    margin-left: 0;
+}

@@ -5,6 +5,7 @@ import {I18nService} from "../i18n.service";
 @Component({
   selector: 'sa-language-selector',
   templateUrl: './language-selector.component.html',
+  styleUrls: ['./language-selector.component.css']
 })
 export class LanguageSelectorComponent implements OnInit {
 

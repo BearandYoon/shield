@@ -1,6 +1,6 @@
 export const config: any = {
 
-  defaultLocale: "us",
+  defaultLocale: "de",
 
   API_URL: "assets/api",
 
