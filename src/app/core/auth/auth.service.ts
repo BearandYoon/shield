@@ -14,9 +14,10 @@ export class AuthService {
 
     login(data) {
         const body = { username: data.username, password_md5: Md5.hashStr(data.password) };
+        const persist = data.persist;
         return this.http.post(environment.baseUrl + '/system.user.login/', JSON.stringify(body))
             .do(res => {
-                this.storage.save(res);
+                this.storage.save(res, persist);
             })
             .catch(this.handleError);
     }

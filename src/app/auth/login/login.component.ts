@@ -23,11 +23,12 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
     this.loginForm = this.fb.group({
       username: ['', Validators.required],
-      password: ['',  Validators.required]
+      password: ['',  Validators.required],
+      persist: true
     })
   }
 
-  login(data){
+  login(data) {
     this.loading = true;
     this.auth.login(data)
         .subscribe(() => {

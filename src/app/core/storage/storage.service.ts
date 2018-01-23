@@ -7,16 +7,18 @@ export class UserStorageService {
 
     constructor() {}
 
-    save(value) {
-        localStorage.setItem(this.userKey, JSON.stringify(value));
+    save(value, persist) {
+        let storage = persist ? localStorage : sessionStorage;
+        storage.setItem(this.userKey, JSON.stringify(value));
     }
 
     get() {
-        return JSON.parse(localStorage.getItem(this.userKey));
+        return JSON.parse(localStorage.getItem(this.userKey) || sessionStorage.getItem(this.userKey));
     }
 
     remove() {
         localStorage.removeItem(this.userKey);
+        sessionStorage.removeItem(this.userKey);
     }
 
 }
