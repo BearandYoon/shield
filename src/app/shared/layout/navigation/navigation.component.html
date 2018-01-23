@@ -22,6 +22,15 @@
               <i class="fa fa-lg fa-fw" [ngClass]="subitem.icon"></i>
               {{subitem.name || i18n}}
             </a>
+
+            <ul *ngIf="subitem.items">
+              <li *ngFor="let subsubitem of subitem.items">
+                <a href="#">
+                  <i class="fa fa-lg fa-fw" [ngClass]="subsubitem.icon"></i>
+                  {{subsubitem.name || i18n}}
+                </a>
+              </li>
+            </ul>
           </li>
         </ul>
       </li>
