@@ -32,7 +32,7 @@ export const config: any = {
 
     {
       name: "smart-style-2",
-      logo: "assets/img/logo-blue.png",
+      logo: "assets/img/logo.png",
       skinBtnClass: "btn btn-xs btn-block txt-color-darken margin-top-5",
       style: {
         background: '#fff'
