@@ -14,7 +14,16 @@
 
       <li *ngFor="let item of navigation">
         <a [attr.title]="item.name">
-          <i class="fa fa-lg fa-fw" [ngClass]="item.icon"></i> <span class="menu-item-parent">{{item.name | i18n}}</span></a>
+          <i class="fa fa-lg fa-fw" [ngClass]="item.icon"></i> <span class="menu-item-parent">{{item.name | i18n}}</span>
+        </a>
+        <ul *ngIf="item.items">
+          <li *ngFor="let subitem of item.items">
+            <a href="#">
+              <i class="fa fa-lg fa-fw" [ngClass]="subitem.icon"></i>
+              {{subitem.name || i18n}}
+            </a>
+          </li>
+        </ul>
       </li>
 
     </ul>
