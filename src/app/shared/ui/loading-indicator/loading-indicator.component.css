@@ -1,0 +1,20 @@
+.sa-loading-container {
+    position: fixed;
+    top: calc(50% - 50px);
+    background: rgba(4, 4, 4, 0.81);
+    width: 100%;
+    height: 100px;
+    padding: 10px;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+}
+
+.sa-loading-body {
+    color: #ffa000;
+}
+
+.sa-loading-detail {
+    font-size: 12px;
+    margin-top: 20px;
+}
