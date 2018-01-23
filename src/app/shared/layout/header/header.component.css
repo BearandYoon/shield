@@ -9,7 +9,7 @@ header .menu .text span {
 
 header .menu .text span.username {
     font-size: 13px !important;
-    font-weight: bold;
+    /* font-weight: bold; */
     margin-top: 10px;
 }
 
