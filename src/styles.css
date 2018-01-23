@@ -6,3 +6,12 @@
 #divSmallBoxes .textoFoto {
     line-height: 50px;
 }
+
+#extr-page #header {
+    background: #000 !important;
+    overflow: visible;
+}
+
+#extr-page #header #logo {
+    margin-top: 15px;
+}

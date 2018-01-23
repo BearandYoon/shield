@@ -1,7 +1,3 @@
-#header {
-    background: #000 !important;
-}
-
 #logo {
     margin: 0;
 }
@@ -16,4 +12,8 @@
 
 #main {
     margin-left: 0;
+}
+
+.login-lang {
+    margin-top: 8px;
 }
