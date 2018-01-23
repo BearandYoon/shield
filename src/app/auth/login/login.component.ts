@@ -13,7 +13,7 @@ import { NotificationService } from "../../shared/utils/notification.service";
 export class LoginComponent implements OnInit {
 
   loginForm: FormGroup;
-  error: string;
+  loading = false;
 
   constructor(private router: Router,
               private fb: FormBuilder,
@@ -28,11 +28,13 @@ export class LoginComponent implements OnInit {
   }
 
   login(data){
-    this.error = '';
+    this.loading = true;
     this.auth.login(data)
         .subscribe(() => {
+          this.loading = false;
           this.router.navigate(['/home']);
         }, (error) => {
+          this.loading = false;
           this.notificationService.smallBox({
             content: error,
             color: "#a90329",

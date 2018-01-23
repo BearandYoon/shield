@@ -79,8 +79,9 @@
               </section>
             </fieldset>
             <footer>
-              <button type="submit" class="btn btn-primary" [disabled]="!loginForm.valid">
+              <button type="submit" class="btn btn-primary" [disabled]="!loginForm.valid || loading">
                 Sign in
+                <i class="fa fa-spinner fa-spin fa-fw" *ngIf="loading"></i>
               </button>
             </footer>
           </form>
