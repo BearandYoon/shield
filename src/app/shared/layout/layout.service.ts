@@ -19,7 +19,7 @@ const store = {
   fixedPageFooter: true,
   insideContainer: false,
   rtl: false,
-  menuOnTop: true,
+  menuOnTop: false,
   colorblindFriendly: false,
 
   shortcutOpen: false,
@@ -28,7 +28,7 @@ const store = {
 
   mobileViewActivated: false,
   menuCollapsed: false,
-  menuMinified: false,
+  menuMinified: true,
 };
 
 
