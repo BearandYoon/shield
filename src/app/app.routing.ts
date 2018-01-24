@@ -30,6 +30,15 @@ export const routes: Routes = [
         component: AuthLayoutComponent,
         loadChildren: 'app/auth/auth.module#AuthModule',
         canActivate: [UnauthGuardService]
+    },
+    {
+        path: 'miscellaneous',
+        loadChildren: 'app/miscellaneous/miscellaneous.module#MiscellaneousModule',
+        data: {pageTitle: 'Miscellaneous'}
+    },
+    {
+        path: '**',
+        redirectTo: 'miscellaneous/error404'
     }
 ];
 
