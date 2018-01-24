@@ -10,8 +10,24 @@
 #extr-page #header {
     background: #000 !important;
     overflow: visible;
+    height: 49px;
+    padding: 0 13px 0 0;
+}
+
+#extr-page #header .login-lang {
+    margin-top: 0;
+}
+
+#extr-page #logo-group {
+    max-height: 39px;
+    width: 220px;
+    margin: 0;
 }
 
 #extr-page #header #logo {
-    margin-top: 15px;
+    margin-top: 0;
+}
+
+#extr-page #header #logo img {
+    width: auto;
 }
