@@ -62,7 +62,6 @@ export class FooterComponent implements OnInit {
 
     let script2 = this.renderer.createElement('script');
     let userInfo = this.storage.get().user;
-    console.log(userInfo);
     script2.text = `
       zE(function() {
         zE.identify({
