@@ -7,5 +7,5 @@ export const environment = {
   production: false,
   baseUrl: 'https://api.amalyze.com/0.0.1',
   apiVersion: '0.0.1',
-  version: '0.0.2',
+  version: '0.0.4',
 };

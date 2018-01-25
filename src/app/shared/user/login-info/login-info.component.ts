@@ -28,7 +28,6 @@ export class LoginInfoComponent implements OnInit {
     if(!this.user['picture']) {
       this.user['picture'] = "https://www.gravatar.com/avatar/" + md5Hashed + "?d=" + avatarDef;
     }
-    console.log(this.user);
   }
 
   toggleShortcut() {
