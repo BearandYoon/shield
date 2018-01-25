@@ -10,7 +10,10 @@ import { environment } from '../../../environments/environment';
 @Injectable()
 export class AuthService {
 
-    constructor(private http: HttpClient, private storage: UserStorageService) {}
+    constructor(
+        private http: HttpClient,
+        private storage: UserStorageService,
+    ) {}
 
     login(data) {
         const body = { username: data.username, password_md5: Md5.hashStr(data.password) };

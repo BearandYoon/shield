@@ -19,7 +19,7 @@ const store = {
   fixedPageFooter: true,
   insideContainer: false,
   rtl: false,
-  menuOnTop: true,
+  menuOnTop: false,
   colorblindFriendly: false,
 
   shortcutOpen: false,
@@ -28,7 +28,7 @@ const store = {
 
   mobileViewActivated: false,
   menuCollapsed: false,
-  menuMinified: false,
+  menuMinified: true,
 };
 
 
@@ -203,6 +203,7 @@ export class LayoutService {
     $body.addClass(state.skin.name);
     $("#logo img").attr('src', state.skin.logo);
 
+    $body.toggleClass('fixed-header', state.fixedHeader);
     $body.toggleClass('fixed-header', state.fixedHeader);
     $body.toggleClass('fixed-navigation', state.fixedNavigation);
     $body.toggleClass('fixed-ribbon', state.fixedRibbon);

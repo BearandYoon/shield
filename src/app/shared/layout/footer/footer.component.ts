@@ -1,6 +1,7 @@
 import { Component, OnInit, Renderer2, Inject } from '@angular/core';
 import { DOCUMENT } from '@angular/platform-browser';
 import { UserStorageService } from 'app/core/storage/storage.service';
+import { environment } from 'environments/environment';
 
 
 @Component({
@@ -10,11 +11,17 @@ import { UserStorageService } from 'app/core/storage/storage.service';
 })
 export class FooterComponent implements OnInit {
 
+  shieldVersion = '';
+  falconVersion = '';
+
   constructor(
     private renderer: Renderer2,
     @Inject(DOCUMENT) private document,
     private storage: UserStorageService,
-  ) {}
+  ) {
+    this.shieldVersion = environment.version;
+    this.falconVersion = environment.apiVersion;
+  }
 
   ngOnInit() {
     let script1 = this.renderer.createElement('script');
