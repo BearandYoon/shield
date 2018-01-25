@@ -204,6 +204,7 @@ export class LayoutService {
     $("#logo img").attr('src', state.skin.logo);
 
     $body.toggleClass('fixed-header', state.fixedHeader);
+    $body.toggleClass('fixed-header', state.fixedHeader);
     $body.toggleClass('fixed-navigation', state.fixedNavigation);
     $body.toggleClass('fixed-ribbon', state.fixedRibbon);
     $body.toggleClass('fixed-page-footer', state.fixedPageFooter);

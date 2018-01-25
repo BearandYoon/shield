@@ -1,9 +1,7 @@
 <div class="login-info">
   <span *ngIf="user?.picture">
     <a (click)="toggleShortcut()">
-      <object data="/assets/img/avatars/avatar.png" type="image/png" class="online">
-        <img [src]="user.picture" alt="me" class="online"/>
-      </object>
+      <img [src]="user.picture" alt="me" class="online"/>
       <span style="font-size: 14px !important; margin-top: 10px; max-width: 100%;">
         {{user.firstname + ' ' + user.lastname }}
         <i class="fa fa-angle-down"></i>

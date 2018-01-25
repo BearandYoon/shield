@@ -18,6 +18,7 @@ import {AuthService} from "./auth/auth.service";
 import {UserStorageService} from "./storage/storage.service";
 import {AuthGuardService} from "./guards/auth-guard";
 import {UnauthGuardService} from "./guards/unauth-guard";
+import { CacheService } from 'app/core/cache/cache.service';
 
 @NgModule({
   imports: [
@@ -42,6 +43,7 @@ import {UnauthGuardService} from "./guards/unauth-guard";
 
     AuthService,
     UserStorageService,
+    CacheService,
 
     AuthGuardService,
     UnauthGuardService
