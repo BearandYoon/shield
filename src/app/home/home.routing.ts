@@ -9,6 +9,11 @@ export const homeRoutes: Routes = [
         data: {
             pageTitle: 'Home'
         }
+    },
+    {
+        path: '**',
+        pathMatch: 'full',
+        redirectTo: ''
     }
 ];
 
