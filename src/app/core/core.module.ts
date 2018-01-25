@@ -13,7 +13,6 @@ import {SoundService} from "../shared/sound/sound.service";
 import { throwIfAlreadyLoaded } from './guards/module-import-guard';
 import {VoiceRecognitionService} from "../shared/voice-control/voice-recognition.service";
 import {TabsModule, ProgressbarModule, TooltipModule, BsDropdownModule, AlertModule} from "ngx-bootstrap";
-import {CorsHttpService} from "./api/cors-http.service";
 import {AuthService} from "./auth/auth.service";
 import {UserStorageService} from "./storage/storage.service";
 import {AuthGuardService} from "./guards/auth-guard";

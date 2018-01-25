@@ -31,7 +31,7 @@
 
     <div class="btn-header transparent pull-right hidden-xs text">
       <span class="username">{{userInfo.user.firstname + ' ' + userInfo.user.lastname + ' ('+userInfo.user.entity.company+')'}}</span>
-      <span class="customer">customer number: {{userInfo.user.entity.id}}</span>
+      <span class="customer">{{'CUSTOMER_NO' | i18n}}: {{userInfo.user.entity.id}}</span>
     </div>
   </div>
   <!-- end pulled right: nav area -->
