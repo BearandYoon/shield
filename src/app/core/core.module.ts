@@ -17,6 +17,7 @@ import {AuthService} from "./auth/auth.service";
 import {UserStorageService} from "./storage/storage.service";
 import {AuthGuardService} from "./guards/auth-guard";
 import {UnauthGuardService} from "./guards/unauth-guard";
+import { CacheService } from 'app/core/cache/cache.service';
 
 import { TokensInterceptor } from './interceptors/tokens-interceptor';
 
@@ -44,6 +45,7 @@ import { TokensInterceptor } from './interceptors/tokens-interceptor';
 
     AuthService,
     UserStorageService,
+    CacheService,
 
     AuthGuardService,
     UnauthGuardService,
