@@ -56,7 +56,10 @@ export class AuthService {
 
     checkStatus() {
         return this.http.post(environment.baseUrl + '/system.user.status', null)
-            .catch(this.handleError);
+            .catch(error => {
+                this.userStorage.remove();
+                return this.handleError(error);
+            })
     }
 
     private handleError(data:any) {

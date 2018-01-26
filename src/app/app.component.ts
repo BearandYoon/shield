@@ -27,7 +27,10 @@ export class AppComponent {
           if (isLoggedIn) {
             this.checkStatusSubscription = TimerObservable.create(this.interval, this.interval)
                 .switchMap(() => this.auth.checkStatus())
-                .subscribe(() => { }, () => { this.router.navigate(['/auth']); });
+                .subscribe(
+                    () => {},
+                    () => { this.router.navigate(['/auth']); }
+                );
           } else if (this.checkStatusSubscription) {
             this.checkStatusSubscription.unsubscribe();
           }
