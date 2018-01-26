@@ -2,7 +2,6 @@ import { NgModule, Optional, SkipSelf } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { CookieService } from 'angular2-cookie/services/cookies.service';
 
 import { JsonApiService } from './api/json-api.service'
 import { LayoutService } from '../shared/layout/layout.service'
@@ -41,7 +40,6 @@ import { TokensInterceptor } from './interceptors/tokens-interceptor';
     VoiceControlService,
     VoiceRecognitionService,
     SoundService,
-    CookieService,
 
     AuthService,
     UserStorageService,
