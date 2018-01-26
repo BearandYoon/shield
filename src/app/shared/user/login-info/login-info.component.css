@@ -1,0 +1,12 @@
+object.online {
+    border-left-color: #40ac2b!important;
+    border-left: 3px solid #fff;
+    width: 35px;
+    height: 35px;
+    float: left;
+    margin-right: 5px;
+}
+
+.login-info {
+    font-size: 13px !important;
+}

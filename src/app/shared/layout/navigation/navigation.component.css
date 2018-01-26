@@ -1,10 +1,12 @@
 aside#left-panel {
     background: #fff;
+    border-right: 1px solid #b5b5b5;
+    overflow: hidden;
 }
 /*
 aside#left-panel nav ul ul {
     background-color: #fff !important;
-    border-borrom: 1px solid #f00;
+    border-bottom: 1px solid #f00;
 }
 
 aside#left-panel nav > ul > li > a {
@@ -40,4 +42,4 @@ aside#left-panel nav ul>li:hover>a {
 aside#left-panel nav>ul>li>a .collapse-sign {
     display: none;
 }
- */
+*/
