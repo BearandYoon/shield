@@ -50,3 +50,9 @@
     width: auto !important;
     margin: 5px;
 }
+
+/*zendesk support button*/
+
+.zEWidget-launcher {
+    left: 220px !important;
+}
