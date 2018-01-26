@@ -68,14 +68,17 @@
                   <b class="tooltip tooltip-top-right"><i class="fa fa-lock txt-color-teal"></i> Enter
                     your password</b> </label>
 
-                <!--<div class="note">-->
-                  <!--<a routerLink="/auth/forgot-password">Forgot password?</a>-->
-                <!--</div>-->
+                <div class="note">
+                  <a routerLink="/auth/forgot-password">Forgot password?</a>
+                </div>
               </section>
               <section>
                 <label class="checkbox">
                   <input type="checkbox" name="remember" formControlName="persist">
                   <i></i>Stay signed in</label>
+              </section>
+              <section>
+                <re-captcha [site_key]="googleKey"></re-captcha>
               </section>
             </fieldset>
             <footer>

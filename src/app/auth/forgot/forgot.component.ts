@@ -1,23 +1,22 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from "@angular/router";
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from '../../core/auth/auth.service';
-import { NotificationService } from "../../shared/utils/notification.service";
 import { environment } from '../../../environments/environment';
+import { NotificationService } from "../../shared/utils/notification.service";
 import { ReCaptchaComponent } from "angular2-recaptcha";
-import { I18nService } from "../../shared/i18n/i18n.service";
+import {I18nService} from "../../shared/i18n/i18n.service";
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  selector: 'app-forgot',
+  templateUrl: './forgot.component.html',
+  styles: []
 })
-export class LoginComponent implements OnInit {
+export class ForgotComponent implements OnInit {
 
   @ViewChild(ReCaptchaComponent) captcha: ReCaptchaComponent;
 
-  loginForm: FormGroup;
+  resetForm: FormGroup;
   loading = false;
   googleKey = environment.googleSiteKey;
 
@@ -28,14 +27,12 @@ export class LoginComponent implements OnInit {
               private notificationService: NotificationService) { }
 
   ngOnInit() {
-    this.loginForm = this.fb.group({
-      username: ['', Validators.required],
-      password: ['',  Validators.required],
-      persist: true
+    this.resetForm = this.fb.group({
+      email: ['', Validators.required]
     })
   }
 
-  login(data) {
+  reset(data){
     const captcha = this.captcha.getResponse();
     if (!captcha) {
       this.notificationService.smallBox({
@@ -46,23 +43,25 @@ export class LoginComponent implements OnInit {
       });
     } else {
       this.loading = true;
-
-      this.auth.login({...data, captcha})
+      this.auth.resetPassword({...data, captcha})
           .subscribe(() => {
             this.loading = false;
-            this.router.navigate(['/home']);
+            this.notificationService.smallBox({
+              content: this.i18n.getTranslation('An email has been sent to your account'),
+              timeout: 4000,
+              icon: "fa fa-bell swing animated"
+            });
+            this.resetForm.reset();
+            this.captcha.reset();
           }, (error) => {
             this.loading = false;
-            this.captcha.reset();
             this.notificationService.smallBox({
               content: this.i18n.getTranslation(error),
               color: "#a90329",
               timeout: 4000,
               icon: "fa fa-warning shake animated"
-            })
+            });
           })
     }
-
   }
-
 }

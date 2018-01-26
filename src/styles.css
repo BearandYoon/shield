@@ -36,6 +36,10 @@
     margin-top: 0;
 }
 
-#extr-page #header #logo img {
-    width: auto;
+#extr-page #logo-group img {
+    display: block;
+    max-height: 39px;
+    max-width: 200px;
+    width: auto !important;
+    margin: 5px;
 }

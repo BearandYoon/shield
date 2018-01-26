@@ -5,5 +5,6 @@
 
 export const environment = {
   production: false,
-  baseUrl: 'https://api.amalyze.com/0.0.1'
+  baseUrl: 'https://api.amalyze.com/0.0.6',
+  googleSiteKey: '6LcKNEIUAAAAAPGe3VDGzUcqXyi5iyMD-IPhiXej'
 };

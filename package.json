@@ -45,6 +45,7 @@
     "@angular/router": "5.0.5",
     "@swimlane/ngx-datatable": "11.1.5",
     "X-editable": "github:vitalets/x-editable",
+    "angular2-recaptcha": "^0.6.0",
     "bootstrap": "3.3.7",
     "bootstrap-colorpicker": "2.5.2",
     "bootstrap-duallistbox": "3.0.6",

@@ -9,6 +9,10 @@ export const routes:Routes = [
     loadChildren: './login/login.module#LoginModule'
   },
   {
+    path: 'forgot-password',
+    loadChildren: './forgot/forgot.module#ForgotModule'
+  },
+  {
     path: '**',
     pathMatch: 'full',
     redirectTo: ''

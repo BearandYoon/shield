@@ -1,6 +1,6 @@
 import { Component, OnInit, Renderer2, Inject } from '@angular/core';
 import { DOCUMENT } from '@angular/platform-browser';
-import { UserStorageService } from 'app/core/storage/storage.service';
+import { UserStorageService } from '../../../core/storage/storage.service';
 
 
 @Component({

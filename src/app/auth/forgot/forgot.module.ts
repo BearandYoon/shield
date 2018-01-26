@@ -4,17 +4,17 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ReCaptchaModule } from 'angular2-recaptcha';
 
 import { SmartadminModule } from '../../shared/smartadmin.module';
-import { LoginRoutingModule } from './login-routing.module';
-import { LoginComponent } from './login.component';
+import { ForgotRoutingModule } from './forgot-routing.module';
+import { ForgotComponent } from './forgot.component';
 
 @NgModule({
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    LoginRoutingModule,
+    ForgotRoutingModule,
     SmartadminModule,
     ReCaptchaModule
   ],
-  declarations: [LoginComponent]
+  declarations: [ForgotComponent]
 })
-export class LoginModule { }
+export class ForgotModule { }

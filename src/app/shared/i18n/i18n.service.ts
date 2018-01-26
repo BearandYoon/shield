@@ -39,7 +39,6 @@ export class I18nService {
       this.currentLanguage = language
     } else {
       throw new Error(`Incorrect locale used for I18nService: ${locale}`);
-
     }
   }
 
