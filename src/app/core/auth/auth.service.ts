@@ -23,7 +23,7 @@ export class AuthService {
         const body = { username: data.username, password_md5: Md5.hashStr(data.password), captcha: data.captcha };
         const persist = data.persist;
 
-        return this.http.post(environment.baseUrl + '/system.user.login', JSON.stringify(body),
+        return this.http.post(environment.baseUrl + '/system.user.login', body,
             { observe: 'response' })
             .do(res => {
                 const falconToken = res.headers.get(constants.FALCON_TOKEN);
@@ -50,7 +50,7 @@ export class AuthService {
     }
 
     resetPassword(data) {
-        return this.http.post(environment.baseUrl + '/system.user.recover', JSON.stringify(data))
+        return this.http.post(environment.baseUrl + '/system.user.recover', data)
             .catch(this.handleError);
     }
 

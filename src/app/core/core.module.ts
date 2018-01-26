@@ -19,6 +19,7 @@ import { UnauthGuardService} from "./guards/unauth-guard";
 import { CacheService } from 'app/core/cache/cache.service';
 
 import { TokensInterceptor } from './interceptors/tokens-interceptor';
+import { ContentTypeInterceptor } from './interceptors/content-type-interceptor';
 
 @NgModule({
   imports: [
@@ -47,6 +48,12 @@ import { TokensInterceptor } from './interceptors/tokens-interceptor';
 
     AuthGuardService,
     UnauthGuardService,
+
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ContentTypeInterceptor,
+      multi: true
+    },
 
     {
       provide: HTTP_INTERCEPTORS,
