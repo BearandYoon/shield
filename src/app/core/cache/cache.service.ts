@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Md5 } from 'ts-md5';
 import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/mergeMap';
 import { expressionType } from '@angular/compiler/src/output/output_ast';
 
 @Injectable()
@@ -23,7 +24,7 @@ export class CacheService {
         if(dataObj && new Date(dataObj.expireAt).getTime() > Date.now()) {
             return Observable.of(dataObj);
         } else {
-            return observable.flatMap((result: any) => this.doCache(key, result, expiresInSec, persist));
+            return observable.mergeMap((result: any) => this.doCache(key, result, expiresInSec, persist));
         }
     }
 
