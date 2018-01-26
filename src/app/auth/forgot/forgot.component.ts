@@ -5,7 +5,7 @@ import { AuthService } from '../../core/auth/auth.service';
 import { environment } from '../../../environments/environment';
 import { NotificationService } from "../../shared/utils/notification.service";
 import { ReCaptchaComponent } from "angular2-recaptcha";
-import {I18nService} from "../../shared/i18n/i18n.service";
+import { I18nService} from "../../shared/i18n/i18n.service";
 
 @Component({
   selector: 'app-forgot',
@@ -32,11 +32,10 @@ export class ForgotComponent implements OnInit {
     })
   }
 
-  reset(data){
-    const captcha = this.captcha.getResponse();
+  reset(captcha, data){
     if (!captcha) {
       this.notificationService.smallBox({
-        content: this.i18n.getTranslation('Please complete the captcha'),
+        content: this.i18n.getTranslation('Problems with captcha'),
         color: "#a90329",
         timeout: 4000,
         icon: "fa fa-warning shake animated"
@@ -47,7 +46,7 @@ export class ForgotComponent implements OnInit {
           .subscribe(() => {
             this.loading = false;
             this.notificationService.smallBox({
-              content: this.i18n.getTranslation('An email has been sent to your account'),
+              content: this.i18n.getTranslation('An email has been sent to you'),
               timeout: 4000,
               icon: "fa fa-bell swing animated"
             });
@@ -63,5 +62,9 @@ export class ForgotComponent implements OnInit {
             });
           })
     }
+  }
+
+  submitForm() {
+    this.captcha.execute();
   }
 }

@@ -49,7 +49,7 @@
       </div>
       <div class="col-xs-12 col-sm-12 col-md-5 col-lg-4">
         <div class="well no-padding">
-          <form class="smart-form client-form" [formGroup]="loginForm" (submit)="login(loginForm.value)">
+          <form class="smart-form client-form" [formGroup]="loginForm" (submit)="submitForm()">
             <header>
               {{'LOGIN' | i18n}}
             </header>
@@ -78,7 +78,8 @@
                   <i></i>Stay signed in</label>
               </section>
               <section>
-                <re-captcha [site_key]="googleKey"></re-captcha>
+                <re-captcha [site_key]="googleKey" size="invisible" (captchaResponse)="login($event, loginForm.value)">
+                </re-captcha>
               </section>
             </fieldset>
             <footer>

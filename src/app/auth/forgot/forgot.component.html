@@ -48,7 +48,7 @@
       </div>
       <div class="col-xs-12 col-sm-12 col-md-5 col-lg-4">
         <div class="well no-padding">
-          <form id="login-form" class="smart-form client-form" [formGroup]="resetForm" (submit)="reset(resetForm.value)">
+          <form id="login-form" class="smart-form client-form" [formGroup]="resetForm" (submit)="submitForm()">
             <header>
               Forgot Password
             </header>
@@ -68,7 +68,8 @@
               </section>
 
               <section>
-                <re-captcha [site_key]="googleKey"></re-captcha>
+                <re-captcha [site_key]="googleKey" size="invisible" (captchaResponse)="reset($event, resetForm.value)">
+                </re-captcha>
               </section>
 
             </fieldset>

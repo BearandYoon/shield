@@ -35,11 +35,10 @@ export class LoginComponent implements OnInit {
     })
   }
 
-  login(data) {
-    const captcha = this.captcha.getResponse();
+  login(captcha, data) {
     if (!captcha) {
       this.notificationService.smallBox({
-        content: this.i18n.getTranslation('Please complete the captcha'),
+        content: this.i18n.getTranslation('Problems with captcha'),
         color: "#a90329",
         timeout: 4000,
         icon: "fa fa-warning shake animated"
@@ -62,7 +61,10 @@ export class LoginComponent implements OnInit {
             })
           })
     }
+  }
 
+  submitForm() {
+    this.captcha.execute();
   }
 
 }
