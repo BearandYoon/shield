@@ -56,3 +56,7 @@
 .zEWidget-launcher {
     left: 220px !important;
 }
+
+@media screen and (max-width: 1200px) {
+    .mobile-detected.fixed-navigation nav>ul{padding-right:16px !important}
+}
