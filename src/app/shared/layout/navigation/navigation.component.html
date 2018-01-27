@@ -4,16 +4,16 @@
   <sa-login-info></sa-login-info>
   <!-- end user info -->
 
-  <nav>
+  <nav style="overflow-x: hidden;">
     <!-- NOTE: Notice the gaps after each icon usage <i></i>..
     Please note that these links work a bit different than
     traditional href="" links. See documentation for details.
     -->
 
-    <ul saSmartMenu>
+    <ul saSmartMenu style="padding: 0;">
 
-      <li *ngFor="let item of navigation">
-        <a [attr.title]="item.name">
+      <li *ngFor="let item of navigation; let idx=index;" routerLinkActive="active">
+        <a [attr.title]="item.name" style="padding: 16px 0;">
           <i class="fa fa-lg fa-fw" [ngClass]="item.icon"></i> <span class="menu-item-parent">{{item.name | i18n}}</span>
         </a>
         <ul *ngIf="item.items">
@@ -34,8 +34,8 @@
           </li>
         </ul>
       </li>
-
     </ul>
+
     <sa-minify-menu></sa-minify-menu>  
   </nav>
 </aside>
