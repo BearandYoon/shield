@@ -37,7 +37,19 @@ export class CacheService {
         };
         dataObj = dataObj ? dataObj : {};
         dataObj[key] = cached;
-        storage.setItem(this.cacheKey, JSON.stringify(dataObj));
+        try {
+            storage.setItem(this.cacheKey, JSON.stringify(dataObj));
+        } catch (errMsg) {
+            console.error(errMsg); // log to console
+            dataObj[key] = undefined;
+            try {
+                storage.setItem(this.cacheKey, JSON.stringify(dataObj));
+            } catch (err) {
+                console.error(err); // log to console
+                return Observable.throw(`FALCON_ERR_${err}`);
+            }
+            return Observable.throw(`FALCON_ERR_${errMsg}`);    
+        }
         return Observable.of(cached);
     }
 
