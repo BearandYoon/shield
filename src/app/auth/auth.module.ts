@@ -10,7 +10,7 @@ import { AuthComponent } from './auth.component';
 
     routing,
   ],
-  declarations: [ AuthComponent],
+  declarations: [ AuthComponent ],
   exports: [ AuthComponent ]
 })
 export class AuthModule { }

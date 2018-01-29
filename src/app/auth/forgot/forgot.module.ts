@@ -3,8 +3,9 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ReCaptchaModule } from 'angular2-recaptcha';
 
-import { SmartadminModule } from '../../shared/smartadmin.module';
+import { AuthHeaderModule } from '../auth-header/auth-header.module';
 import { ForgotRoutingModule } from './forgot-routing.module';
+import { I18nModule } from '../../shared/i18n/i18n.module';
 import { ForgotComponent } from './forgot.component';
 
 @NgModule({
@@ -12,8 +13,9 @@ import { ForgotComponent } from './forgot.component';
     CommonModule,
     ReactiveFormsModule,
     ForgotRoutingModule,
-    SmartadminModule,
-    ReCaptchaModule
+    ReCaptchaModule,
+    AuthHeaderModule,
+    I18nModule
   ],
   declarations: [ForgotComponent]
 })
