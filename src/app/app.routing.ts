@@ -16,12 +16,12 @@ export const routes: Routes = [
         component: MainLayoutComponent,
         children: [
             {
-                path: '', redirectTo: 'home', pathMatch: 'full'
-            },
-            {
                 path: 'home',
                 loadChildren: 'app/home/home.module#HomeModule'
             },
+            {
+                path: '', redirectTo: 'home', pathMatch: 'full'
+            }
         ],
         canActivate: [AuthGuardService]
     },

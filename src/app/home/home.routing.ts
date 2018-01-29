@@ -6,15 +6,22 @@ export const homeRoutes: Routes = [
     {
         path: '',
         component: HomeComponent,
-        data: {
-            pageTitle: 'Home'
-        }
+        children: [
+            {
+                path: 'dashboard',
+                loadChildren: 'app/home/dashboard/dashboard.module#DashboardModule'
+            },
+            {
+                path: 'advertising/campaigns',
+                loadChildren: 'app/home/advertising/campaigns/campaigns.module#CampaignsModule'
+            },
+            {
+                path: '',
+                pathMatch: 'full',
+                redirectTo: 'dashboard'
+            }
+        ]
     },
-    {
-        path: '**',
-        pathMatch: 'full',
-        redirectTo: ''
-    }
 ];
 
 export const homeRouting: ModuleWithProviders = RouterModule.forChild(homeRoutes);
