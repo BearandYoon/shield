@@ -14,6 +14,7 @@ import { environment } from 'environments/environment';
 export class LoginInfoComponent implements OnInit {
 
   user:any;
+  isShow = false;
 
   constructor(
     private userService: UserService,
@@ -22,9 +23,13 @@ export class LoginInfoComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.layoutService.subscribeAni(inf => {
+      this.isShow = !inf.minified;
+    });
+
     this.user = this.storage.get().user;
     let md5Hashed = Md5.hashStr(this.user.email);
-    let avatarDef = "https://shield.stage.amalyze.com/" +  environment.version + "/dist/assets/img/avatars/male.png";
+    let avatarDef = "https://shield.stage.amalyze.com/" +  environment.version + "/dist/assets/img/avatars/male.png&s=38";
     if(!this.user['picture']) {
       this.user['picture'] = "https://www.gravatar.com/avatar/" + md5Hashed + "?d=" + avatarDef;
     }

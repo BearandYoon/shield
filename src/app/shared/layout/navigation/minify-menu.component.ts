@@ -16,6 +16,9 @@ export class MinifyMenuComponent {
   }
 
   toggle() {
-    this.layoutService.onMinifyMenu()
+    this.layoutService.onMinifyMenu();
+    setTimeout(() => {
+      this.layoutService.triggerAni();
+    }, 250);
   }
 }

@@ -40,6 +40,7 @@ export class LayoutService {
   store:any;
 
   private subject:Subject<any>;
+  private aniSubj:Subject<any>;
 
   trigger() {
     this.processBody(this.store);
@@ -50,8 +51,17 @@ export class LayoutService {
     return this.subject.subscribe(next, err, complete)
   }
 
+  triggerAni() {
+    this.aniSubj.next({minified: this.store.menuMinified});
+  }
+
+  subscribeAni(next, err?, complete?) {
+    return this.aniSubj.subscribe(next, err, complete);
+  }
+
   constructor(private notificationService: NotificationService) {
     this.subject = new Subject();
+    this.aniSubj = new Subject();
     this.store = store;
     this.trigger();
 
