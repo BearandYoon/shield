@@ -59,3 +59,9 @@
 .minified .zEWidget-launcher {
     left: 50px !important;
 }
+.collapse-sign {
+    min-width: 10px;
+}
+.minified nav>ul>li:hover>a>.menu-item-parent.hide {
+    display: none !important;
+}

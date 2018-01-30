@@ -10,3 +10,11 @@ object.online {
 .login-info {
     font-size: 13px !important;
 }
+
+.user-name {
+    float: left;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    max-width: 130px;
+    margin-right: 5px;
+}

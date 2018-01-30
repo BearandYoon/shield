@@ -2,8 +2,8 @@
   <span *ngIf="user?.picture" style="margin: 1px;">
     <a (click)="toggleShortcut()">
       <img [src]="user.picture" alt="me" class="online"/>
-      <span style="max-width: 160px;">
-        {{user.firstname + ' ' + user.lastname }}
+      <span style="max-width: 140px;">
+        <div class="user-name" title="{{user.firstname + ' ' + user.lastname }}">{{user.firstname + ' ' + user.lastname }}</div>
         <i class="fa fa-angle-down"></i>
       </span>
     </a>
