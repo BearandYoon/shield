@@ -56,3 +56,6 @@
 .zEWidget-launcher {
     left: 220px !important;
 }
+.minified .zEWidget-launcher {
+    left: 50px !important;
+}

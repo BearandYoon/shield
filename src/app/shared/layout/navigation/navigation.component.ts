@@ -16,6 +16,7 @@ export class NavigationComponent implements OnInit {
 
   ngOnInit() {
     this.navigation = this.storage.get().user.navigation;
+    console.log(this.navigation);
   }
 
 }

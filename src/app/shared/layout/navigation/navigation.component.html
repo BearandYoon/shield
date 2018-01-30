@@ -1,4 +1,4 @@
-<aside id="left-panel">
+<aside id="left-panel" style="padding-left: 0; padding-right: 0;">
 
   <!-- User info -->
   <sa-login-info></sa-login-info>
@@ -13,19 +13,41 @@
     <ul saSmartMenu>
 
       <li *ngFor="let item of navigation; let idx=index;" routerLinkActive="active">
-        <a [attr.title]="item.name">
+        <a [attr.title]="item.name" routerLink="/{{item.method}}" *ngIf="!item.absolute && item.method">
+          <i class="fa fa-lg fa-fw" [ngClass]="item.icon"></i> <span class="menu-item-parent">{{item.name | i18n}}</span>
+        </a>
+        <a [attr.title]="item.name" *ngIf="!item.absolute && !item.method">
+          <i class="fa fa-lg fa-fw" [ngClass]="item.icon"></i> <span class="menu-item-parent">{{item.name | i18n}}</span>
+        </a>
+        <a [attr.title]="item.name" *ngIf="item.absolute" href="{{item.method}}">
           <i class="fa fa-lg fa-fw" [ngClass]="item.icon"></i> <span class="menu-item-parent">{{item.name | i18n}}</span>
         </a>
         <ul *ngIf="item.items">
-          <li *ngFor="let subitem of item.items">
-            <a href="#">
+          <li *ngFor="let subitem of item.items" routerLinkActive="active">
+            <a *ngIf="!subitem.absolute && subitem.method" routerLink="/{{subitem.method}}">
+              <i class="fa fa-lg fa-fw" [ngClass]="subitem.icon"></i>
+              {{subitem.name | i18n}}
+            </a>
+            <a *ngIf="!subitem.absolute && !subitem.method">
+              <i class="fa fa-lg fa-fw" [ngClass]="subitem.icon"></i>
+              {{subitem.name | i18n}}
+            </a>
+            <a *ngIf="subitem.absolute" href="{{subitem.method}}">
               <i class="fa fa-lg fa-fw" [ngClass]="subitem.icon"></i>
               {{subitem.name | i18n}}
             </a>
 
             <ul *ngIf="subitem.items">
-              <li *ngFor="let subsubitem of subitem.items">
-                <a href="#">
+              <li *ngFor="let subsubitem of subitem.items" routerLinkActive="active">
+                <a *ngIf="!subsubitem.absolute && subsubitem.method" routerLink="/{{subsubitem.method}}">
+                  <i class="fa fa-lg fa-fw" [ngClass]="subsubitem.icon"></i>
+                  {{subsubitem.name | i18n}}
+                </a>
+                <a *ngIf="!subsubitem.absolute && !subsubitem.method">
+                  <i class="fa fa-lg fa-fw" [ngClass]="subsubitem.icon"></i>
+                  {{subsubitem.name | i18n}}
+                </a>
+                <a *ngIf="subitem.absolute" href="{{subsubitem.method}}">
                   <i class="fa fa-lg fa-fw" [ngClass]="subsubitem.icon"></i>
                   {{subsubitem.name | i18n}}
                 </a>
@@ -35,9 +57,9 @@
         </ul>
       </li>
     </ul>
+    <sa-minify-menu></sa-minify-menu>
 
   </nav>
 
-  <sa-minify-menu></sa-minify-menu>
 
 </aside>
