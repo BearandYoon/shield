@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { CampaignsService } from "./services/campaigns.service";
+import { Subscription } from "rxjs/Subscription";
 
 @Component({
   selector: 'app-campaigns',
@@ -7,9 +9,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CampaignsComponent implements OnInit {
 
-  constructor() { }
+  campaigns: any[];
+  campaignsSubscription: Subscription;
+  loading = false;
+
+  constructor(private campaignsService: CampaignsService) { }
 
   ngOnInit() {
+    this.campaignsSubscription = this.campaignsService.getCampaigns()
+        .subscribe((campaigns: any[]) => {
+          this.campaigns = campaigns;
+        })
+  }
+
+  ngOnDestroy() {
+    this.campaignsSubscription.unsubscribe();
   }
 
 }

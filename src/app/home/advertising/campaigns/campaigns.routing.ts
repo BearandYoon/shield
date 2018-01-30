@@ -6,11 +6,6 @@ export const campaignsRoutes: Routes = [
     {
         path: '',
         component: CampaignsComponent
-    },
-    {
-        path: '',
-        pathMatch: 'full',
-        redirectTo: ''
     }
 ];
 

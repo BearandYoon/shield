@@ -12,8 +12,8 @@ export const homeRoutes: Routes = [
                 loadChildren: 'app/home/dashboard/dashboard.module#DashboardModule'
             },
             {
-                path: 'advertising/campaigns',
-                loadChildren: 'app/home/advertising/campaigns/campaigns.module#CampaignsModule'
+                path: 'advertising',
+                loadChildren: 'app/home/advertising/advertising.module#AdvertisingModule'
             },
             {
                 path: '',
