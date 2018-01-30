@@ -62,6 +62,6 @@
 .collapse-sign {
     min-width: 10px;
 }
-.minified nav>ul>li:hover>a>.menu-item-parent.hide {
+.minified nav>ul>li:hover>a>.menu-item-parent.hide-on {
     display: none !important;
 }

@@ -15,15 +15,15 @@
       <li *ngFor="let item of navigation; let idx=index;" routerLinkActive="active">
         <a [attr.title]="item.name" routerLink="/{{item.route}}" *ngIf="!item.absolute && item.route">
           <i class="fa fa-lg fa-fw" [ngClass]="item.icon"></i>
-          <span class="menu-item-parent" [class.hide]="item.items ? false : true">{{item.name | i18n}}</span>
+          <span class="menu-item-parent" [class.hide-on]="item.items ? false : true">{{item.name | i18n}}</span>
         </a>
         <a [attr.title]="item.name" *ngIf="!item.absolute && !item.route">
           <i class="fa fa-lg fa-fw" [ngClass]="item.icon"></i>
-          <span class="menu-item-parent" [class.hide]="item.items ? false : true">{{item.name | i18n}}</span>
+          <span class="menu-item-parent" [class.hide-on]="item.items ? false : true">{{item.name | i18n}}</span>
         </a>
         <a [attr.title]="item.name" *ngIf="item.absolute" href="{{item.route}}">
           <i class="fa fa-lg fa-fw" [ngClass]="item.icon"></i>
-          <span class="menu-item-parent" [class.hide]="item.items ? false : true">{{item.name | i18n}}</span>
+          <span class="menu-item-parent" [class.hide-on]="item.items ? false : true">{{item.name | i18n}}</span>
         </a>
         <ul *ngIf="item.items">
           <li *ngFor="let subitem of item.items" routerLinkActive="active">
