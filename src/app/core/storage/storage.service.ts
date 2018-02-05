@@ -28,6 +28,8 @@ export class UserStorageService {
 
     remove() {
         localStorage.removeItem(constants.USER_STORAGE_KEY);
+        localStorage.removeItem(constants.XSRF_TOKEN);
+        localStorage.removeItem(constants.FALCON_TOKEN);
         sessionStorage.removeItem(constants.USER_STORAGE_KEY);
         sessionStorage.removeItem(constants.XSRF_TOKEN);
         sessionStorage.removeItem(constants.FALCON_TOKEN);
