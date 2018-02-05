@@ -10,10 +10,12 @@ export const homeRoutes: Routes = [
             {
                 path: 'dashboard',
                 loadChildren: 'app/home/dashboard/dashboard.module#DashboardModule'
-            }, {
-                path: 'advertising',
-                loadChildren: 'app/home/advertising/advertising.module#AdvertisingModule'
-            }, {
+            },
+            {
+                path: 'advertising/campaigns',
+                loadChildren: 'app/home/campaigns/campaigns.module#CampaignsModule'
+            },
+            {
                 path: '',
                 pathMatch: 'full',
                 redirectTo: 'dashboard'

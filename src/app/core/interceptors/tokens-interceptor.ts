@@ -8,7 +8,7 @@ import {
 import { Observable } from 'rxjs/Observable';
 import { UserStorageService } from '../storage/storage.service';
 
-import constants from '../../shared/constants';
+import constants from '../core.constants';
 
 @Injectable()
 export class TokensInterceptor implements HttpInterceptor {

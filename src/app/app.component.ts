@@ -1,12 +1,10 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { TimerObservable } from 'rxjs/observable/TimerObservable';
 import { Router } from '@angular/router';
-import { NotificationService } from './shared/utils/notification.service';
 import { AuthService } from './core/auth/auth.service';
-import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import 'rxjs/add/operator/switchMap';
-import constants from './shared/constants';
+import constants from './core/core.constants';
 
 @Component({
   selector: 'app-root',

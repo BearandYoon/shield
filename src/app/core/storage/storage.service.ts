@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import constants from '../../shared/constants';
+import constants from '../core.constants';
 
 @Injectable()
 export class UserStorageService {
