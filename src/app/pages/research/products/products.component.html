@@ -1,0 +1,76 @@
+<div>
+  <div class="row search-bar">
+    <div class="col-sm-6">
+      <button type="button" class="btn btn-primary">
+        <i class="glyphicon glyphicon-search"></i>
+        Search for campaign name, ASIN, SKU
+      </button>
+    </div>
+    <div class="col-sm-6 buttons">
+      <button type="button" class="btn btn-success pull-right">
+        <i class="glyphicon glyphicon-filter"></i>
+        Filter
+      </button>
+      <button type="button" class="btn btn-success pull-right new-campaign">
+        <i class="glyphicon glyphicon-plus"></i>
+        New campaign
+      </button>
+    </div>
+  </div>
+
+  <div class="well">
+    <form class="form-horizontal">
+      <div class="row">
+        <div class="col-md-4 col-sm-6 col-xs-12">
+          <div class="form-group">
+            <label for="start" class="col-sm-3 control-label">Start</label>
+            <div class="col-sm-3">
+              <select class="form-control" id="start"></select>
+            </div>
+            <label for="end" class="col-sm-1 control-label">End</label>
+            <div class="col-sm-3">
+              <select class="form-control" id="end"></select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="progress" class="col-sm-3 control-label">Progress</label>
+            <div class="col-sm-7">
+              <select class="form-control" id="progress"></select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="type" class="col-sm-3 control-label">Type</label>
+            <div class="col-sm-7">
+              <select class="form-control" id="type"></select>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 col-sm-6 col-xs-12">
+          <div class="form-group">
+            <label for="merchant" class="col-sm-3 control-label">Merchant</label>
+            <div class="col-sm-7">
+              <select class="form-control" id="merchant"></select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="marketplace" class="col-sm-3 control-label">Marketplace</label>
+            <div class="col-sm-7">
+              <select class="form-control" id="marketplace"></select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="asin" class="col-sm-3 control-label">ASIN</label>
+            <div class="col-sm-7">
+              <select class="form-control" id="asin"></select>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </form>
+  </div>
+
+  <div>
+    {{campaigns | json}}
+  </div>
+</div>

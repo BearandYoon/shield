@@ -1,5 +1,3 @@
-
-
 import {NgModule} from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {I18nModule} from "../../i18n/i18n.module";
@@ -32,4 +30,4 @@ import {RouterModule} from "@angular/router";
     SmartMenuDirective,
   ]
 })
-export class NavigationModule{}
+export class NavigationModule {}
