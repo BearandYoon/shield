@@ -7,7 +7,7 @@ import { expressionType } from '@angular/compiler/src/output/output_ast';
 @Injectable()
 export class CacheService {
 
-    private cacheKey:any = 'cache';
+    private cacheKey: any = 'cache';
     private defaultExpires = 86400;
 
     constructor() {
@@ -19,9 +19,9 @@ export class CacheService {
         sessionStorage.removeItem(this.cacheKey);
     }
 
-    public observable(key: string, observable: Observable<any>, expiresInSec: number = this.defaultExpires, persist:boolean = false): Observable<any> {
-        let dataObj = this.getCache(key, persist);
-        if(dataObj && new Date(dataObj.expireAt).getTime() > Date.now()) {
+    public observable(key: string, observable: Observable<any>, expiresInSec: number = this.defaultExpires, persist: boolean = false): Observable<any> {
+        const dataObj = this.getCache(key, persist);
+        if (dataObj && new Date(dataObj.expireAt).getTime() > Date.now()) {
             return Observable.of(dataObj);
         } else {
             return observable.mergeMap((result: any) => this.doCache(key, result, expiresInSec, persist));
@@ -29,9 +29,9 @@ export class CacheService {
     }
 
     private doCache(key: string, value: any, expireAt: number, persist: boolean = false) {
-        let storage = persist ? localStorage : sessionStorage;
+        const storage = persist ? localStorage : sessionStorage;
         let dataObj = JSON.parse(storage.getItem(this.cacheKey));
-        let cached = {
+        const cached = {
             value: value,
             expireAt: (Date.now() + expireAt * 1000),
         };
@@ -48,14 +48,14 @@ export class CacheService {
                 console.error(err); // log to console
                 return Observable.throw(`FALCON_ERR_${err}`);
             }
-            return Observable.throw(`FALCON_ERR_${errMsg}`);    
+            return Observable.throw(`FALCON_ERR_${errMsg}`);
         }
         return Observable.of(cached);
     }
 
     private getCache(key: string, persist: boolean = false) {
-        let storage = persist ? localStorage : sessionStorage;
-        let dataObj = JSON.parse(storage.getItem(this.cacheKey));
+        const storage = persist ? localStorage : sessionStorage;
+        const dataObj = JSON.parse(storage.getItem(this.cacheKey));
         return dataObj ? dataObj[key] || null : null;
     }
 

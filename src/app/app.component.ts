@@ -1,25 +1,27 @@
-import { Component } from '@angular/core';
-import { TimerObservable } from "rxjs/observable/TimerObservable";
+import {Component, OnInit} from '@angular/core';
+import { TimerObservable } from 'rxjs/observable/TimerObservable';
 import { Router } from '@angular/router';
-import { NotificationService } from "./shared/utils/notification.service";
-import { AuthService } from "./core/auth/auth.service";
-import { Observable } from "rxjs/Observable";
+import { NotificationService } from './shared/utils/notification.service';
+import { AuthService } from './core/auth/auth.service';
+import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import 'rxjs/add/operator/switchMap';
-import constants from "./shared/constants";
+import constants from './shared/constants';
 
 @Component({
   selector: 'app-root',
   template: '<router-outlet></router-outlet>'
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
 
-  public constructor(private auth: AuthService,
-                     private router: Router) {}
+    interval = constants.STATUS_CHECK_INTERVAL;
+    authSubscription: Subscription;
+    checkStatusSubscription: Subscription;
 
-  interval = constants.STATUS_CHECK_INTERVAL;
-  authSubscription: Subscription;
-  checkStatusSubscription: Subscription;
+    constructor (
+        private auth: AuthService,
+        private router: Router
+    ) {}
 
   ngOnInit() {
     this.authSubscription = this.auth.loginStatusChange

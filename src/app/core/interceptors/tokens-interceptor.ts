@@ -6,7 +6,7 @@ import {
     HttpInterceptor
 } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
-import {UserStorageService} from "../storage/storage.service";
+import { UserStorageService } from '../storage/storage.service';
 
 import constants from '../../shared/constants';
 

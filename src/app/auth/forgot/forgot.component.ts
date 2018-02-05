@@ -1,11 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Router } from "@angular/router";
+import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from '../../core/auth/auth.service';
 import { environment } from '../../../environments/environment';
-import { NotificationService } from "../../shared/utils/notification.service";
-import { ReCaptchaComponent } from "angular2-recaptcha";
-import { I18nService} from "../../shared/i18n/i18n.service";
+import { NotificationService } from '../../shared/utils/notification.service';
+import { ReCaptchaComponent } from 'angular2-recaptcha';
+import { I18nService} from '../../shared/i18n/i18n.service';
 
 @Component({
   selector: 'app-forgot',
@@ -32,13 +32,13 @@ export class ForgotComponent implements OnInit {
     })
   }
 
-  reset(captcha, data){
+  reset(captcha, data) {
     if (!captcha) {
       this.notificationService.smallBox({
         content: this.i18n.getTranslation('Problems with captcha'),
-        color: "#a90329",
+        color: '#a90329',
         timeout: 4000,
-        icon: "fa fa-warning shake animated"
+        icon: 'fa fa-warning shake animated'
       });
     } else {
       this.loading = true;
@@ -48,7 +48,7 @@ export class ForgotComponent implements OnInit {
             this.notificationService.smallBox({
               content: this.i18n.getTranslation('An email has been sent to you'),
               timeout: 4000,
-              icon: "fa fa-bell swing animated"
+              icon: 'fa fa-bell swing animated'
             });
             this.resetForm.reset();
             this.captcha.reset();
@@ -56,9 +56,9 @@ export class ForgotComponent implements OnInit {
             this.loading = false;
             this.notificationService.smallBox({
               content: this.i18n.getTranslation(error),
-              color: "#a90329",
+              color: '#a90329',
               timeout: 4000,
-              icon: "fa fa-warning shake animated"
+              icon: 'fa fa-warning shake animated'
             });
           })
     }

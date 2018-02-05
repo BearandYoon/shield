@@ -1,12 +1,12 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Router } from "@angular/router";
+import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { AuthService } from '../../core/auth/auth.service';
-import { NotificationService } from "../../shared/utils/notification.service";
+import { NotificationService } from '../../shared/utils/notification.service';
 import { environment } from '../../../environments/environment';
-import { ReCaptchaComponent } from "angular2-recaptcha";
-import { I18nService } from "../../shared/i18n/i18n.service";
+import { ReCaptchaComponent } from 'angular2-recaptcha';
+import { I18nService } from '../../shared/i18n/i18n.service';
 
 @Component({
   selector: 'app-login',
@@ -32,16 +32,22 @@ export class LoginComponent implements OnInit {
       username: ['', Validators.required],
       password: ['',  Validators.required],
       persist: true
-    })
+    });
+
+    this.loginForm.setValue({
+        username: 'developertest@amalyze.com',
+        password: 'Iilo1ail',
+        persist: true
+    });
   }
 
   login(captcha, data) {
     if (!captcha) {
       this.notificationService.smallBox({
         content: this.i18n.getTranslation('Problems with captcha'),
-        color: "#a90329",
+        color: '#a90329',
         timeout: 4000,
-        icon: "fa fa-warning shake animated"
+        icon: 'fa fa-warning shake animated'
       });
     } else {
       this.loading = true;
@@ -55,9 +61,9 @@ export class LoginComponent implements OnInit {
             this.captcha.reset();
             this.notificationService.smallBox({
               content: this.i18n.getTranslation(error),
-              color: "#a90329",
+              color: '#a90329',
               timeout: 4000,
-              icon: "fa fa-warning shake animated"
+              icon: 'fa fa-warning shake animated'
             })
           })
     }

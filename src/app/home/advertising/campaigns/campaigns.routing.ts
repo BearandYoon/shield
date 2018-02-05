@@ -1,6 +1,6 @@
 import { Routes, RouterModule } from '@angular/router';
-import {CampaignsComponent} from "./campaigns.component";
-import {ModuleWithProviders} from "@angular/core";
+import {CampaignsComponent} from './campaigns.component';
+import {ModuleWithProviders} from '@angular/core';
 
 export const campaignsRoutes: Routes = [
     {

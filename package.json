@@ -95,6 +95,7 @@
     "@angular/cli": "^1.5.5",
     "@angular/compiler-cli": "5.0.5",
     "@types/jasmine": "2.8.2",
+    "@types/jasminewd2": "~2.0.3",
     "@types/jquery": "3.2.16",
     "@types/node": "8.0.54",
     "codelyzer": "4.0.1",

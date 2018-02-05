@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {routing} from "./miscellaneous.routing";
+import { routing } from './miscellaneous.routing';
 
 @NgModule({
   imports: [

@@ -14,8 +14,8 @@ import { APP_RESOLVER_PROVIDERS } from './app.resolver';
 import { AppState, InternalStateType } from './app.service';
 
 // Core providers
-import {CoreModule} from "./core/core.module";
-import {SmartadminLayoutModule} from "./shared/layout/layout.module";
+import {CoreModule} from './core/core.module';
+import {SmartadminLayoutModule} from './shared/layout/layout.module';
 
 import { ModalModule } from 'ngx-bootstrap/modal';
 

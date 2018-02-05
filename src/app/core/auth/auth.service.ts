@@ -1,8 +1,8 @@
 import { Injectable  } from '@angular/core';
 import { Md5 } from 'ts-md5/dist/md5';
-import { UserStorageService } from "../storage/storage.service";
-import { HttpClient } from "@angular/common/http";
-import { Observable } from "rxjs/Observable";
+import { UserStorageService } from '../storage/storage.service';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import 'rxjs/add/observable/throw';
 import { environment } from '../../../environments/environment';
@@ -63,12 +63,9 @@ export class AuthService {
     }
 
     private handleError(data:any) {
-        let errMsg = (data.error && data.error.request  && data.error.request.error && data.error.request.error.code ) ?
+        const errMsg = (data.error && data.error.request  && data.error.request.error && data.error.request.error.code ) ?
             data.error.request.error.code : 'Server error';
         console.error(errMsg); // log to console
         return Observable.throw(`FALCON_ERR_${errMsg}`);
     }
-
 }
-
-

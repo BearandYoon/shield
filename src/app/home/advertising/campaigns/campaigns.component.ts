@@ -1,13 +1,13 @@
-import { Component, OnInit } from '@angular/core';
-import { CampaignsService } from "./services/campaigns.service";
-import { Subscription } from "rxjs/Subscription";
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs/Subscription';
+import { CampaignsService } from './services/campaigns.service';
 
 @Component({
   selector: 'app-campaigns',
   templateUrl: './campaigns.component.html',
   styleUrls: ['./campaigns.component.css']
 })
-export class CampaignsComponent implements OnInit {
+export class CampaignsComponent implements OnInit, OnDestroy {
 
   campaigns: any[];
   campaignsSubscription: Subscription;
