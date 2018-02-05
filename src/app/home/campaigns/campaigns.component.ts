@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { CampaignsService } from "./services/campaigns.service";
-import { Subscription } from "rxjs/Subscription";
 import { TYPES, PROGRESS } from './campaigns.constants';
 import {BsModalService} from "ngx-bootstrap";
 import {NewCampaignComponent} from "./new-campaign/new-campaign.component";
@@ -19,8 +18,6 @@ export class CampaignsComponent implements OnInit {
 
     progress = Object.keys(PROGRESS);
     types = Object.keys(TYPES);
-
-    campaignsSubscription: Subscription;
 
     showFilter = false;
 
@@ -68,10 +65,6 @@ export class CampaignsComponent implements OnInit {
 
     toggleFilter() {
         this.showFilter = !this.showFilter;
-    }
-
-    ngOnDestroy() {
-        this.campaignsSubscription.unsubscribe();
     }
 
 }
