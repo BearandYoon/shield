@@ -7,10 +7,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProductsComponent implements OnInit {
 
+  isNewProduct = false;
   constructor() { }
 
   ngOnInit() {
     console.log('products component');
   }
 
+  newProduct() {
+    this.isNewProduct = !this.isNewProduct;
+  };
 }

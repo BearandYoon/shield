@@ -11,6 +11,8 @@ import { NavigationModule } from '../../shared/layout/navigation/navigation.modu
     ResearchRoutingModule,
     NavigationModule
   ],
-  declarations: [ResearchComponent]
+  declarations: [
+    ResearchComponent
+  ]
 })
 export class ResearchModule { }

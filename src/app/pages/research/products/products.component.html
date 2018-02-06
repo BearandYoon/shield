@@ -3,74 +3,200 @@
     <div class="col-sm-6">
       <button type="button" class="btn btn-primary">
         <i class="glyphicon glyphicon-search"></i>
-        Search for campaign name, ASIN, SKU
+        Search for Title, Brand, ASIN
       </button>
     </div>
     <div class="col-sm-6 buttons">
       <button type="button" class="btn btn-success pull-right">
         <i class="glyphicon glyphicon-filter"></i>
-        Filter
+        Filters
       </button>
-      <button type="button" class="btn btn-success pull-right new-campaign">
+      <button type="button" class="btn btn-success pull-right new-campaign" (click)="newProduct()">
         <i class="glyphicon glyphicon-plus"></i>
-        New campaign
+        New product
       </button>
     </div>
   </div>
 
-  <div class="well">
+  <div class="well" *ngIf="isNewProduct">
     <form class="form-horizontal">
       <div class="row">
         <div class="col-md-4 col-sm-6 col-xs-12">
           <div class="form-group">
-            <label for="start" class="col-sm-3 control-label">Start</label>
-            <div class="col-sm-3">
-              <select class="form-control" id="start"></select>
-            </div>
-            <label for="end" class="col-sm-1 control-label">End</label>
-            <div class="col-sm-3">
-              <select class="form-control" id="end"></select>
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="progress" class="col-sm-3 control-label">Progress</label>
-            <div class="col-sm-7">
-              <select class="form-control" id="progress"></select>
+            <label for="ASIN" class="col-sm-3 control-label">ASIN</label>
+            <div class="col-sm-8">
+              <input smartTags class="form-control tagsinput"
+                     value="Amsterdam,Washington,Sydney,Cairo"
+                     data-role="tagsinput"
+                     id="ASIN">
             </div>
           </div>
           <div class="form-group">
-            <label for="type" class="col-sm-3 control-label">Type</label>
-            <div class="col-sm-7">
-              <select class="form-control" id="type"></select>
+            <label for="UPC" class="col-sm-3 control-label">UPC</label>
+            <div class="col-sm-8">
+              <input smartTags class="form-control tagsinput"
+                     value="Amsterdam,Sydney,Beijing,Cairo"
+                     data-role="tagsinput"
+                     id="UPC">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="title" class="col-sm-3 control-label">Title</label>
+            <div class="col-sm-8">
+              <input class="form-control" id="title">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="brand" class="col-sm-3 control-label">Brand</label>
+            <div class="col-sm-8">
+              <input class="form-control" id="brand">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="seller" class="col-sm-3 control-label">Seller</label>
+            <div class="col-sm-8">
+              <input class="form-control" id="seller">
             </div>
           </div>
         </div>
-        <div class="col-md-4 col-sm-6 col-xs-12">
+
+        <div class="col-md-3 col-sm-6 col-xs-12">
           <div class="form-group">
-            <label for="merchant" class="col-sm-3 control-label">Merchant</label>
-            <div class="col-sm-7">
-              <select class="form-control" id="merchant"></select>
+            <label for="available" class="col-sm-3 control-label">Available</label>
+            <div class="col-sm-8">
+              <select class="form-control" id="available"></select>
             </div>
           </div>
           <div class="form-group">
             <label for="marketplace" class="col-sm-3 control-label">Marketplace</label>
-            <div class="col-sm-7">
+            <div class="col-sm-8">
               <select class="form-control" id="marketplace"></select>
             </div>
           </div>
           <div class="form-group">
-            <label for="asin" class="col-sm-3 control-label">ASIN</label>
-            <div class="col-sm-7">
-              <select class="form-control" id="asin"></select>
+            <label for="category" class="col-sm-3 control-label">Category</label>
+            <div class="col-sm-8">
+              <select class="form-control" id="category"></select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="prime" class="col-sm-3 control-label">Prime</label>
+            <div class="col-sm-8">
+              <select class="form-control" id="prime"></select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="sponsor" class="col-sm-3 control-label">Sponsored Products</label>
+            <div class="col-sm-8">
+              <select class="form-control" id="sponsor"></select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="boybox" class="col-sm-3 control-label">Boybox</label>
+            <div class="col-sm-8">
+              <select class="form-control" id="boybox"></select>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-5 col-sm-6 col-xs-12">
+          <div class="form-group">
+            <label class="col-sm-3 control-label">Competitors</label>
+            <div class="col-sm-8">
+              <input ionSlider type="text" data-min="0" data-max="5000" data-from="1000"
+                     data-to="4000" data-type="double" data-step="1" data-prefix="$" data-prettify="false"
+                     data-hasgrid="true">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-3 control-label">Competitors offering Prime</label>
+            <div class="col-sm-8">
+              <input ionSlider type="text" data-min="0" data-max="5000" data-from="1000"
+                     data-to="4000" data-type="double" data-step="1" data-prefix="$" data-prettify="false"
+                     data-hasgrid="true">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-3 control-label">BSR</label>
+            <div class="col-sm-8">
+              <input ionSlider type="text" data-min="0" data-max="5000" data-from="1000"
+                     data-to="4000" data-type="double" data-step="1" data-prefix="$" data-prettify="false"
+                     data-hasgrid="true">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-3 control-label">Price</label>
+            <div class="col-sm-8">
+              <input ionSlider type="text" data-min="0" data-max="5000" data-from="1000"
+                     data-to="4000" data-type="double" data-step="1" data-prefix="$" data-prettify="false"
+                     data-hasgrid="true">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-3 control-label">Optimization</label>
+            <div class="col-sm-8">
+              <input ionSlider type="text" data-min="0" data-max="5000" data-from="1000"
+                     data-to="4000" data-type="double" data-step="1" data-prefix="$" data-prettify="false"
+                     data-hasgrid="true">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-3 control-label">Rating</label>
+            <div class="col-sm-8">
+              <input ionSlider type="text" data-min="0" data-max="5000" data-from="1000"
+                     data-to="4000" data-type="double" data-step="1" data-prefix="$" data-prettify="false"
+                     data-hasgrid="true">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-3 control-label">Reviews</label>
+            <div class="col-sm-8">
+              <input ionSlider type="text" data-min="0" data-max="5000" data-from="1000"
+                     data-to="4000" data-type="double" data-step="1" data-prefix="$" data-prettify="false"
+                     data-hasgrid="true">
             </div>
           </div>
         </div>
       </div>
-
     </form>
   </div>
 
-  <div>
-    {{campaigns | json}}
+  <div class="product-list-container">
+    <div class="widget-body no-padding">
+      <sa-datatable
+        [options]="{
+            colReorder: true,
+            ajax: 'assets/api/tables/datatables.standard.json',
+            columns: [ {data: 'id'}, {data: 'name'}, {data: 'phone'}, {data: 'company'}, {data: 'zip'}, {data: 'city'}, {data: 'date'} ]
+          }"
+        paginationLength="true"
+        tableClass="table table-striped table-bordered table-hover"
+        width="100%"
+      >
+        <thead>
+        <tr>
+          <th data-hide="phone">ID</th>
+          <th data-class="expand"><i
+                  class="fa fa-fw fa-user text-muted hidden-md hidden-sm hidden-xs"></i>
+            Name
+          </th>
+          <th data-hide="phone"><i
+                  class="fa fa-fw fa-phone text-muted hidden-md hidden-sm hidden-xs"></i>
+            Phone
+          </th>
+          <th>Company</th>
+          <th data-hide="phone,tablet"><i
+                  class="fa fa-fw fa-map-marker txt-color-blue hidden-md hidden-sm hidden-xs"></i>
+            Zip
+          </th>
+          <th data-hide="phone,tablet">City</th>
+          <th data-hide="phone,tablet"><i
+                  class="fa fa-fw fa-calendar txt-color-blue hidden-md hidden-sm hidden-xs"></i>
+            Date
+          </th>
+        </tr>
+        </thead>
+      </sa-datatable>
+    </div>
   </div>
 </div>
