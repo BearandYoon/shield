@@ -5,14 +5,13 @@ import {CommonModule} from "@angular/common";
 // import {JqueryUiModule} from "./jquery-ui/jquery-ui.module";
 // import {NestableListModule} from "./nestable-list/nestable-list.module";
 import {LoadingIndicatorModule} from "./loading-indicator/loading-indicator.module";
-import { DynamicDatatableComponent } from './dynamic-datatable/dynamic-datatable.component';
 
 @NgModule({
   imports: [CommonModule],
 
   exports: [LoadingIndicatorModule],
 
-  declarations: [DynamicDatatableComponent],
+  declarations: [],
   // exports: [SmartProgressbarModule, JqueryUiModule, NestableListModule, TreeViewModule, LoadingIndicatorModule],
 })
 export class SmartadminUiModule{}
