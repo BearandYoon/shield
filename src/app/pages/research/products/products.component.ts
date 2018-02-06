@@ -7,14 +7,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProductsComponent implements OnInit {
 
-  isNewProduct = false;
+  isOpenFilter = false;
   constructor() { }
 
   ngOnInit() {
-    console.log('products component');
   }
 
-  newProduct() {
-    this.isNewProduct = !this.isNewProduct;
+  openFilter() {
+    this.isOpenFilter = !this.isOpenFilter;
   };
 }

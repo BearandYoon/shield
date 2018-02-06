@@ -7,18 +7,18 @@
       </button>
     </div>
     <div class="col-sm-6 buttons">
-      <button type="button" class="btn btn-success pull-right">
+      <button type="button" class="btn btn-success pull-right" (click)="openFilter()">
         <i class="glyphicon glyphicon-filter"></i>
         Filters
       </button>
-      <button type="button" class="btn btn-success pull-right new-campaign" (click)="newProduct()">
+      <button type="button" class="btn btn-success pull-right new-campaign">
         <i class="glyphicon glyphicon-plus"></i>
         New product
       </button>
     </div>
   </div>
 
-  <div class="well" *ngIf="isNewProduct">
+  <div class="well" *ngIf="isOpenFilter">
     <form class="form-horizontal">
       <div class="row">
         <div class="col-md-4 col-sm-6 col-xs-12">

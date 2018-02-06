@@ -35,8 +35,8 @@ export class LoginComponent implements OnInit {
     });
 
     this.loginForm.setValue({
-        username: 'developertest@amalyze.com',
-        password: 'Iilo1ail',
+        username: 'im@amalyze.com',
+        password: 'ohr5Gaep',
         persist: true
     });
   }
