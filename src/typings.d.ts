@@ -137,3 +137,5 @@ interface Global extends GlobalEnvironment  {}
 declare var jQuery: any;
 
 declare var require: NodeRequire;
+
+declare var JsonPath: any;

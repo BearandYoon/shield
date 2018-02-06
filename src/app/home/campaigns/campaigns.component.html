@@ -1,12 +1,14 @@
 <div>
   <div class="row actions-panel">
     <div class="col-sm-6">
-        <form class="form-inline full-search-form" [formGroup]="searchForm" (submit)="search(searchForm.value)">
+        <form class="form-inline full-search-form"
+              [formGroup]="quickFilterForm"
+              (submit)="doFilter(quickFilterForm.value)">
             <input type="text"
                    class="form-control full-search"
                    placeholder="Search for campaign name, ASIN, SKU"
-                   formControlName="general" />
-            <button type="submit" class="btn btn-primary">
+                   formControlName="amalyze.generic" />
+            <button type="submit" class="btn btn-primary" [disabled]="!quickFilterForm.valid">
                 Search
             </button>
         </form>
@@ -24,8 +26,7 @@
   </div>
 
   <div class="well" [hidden]="!showFilter">
-    {{filterForm.value | json}}
-    <form class="form-horizontal filter" [formGroup]="filterForm" (submit)="filter(filterForm.value)">
+    <form class="form-horizontal filter" [formGroup]="filterForm" (submit)="doFilter(filterForm.value)">
       <div class="row">
         <div class="col-sm-6 col-xs-12">
           <div class="form-group">
@@ -67,7 +68,7 @@
           <div class="form-group">
             <label for="progress" class="col-sm-2 control-label">Progress</label>
             <div class="col-sm-10">
-              <select class="form-control" id="progress" formControlName="progress">
+              <select class="form-control" id="progress" formControlName="amalyze.progress">
                 <option *ngFor="let item of progress">{{item}}</option>
               </select>
             </div>
@@ -75,7 +76,7 @@
           <div class="form-group">
             <label for="type" class="col-sm-2 control-label">Type</label>
             <div class="col-sm-10">
-              <select class="form-control" id="type" formControlName="type">
+              <select class="form-control" id="type" formControlName="campaign.type">
                 <option *ngFor="let item of types">{{item}}</option>
               </select>
             </div>
@@ -93,7 +94,7 @@
           <div class="form-group">
             <label for="marketplace" class="col-sm-2 control-label">Marketplace</label>
             <div class="col-sm-10">
-              <select class="form-control" id="marketplace" formControlName="merchant">
+              <select class="form-control" id="marketplace" formControlName="marketplace">
                 <option *ngFor="let marketplace of marketplaces">
                   {{marketplace.name}}
                 </option>
@@ -115,6 +116,7 @@
   </div>
 
   <div>
-    {{campaigns | json}}
+    <app-dynamic-datatable [url]="url" [schema]="schema" [filters]="filters" rootField="campaigns">
+    </app-dynamic-datatable>
   </div>
 </div>

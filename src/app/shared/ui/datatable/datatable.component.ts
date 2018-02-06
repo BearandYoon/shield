@@ -50,16 +50,6 @@ export class DatatableComponent implements OnInit {
     if (this.columnsHide)
       toolbar += 'C';
 
-    if (typeof options.ajax === 'string') {
-      let url = options.ajax;
-      options.ajax = {
-        url: url,
-        // complete: function (xhr) {
-        //
-        // }
-      }
-    }
-
     options = $.extend(options, {
 
       "dom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-12 hidden-xs text-right'" + toolbar + ">r>" +
@@ -88,11 +78,6 @@ export class DatatableComponent implements OnInit {
           .draw();
 
       });
-    }
-
-
-    if (!toolbar) {
-      element.parent().find(".dt-toolbar").append('<div class="text-right"><img src="assets/img/logo.png" alt="SmartAdmin" style="width: 111px; margin-top: 3px; margin-right: 10px;"></div>');
     }
 
     if(this.detailsFormat){
