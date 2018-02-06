@@ -156,15 +156,16 @@ export class NewCampaignComponent implements OnInit, DoCheck {
         }
     }
 
-    validateSku(sku) {
+    validateSku(chip) {
+        const sku = chip.value;
         const prevSkus = this.campaignForm.controls['skus'].value;
-        prevSkus.pop(); // delete newly added sku
 
         const marketplace = this.campaignForm.controls['marketplace'].value;
         const asin = this.campaignForm.controls['asin'].value;
 
-        return this.campaignsService.checkSku({skus: [{sku, marketplace, asin}]})
+        this.campaignsService.checkSku({skus: [{sku, marketplace, asin}]})
             .subscribe(() => {
+                this.campaignForm.controls['skus'].setValue(prevSkus);
             }, (error) => {
                 this.notificationService.smallBox({
                     content: error,
@@ -172,6 +173,7 @@ export class NewCampaignComponent implements OnInit, DoCheck {
                     timeout: 4000,
                     icon: "fa fa-warning shake animated"
                 });
+                prevSkus.pop(); // delete newly added sku
                 this.campaignForm.controls['skus'].setValue(prevSkus);
             })
     }
@@ -241,7 +243,9 @@ export class NewCampaignComponent implements OnInit, DoCheck {
             if (Object.keys(value).some(it=>value[it] != this.lastValue[it])) {
                 // change detected
                 this.steps.find(it=>it.key == 'step1').valid = this.campaignForm.controls['type'].valid;
-                this.steps.find(it=>it.key == 'step2').valid = this.campaignForm.valid;
+                this.steps.find(it=>it.key == 'step2').valid = this.campaignForm.controls['name'].valid &&
+                    this.campaignForm.controls['budget'].valid && this.campaignForm.controls['asin'].valid &&
+                    this.campaignForm.controls['skus'].valid;
                 this.steps.find(it=>it.key == 'step3').valid = true;
                 this.steps.find(it=>it.key == 'step4').valid = true;
                 this.steps.find(it=>it.key == 'step5').valid = true;

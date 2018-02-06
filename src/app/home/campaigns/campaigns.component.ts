@@ -7,8 +7,8 @@ import {NewCampaignComponent} from "./new-campaign/new-campaign.component";
 
 @Component({
     selector: 'app-campaigns',
-    templateUrl: 'campaigns.component.html',
-    styleUrls: ['campaigns.component.css']
+    templateUrl: './campaigns.component.html',
+    styleUrls: ['./campaigns.component.css']
 })
 export class CampaignsComponent implements OnInit {
 
