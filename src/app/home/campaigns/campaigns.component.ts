@@ -83,7 +83,7 @@ export class CampaignsComponent implements OnInit {
         }
     ];
 
-    filters: any;
+    filters = {};
 
     ////////////////
 
@@ -139,7 +139,6 @@ export class CampaignsComponent implements OnInit {
     }
 
     doFilter(data) {
-        console.log(data);
         this.filters = data;
     }
 

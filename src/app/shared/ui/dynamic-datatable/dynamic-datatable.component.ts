@@ -10,7 +10,7 @@ import * as jp from 'jsonpath';
 export class DynamicDatatableComponent implements OnInit, OnChanges {
 
   @Input() url: string;
-  @Input() filters: Object = {};
+  @Input() filters: Object;
   @Input() schema: any[];
   @Input() rootField: string;
 
@@ -40,7 +40,7 @@ export class DynamicDatatableComponent implements OnInit, OnChanges {
   }
 
   getData() {
-    const data = { pagination: this.pagination, filters: this.filters };
+    const data = { pagination: this.pagination, filters: this.filters || {} };
     this.http.post(this.url, data)
         .subscribe(res => {
           this.data = this.transformData(res[this.rootField]);
