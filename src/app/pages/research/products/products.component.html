@@ -19,25 +19,37 @@
   </div>
 
   <div class="well" *ngIf="showFilter">
-    <form class="form-horizontal">
+    <form class="form-horizontal" [formGroup]="productFilterForm" (submit)="applyFilter(productFilterForm.value)">
       <div class="row">
         <div class="col-md-4 col-sm-6 col-xs-12">
           <div class="form-group">
-            <label for="ASIN" class="col-sm-3 control-label">ASIN</label>
+            <label for="asin" class="col-sm-3 control-label">ASIN</label>
             <div class="col-sm-8">
-              <input smartTags class="form-control tagsinput"
-                     value="Amsterdam,Washington,Sydney,Cairo"
-                     data-role="tagsinput"
-                     id="ASIN">
+              <tag-input id="asin"
+                         placeholder="+ asin"
+                         secondaryPlaceholder="Enter a asin and press Enter"
+                         inputClass="form-control"
+                         allowDupes="false"
+                         addOnBlur="true"
+                         modelAsStrings="true"
+                         formControlName="asin"
+                         (onAdd)="validateTagsInput($event, 'asin')">
+              </tag-input>
             </div>
           </div>
           <div class="form-group">
-            <label for="UPC" class="col-sm-3 control-label">UPC</label>
+            <label for="upc" class="col-sm-3 control-label">UPC</label>
             <div class="col-sm-8">
-              <input smartTags class="form-control tagsinput"
-                     value="Amsterdam,Sydney,Beijing,Cairo"
-                     data-role="tagsinput"
-                     id="UPC">
+              <tag-input id="upc"
+                         placeholder="+ asin"
+                         secondaryPlaceholder="Enter a asin and press Enter"
+                         inputClass="form-control"
+                         allowDupes="false"
+                         addOnBlur="true"
+                         modelAsStrings="true"
+                         formControlName="upc"
+                         (onAdd)="validateTagsInput($event, 'upc')">
+              </tag-input>
             </div>
           </div>
           <div class="form-group">
@@ -49,18 +61,36 @@
           <div class="form-group">
             <label for="brand" class="col-sm-3 control-label">Brand</label>
             <div class="col-sm-8">
-              <input class="form-control" id="brand">
+              <tag-input id="brand"
+                         placeholder="+ brand"
+                         secondaryPlaceholder="Enter a asin and press Enter"
+                         inputClass="form-control"
+                         allowDupes="false"
+                         addOnBlur="true"
+                         modelAsStrings="true"
+                         formControlName="brand"
+                         (onAdd)="validateTagsInput($event, 'brand')">
+              </tag-input>
             </div>
           </div>
           <div class="form-group">
             <label for="seller" class="col-sm-3 control-label">Seller</label>
             <div class="col-sm-8">
-              <input class="form-control" id="seller">
+              <tag-input id="seller"
+                         placeholder="+ seller"
+                         secondaryPlaceholder="Enter a asin and press Enter"
+                         inputClass="form-control"
+                         allowDupes="false"
+                         addOnBlur="true"
+                         modelAsStrings="true"
+                         formControlName="seller"
+                         (onAdd)="validateTagsInput($event, 'seller')">
+              </tag-input>
             </div>
           </div>
         </div>
 
-        <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="col-md-4 col-sm-6 col-xs-12">
           <div class="form-group">
             <label for="available" class="col-sm-3 control-label">Available</label>
             <div class="col-sm-8">
@@ -76,7 +106,16 @@
           <div class="form-group">
             <label for="category" class="col-sm-3 control-label">Category</label>
             <div class="col-sm-8">
-              <select class="form-control" id="category"></select>
+              <tag-input id="category"
+                         placeholder="+ category"
+                         secondaryPlaceholder="Enter a asin and press Enter"
+                         inputClass="form-control"
+                         allowDupes="false"
+                         addOnBlur="true"
+                         modelAsStrings="true"
+                         formControlName="category"
+                         (onAdd)="validateTagsInput($event, 'category')">
+              </tag-input>
             </div>
           </div>
           <div class="form-group">
@@ -99,7 +138,7 @@
           </div>
         </div>
 
-        <div class="col-md-5 col-sm-6 col-xs-12">
+        <div class="col-md-4 col-sm-6 col-xs-12">
           <div class="form-group">
             <label class="col-sm-3 control-label">Competitors</label>
             <div class="col-sm-8">
@@ -157,6 +196,10 @@
             </div>
           </div>
         </div>
+        <button type="submit" class="btn btn-success pull-right new-campaign">
+          <i class="glyphicon glyphicon-plus"></i>
+          Apply Filter
+        </button>
       </div>
     </form>
   </div>

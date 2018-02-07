@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import { ResearchService } from '../../../core/services/ResearchService/research.service';
 import { environment } from '../../../../environments/environment';
-import { TYPES, PROGRESS } from './products.constants';
 
 @Component({
   selector: 'app-products',
@@ -12,7 +12,6 @@ import { TYPES, PROGRESS } from './products.constants';
 export class ProductsComponent implements OnInit {
 
   url = environment.baseUrl + '/research.products.get';
-
   schema = [
     {
       name: 'preview',
@@ -67,34 +66,34 @@ export class ProductsComponent implements OnInit {
       display: 'Color',
       path: '$.amazon.color'
     }, {
-      name: 'pieces',
-      display: 'Pieces',
-      path: ''
-    }, {
-      name: 'sales_30',
-      display: 'Sales (30 days)',
-      path: ''
-    }, {
-      name: 'sales_7',
-      display: 'Sales (7 days)',
-      path: ''
-    }, {
-      name: 'sales_1',
-      display: 'Sales (1 days)',
-      path: ''
-    }, {
-      name: 'revenue_30',
-      display: 'Revenue (30 days)',
-      path: ''
-    }, {
-      name: 'revenue_7',
-      display: 'Revenue (7 days)',
-      path: ''
-    }, {
-      name: 'revenue_1',
-      display: 'Revenue (1 days)',
-      path: ''
-    }, {
+    //   name: 'pieces',
+    //   display: 'Pieces',
+    //   path: ''
+    // }, {
+    //   name: 'sales_30',
+    //   display: 'Sales (30 days)',
+    //   path: ''
+    // }, {
+    //   name: 'sales_7',
+    //   display: 'Sales (7 days)',
+    //   path: ''
+    // }, {
+    //   name: 'sales_1',
+    //   display: 'Sales (1 days)',
+    //   path: ''
+    // }, {
+    //   name: 'revenue_30',
+    //   display: 'Revenue (30 days)',
+    //   path: ''
+    // }, {
+    //   name: 'revenue_7',
+    //   display: 'Revenue (7 days)',
+    //   path: ''
+    // }, {
+    //   name: 'revenue_1',
+    //   display: 'Revenue (1 days)',
+    //   path: ''
+    // }, {
       name: 'rrp',
       display: 'RRP',
       path: ''
@@ -128,30 +127,84 @@ export class ProductsComponent implements OnInit {
       path: ''
     }
   ];
-
   filters: any;
   marketplaces: any[];
-
-  progress = Object.keys(PROGRESS);
-  types = Object.keys(TYPES);
-
   showFilter = false;
+  productFilterForm: any;
 
   constructor(
-    private researchService: ResearchService
-  ) { }
+    private researchService: ResearchService,
+    private fb: FormBuilder
+  ) {
+    this.productFilterForm = this.fb.group({
+      'asin': '',
+      'upc': '',
+      'title': '',
+      'brand': '',
+      'seller': '',
+      'available': '',
+      'marketPlace': '',
+      'category': '',
+      'prime': '',
+      'sponsor': '',
+      'boybox': '',
+      'type': '',
+      'competitor': '',
+      'offeringPrime': '',
+      'bsr': '',
+      'price': '',
+      'optimization': '',
+      'rating': '',
+      'review': '',
+    });
+  }
 
   ngOnInit() {
+    this.researchService.getResearchProducts().subscribe(res => {
+      console.log(res);
+    });
+
     this.marketplaces = this.researchService.getMarketplaces();
 
     if (this.marketplaces) {
       this.filters = {
         marketplace: this.marketplaces[0].id
-      }
+      };
+
+      // this.productFilterForm.setValue({
+      //   marketplaces: this.marketplaces
+      // })
     }
   }
 
   openFilter() {
     this.showFilter = !this.showFilter;
   };
+
+  applyFilter(formValue) {
+    console.log(formValue);
+  }
+
+  validateTagsInput(chip, tagName) {
+    console.log(chip, tagName);
+    // const sku = chip.value;
+    // const prevSkus = this.campaignForm.controls['skus'].value;
+    //
+    // const marketplace = this.campaignForm.controls['marketplace'].value;
+    // const asin = this.campaignForm.controls['asin'].value;
+    //
+    // this.campaignsService.checkSku({skus: [{sku, marketplace, asin}]})
+    //   .subscribe(() => {
+    //     this.campaignForm.controls['skus'].setValue(prevSkus);
+    //   }, (error) => {
+    //     this.notificationService.smallBox({
+    //       content: error,
+    //       color: "#a90329",
+    //       timeout: 4000,
+    //       icon: "fa fa-warning shake animated"
+    //     });
+    //     prevSkus.pop(); // delete newly added sku
+    //     this.campaignForm.controls['skus'].setValue(prevSkus);
+    //   })
+  }
 }
