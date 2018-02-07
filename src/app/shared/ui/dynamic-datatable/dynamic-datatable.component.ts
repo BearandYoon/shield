@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import * as jp from 'jsonpath';
 
 @Component({
-  selector: 'app-dynamic-datatable',
+  selector: 'dynamic-datatable',
   templateUrl: './dynamic-datatable.component.html',
   styleUrls: ['./dynamic-datatable.component.css']
 })
