@@ -1,8 +1,8 @@
-import {Component, OnInit, OnChanges, ElementRef, Input, Output, EventEmitter, Renderer} from '@angular/core';
+import {Component, Input} from '@angular/core';
 
 @Component({
 
-  selector: 'loading-indicator',
+  selector: 'app-loading-indicator',
   template: `
     <div class="sa-loading-container">
       <div class="sa-loading-body">

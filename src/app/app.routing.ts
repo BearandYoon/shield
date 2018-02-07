@@ -11,7 +11,7 @@ export const routes: Routes = [
         component: MainLayoutComponent,
         children: [
             {
-                path: 'home',
+                path: '',
                 loadChildren: 'app/home/home.module#HomeModule'
             }, {
                 path: 'research',

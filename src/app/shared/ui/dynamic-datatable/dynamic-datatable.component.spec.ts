@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AdvertisingComponent } from './advertising.component';
+import { DynamicDatatableComponent } from './dynamic-datatable.component';
 
-describe('AdvertisingComponent', () => {
-  let component: AdvertisingComponent;
-  let fixture: ComponentFixture<AdvertisingComponent>;
+describe('DynamicDatatableComponent', () => {
+  let component: DynamicDatatableComponent;
+  let fixture: ComponentFixture<DynamicDatatableComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AdvertisingComponent ]
+      declarations: [ DynamicDatatableComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AdvertisingComponent);
+    fixture = TestBed.createComponent(DynamicDatatableComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

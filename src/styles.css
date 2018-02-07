@@ -56,12 +56,38 @@
 .zEWidget-launcher {
     left: 220px !important;
 }
+
 .minified .zEWidget-launcher {
     left: 50px !important;
 }
+
+/* navigation  */
+
 .collapse-sign {
     min-width: 10px;
 }
 .minified nav>ul>li:hover>a>.menu-item-parent.hide-on {
     display: none !important;
 }
+
+/* fix tabs */
+
+.tab-container>.nav.nav-tabs {
+    display: block !important;
+}
+
+/* ngx tags */
+
+.ng2-tag-input {
+    border: none !important;
+}
+
+tag-input {
+    border: 1px solid #ccc;
+    padding: 0 12px;
+}
+
+.has-error tag-input {
+    border-color: #b94a48;
+}
+

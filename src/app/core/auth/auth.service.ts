@@ -6,7 +6,7 @@ import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import 'rxjs/add/observable/throw';
 import { environment } from '../../../environments/environment';
-import constants from '../../shared/constants';
+import constants from '../core.constants';
 
 @Injectable()
 export class AuthService {

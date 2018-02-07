@@ -1,0 +1,31 @@
+.form-bootstrapWizard {
+    margin-bottom: 30px;
+}
+
+.bootstrapWizard li {
+    width: 20%;
+}
+
+.well {
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+
+.well.bg-color-teal {
+    color: #fff;
+}
+
+.well > p {
+    margin: 30px 0;
+    text-align: center;
+}
+
+.well i {
+    font-size: 30px;
+    margin-right: 6px;
+    vertical-align: middle;
+}
+
+.optimization {
+    text-align: center;
+}

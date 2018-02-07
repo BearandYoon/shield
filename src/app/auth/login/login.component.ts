@@ -55,7 +55,7 @@ export class LoginComponent implements OnInit {
       this.auth.login({...data, captcha})
           .subscribe(() => {
             this.loading = false;
-            this.router.navigate(['/home']);
+            this.router.navigate(['/']);
           }, (error) => {
             this.loading = false;
             this.captcha.reset();
