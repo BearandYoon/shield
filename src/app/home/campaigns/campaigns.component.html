@@ -69,6 +69,7 @@
             <label for="progress" class="col-sm-2 control-label">Progress</label>
             <div class="col-sm-10">
               <select class="form-control" id="progress" formControlName="amalyze.progress">
+                <option value=""></option>
                 <option *ngFor="let item of progress">{{item}}</option>
               </select>
             </div>
@@ -77,6 +78,7 @@
             <label for="type" class="col-sm-2 control-label">Type</label>
             <div class="col-sm-10">
               <select class="form-control" id="type" formControlName="campaign.type">
+                <option value=""></option>
                 <option *ngFor="let item of types">{{item}}</option>
               </select>
             </div>
@@ -87,7 +89,8 @@
             <label for="merchant" class="col-sm-2 control-label">Merchant</label>
             <div class="col-sm-10">
               <select class="form-control" id="merchant" formControlName="merchant">
-                <option *ngFor="let merchant of merchants">{{merchant.name}}</option>
+                <option value=""></option>
+                <option *ngFor="let merchant of merchants" [value]="merchant.id">{{merchant.name}}</option>
               </select>
             </div>
           </div>
@@ -95,7 +98,8 @@
             <label for="marketplace" class="col-sm-2 control-label">Marketplace</label>
             <div class="col-sm-10">
               <select class="form-control" id="marketplace" formControlName="marketplace">
-                <option *ngFor="let marketplace of marketplaces">
+                <option value=""></option>
+                <option *ngFor="let marketplace of marketplaces" [value]="marketplace.id">
                   {{marketplace.name}}
                 </option>
               </select>

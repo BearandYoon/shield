@@ -17,12 +17,14 @@ export class CampaignsService {
 
     getMerchants() {
         const userInfo = this.storage.get();
-        return userInfo && userInfo.user.entity.modules.advertising.merchants;
+        return userInfo.user.entity.modules.advertising.map(advertising => advertising.merchant);
     }
 
-    getMarketplaces() {
+    getMarketplaces(merchantId: string) {
         const userInfo = this.storage.get();
-        return userInfo && userInfo.user.entity.modules.advertising.marketplaces;
+        return userInfo.user.entity.modules.advertising.find(advertising => {
+            return advertising.merchant.id === merchantId;
+        }).marketplaces;
     }
 
     checkAsin(data) {

@@ -134,13 +134,19 @@
                                             <label for="merchant" class="col-sm-2 control-label">Merchant</label>
                                             <div class="col-sm-4">
                                                 <select id="merchant" class="form-control" formControlName="merchant">
-                                                    <option *ngFor="let merchant of merchants">{{merchant.name}}</option>
+                                                    <option value=""></option>
+                                                    <option *ngFor="let merchant of merchants" [value]="merchant.id">
+                                                        {{merchant.name}}
+                                                    </option>
                                                 </select>
                                             </div>
                                             <label for="marketplace" class="col-sm-2 control-label">Marketplace</label>
                                             <div class="col-sm-4">
                                                 <select id="marketplace" class="form-control" formControlName="marketplace">
-                                                    <option *ngFor="let marketplace of marketplaces">{{marketplace.name}}</option>
+                                                    <option value=""></option>
+                                                    <option *ngFor="let marketplace of marketplaces" [value]="marketplace.id">
+                                                        {{marketplace.name}}
+                                                    </option>
                                                 </select>
                                             </div>
                                         </div>

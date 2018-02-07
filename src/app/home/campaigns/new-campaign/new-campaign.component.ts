@@ -1,12 +1,13 @@
-import { Component, OnInit, DoCheck } from '@angular/core';
+import { Component, OnInit, OnDestroy, DoCheck } from '@angular/core';
 import { trigger, state, style, transition, animate } from '@angular/animations'
 import { BsModalRef} from "ngx-bootstrap";
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
 
 import { TYPES, PROGRESS } from '../campaigns.constants';
 import { NotificationService } from "../../../shared/utils/notification.service";
-import {CampaignsService} from "../services/campaigns.service";
+import { CampaignsService } from '../services/campaigns.service';
 
 @Component({
     selector: 'app-new-campaign',
@@ -25,7 +26,7 @@ import {CampaignsService} from "../services/campaigns.service";
         ])
     ]
 })
-export class NewCampaignComponent implements OnInit, DoCheck {
+export class NewCampaignComponent implements OnInit, OnDestroy, DoCheck {
 
     merchants: any[];
     marketplaces: any[];
@@ -39,6 +40,8 @@ export class NewCampaignComponent implements OnInit, DoCheck {
         containerClass: 'theme-blue'
     };
 
+    merchantSubscription: Subscription;
+
     constructor(public fb: FormBuilder,
                 public bsModalRef: BsModalRef,
                 public notificationService: NotificationService,
@@ -47,7 +50,6 @@ export class NewCampaignComponent implements OnInit, DoCheck {
 
     ngOnInit() {
         this.merchants = this.campaignsService.getMerchants();
-        this.marketplaces = this.campaignsService.getMarketplaces();
 
         this.campaignForm = this.fb.group({
             type: ['', Validators.required],
@@ -56,8 +58,8 @@ export class NewCampaignComponent implements OnInit, DoCheck {
             start: '',
             end: '',
             budget: ['', Validators.required],
-            merchant: [this.merchants[0].id, Validators.required],
-            marketplace: [this.marketplaces[0].id, Validators.required],
+            merchant: ['', Validators.required],
+            marketplace: ['', Validators.required],
             asin: ['', Validators.required],
             skus: ['', Validators.required],
 
@@ -65,6 +67,19 @@ export class NewCampaignComponent implements OnInit, DoCheck {
 
             optimization: ['', Validators.required]
         });
+
+        this.merchantSubscription = this.campaignForm.controls['merchant'].valueChanges
+            .do(merchantId => {
+                if (!merchantId) {
+                    this.marketplaces = [];
+                    this.campaignForm.controls['marketplace'].setValue('');
+                }
+            })
+            .filter(merchantId => merchantId)
+            .map(merchantId => this.campaignsService.getMarketplaces(merchantId))
+            .subscribe(marketplaces => {
+                this.marketplaces = marketplaces;
+            });
 
         this.getCompetitors();
     }
@@ -253,6 +268,10 @@ export class NewCampaignComponent implements OnInit, DoCheck {
                 this.lastValue = Object.assign({}, value)
             }
         }
+    }
+
+    ngOnDestroy() {
+        this.merchantSubscription.unsubscribe();
     }
 
 }
