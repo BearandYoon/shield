@@ -3,26 +3,33 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 
 import { environment } from '../../../../environments/environment';
+import { UserStorageService } from '../../storage/storage.service';
 
 @Injectable()
 export class ResearchService {
 
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private storage: UserStorageService
   ) { }
 
   getResearchProducts() {
-    console.log('getResearchProducts Api calling');
     const body = {
       'pagination': {
         'page': 1,
         'size': 10
       },
       'filters': {
+        'marketplace': 'A1PA6795UKMFR9',
       }
     };
     return this.http.post(`${environment.baseUrl}/research.products.get`, body)
       .catch(this.handleError);
+  }
+
+  getMarketplaces() {
+    const userInfo = this.storage.get();
+    return userInfo ? userInfo.user.entity.modules.advertising[0].marketplaces : null;
   }
 
   private handleError(data: any) {

@@ -6,6 +6,7 @@ import { ProductsComponent } from './products.component';
 import { SmartadminDatatableModule } from '../../../shared/ui/datatable/smartadmin-datatable.module';
 import { SmartadminFormsModule } from '../../../shared/forms/smartadmin-forms.module';
 import { SmartadminModule } from '../../../shared/smartadmin.module';
+import { DynamicDatatableModule } from '../../../shared/ui/dynamic-datatable/dynamic-datatable.module';
 
 @NgModule({
   imports: [
@@ -13,7 +14,8 @@ import { SmartadminModule } from '../../../shared/smartadmin.module';
     ProductsRoutingModule,
     SmartadminDatatableModule,
     SmartadminFormsModule,
-    SmartadminModule
+    SmartadminModule,
+    DynamicDatatableModule
   ],
   declarations: [ProductsComponent]
 })

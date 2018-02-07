@@ -45,7 +45,8 @@ export class DynamicDatatableComponent implements OnInit, OnChanges {
         .subscribe(res => {
           this.data = this.transformData(res[this.rootField]);
         }, error => {
-          alert(error);
+          console.log('dynamic data table error = ', error);
+          // alert(error);
         })
   }
 
@@ -54,7 +55,11 @@ export class DynamicDatatableComponent implements OnInit, OnChanges {
     entries.forEach(entry => {
       const transformedEntry = {};
       this.schema.forEach(rule => {
-        transformedEntry[rule.name] = jp.value(entry, rule.path);
+        if (rule.path) {
+          transformedEntry[rule.name] = jp.value(entry, rule.path);
+        } else {
+          transformedEntry[rule.name] = '';
+        }
       });
       transformedEntries.push(transformedEntry);
     });
