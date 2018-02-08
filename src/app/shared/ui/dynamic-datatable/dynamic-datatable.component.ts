@@ -31,8 +31,6 @@ export class DynamicDatatableComponent implements OnInit, OnChanges {
   ngOnInit() {
     this.columns = this.schema.map(field => ({ 'data': field.name }));
     this.displayColumns = this.schema.map(field => field.display);
-
-    this.getData();
   }
 
   ngOnChanges() {
