@@ -91,3 +91,31 @@ tag-input {
     border-color: #b94a48;
 }
 
+tag-input-form {
+    flex: 1;
+}
+
+tag-input-form .ng2-tag-input__text-input {
+    height: 28px !important;
+}
+
+.ng2-tags-container tag {
+    height: 25px !important;
+    line-height: 25px !important;
+    background: #337ab7 !important;
+    color: #fff !important;
+    border-radius: 0 !important;
+}
+
+delete-icon:hover {
+    transform: none !important;
+}
+
+delete-icon svg {
+    height: 25px !important;
+    color: #fff !important;
+}
+
+delete-icon path {
+    fill: #fff !important;
+}

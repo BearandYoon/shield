@@ -129,6 +129,7 @@ export class ProductsComponent implements OnInit {
   ];
   filters: any;
   marketplaces: any[];
+  buyboxs: any[];
   showFilter = false;
   productFilterForm: any;
 
@@ -142,15 +143,15 @@ export class ProductsComponent implements OnInit {
       'title': '',
       'brand': '',
       'seller': '',
-      'available': '',
+      'available': 'true',
       'marketPlace': '',
       'category': '',
-      'prime': '',
+      'prime': 'true',
       'sponsor': '',
       'boybox': '',
       'type': '',
       'competitor': '',
-      'offeringPrime': '',
+      'offeringPrime': '70',
       'bsr': '',
       'price': '',
       'optimization': '',
@@ -187,24 +188,5 @@ export class ProductsComponent implements OnInit {
 
   validateTagsInput(chip, tagName) {
     console.log(chip, tagName);
-    // const sku = chip.value;
-    // const prevSkus = this.campaignForm.controls['skus'].value;
-    //
-    // const marketplace = this.campaignForm.controls['marketplace'].value;
-    // const asin = this.campaignForm.controls['asin'].value;
-    //
-    // this.campaignsService.checkSku({skus: [{sku, marketplace, asin}]})
-    //   .subscribe(() => {
-    //     this.campaignForm.controls['skus'].setValue(prevSkus);
-    //   }, (error) => {
-    //     this.notificationService.smallBox({
-    //       content: error,
-    //       color: "#a90329",
-    //       timeout: 4000,
-    //       icon: "fa fa-warning shake animated"
-    //     });
-    //     prevSkus.pop(); // delete newly added sku
-    //     this.campaignForm.controls['skus'].setValue(prevSkus);
-    //   })
   }
 }

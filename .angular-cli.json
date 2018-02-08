@@ -19,6 +19,8 @@
       "prefix": "app",
       "styles": [
         "../node_modules/ngx-bootstrap/datepicker/bs-datepicker.css",
+        "../node_modules/devextreme/dist/css/dx.common.css",
+        "../node_modules/devextreme/dist/css/dx.light.css",
         "styles.css"
       ],
       "scripts": [

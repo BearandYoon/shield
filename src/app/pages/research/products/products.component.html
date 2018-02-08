@@ -55,7 +55,7 @@
           <div class="form-group">
             <label for="title" class="col-sm-3 control-label">Title</label>
             <div class="col-sm-8">
-              <input class="form-control" id="title">
+              <input class="form-control" id="title" formControlName="title">
             </div>
           </div>
           <div class="form-group">
@@ -94,13 +94,18 @@
           <div class="form-group">
             <label for="available" class="col-sm-3 control-label">Available</label>
             <div class="col-sm-8">
-              <select class="form-control" id="available"></select>
+              <select class="form-control" id="available" formControlName="available">
+                <option value="true">true</option>
+                <option value="false">false</option>
+              </select>
             </div>
           </div>
           <div class="form-group">
             <label for="marketplace" class="col-sm-3 control-label">Marketplace</label>
             <div class="col-sm-8">
-              <select class="form-control" id="marketplace"></select>
+              <select class="form-control" id="marketplace" formControlName="marketPlace">
+                <option *ngFor="let marketplace of marketplaces">{{marketplace.name}}</option>
+              </select>
             </div>
           </div>
           <div class="form-group">
@@ -121,19 +126,26 @@
           <div class="form-group">
             <label for="prime" class="col-sm-3 control-label">Prime</label>
             <div class="col-sm-8">
-              <select class="form-control" id="prime"></select>
+              <select class="form-control" id="prime" formControlName="prime">
+                <option>true</option>
+                <option>false</option>
+              </select>
             </div>
           </div>
           <div class="form-group">
             <label for="sponsor" class="col-sm-3 control-label">Sponsored Products</label>
             <div class="col-sm-8">
-              <select class="form-control" id="sponsor"></select>
+              <select class="form-control" id="sponsor" formControlName="sponsor">
+                <!--<option *ngFor="let sponsor of sponsors">{{sponsor}}</option>-->
+              </select>
             </div>
           </div>
           <div class="form-group">
             <label for="boybox" class="col-sm-3 control-label">Boybox</label>
             <div class="col-sm-8">
-              <select class="form-control" id="boybox"></select>
+              <select class="form-control" id="boybox">
+                <option *ngFor="let buybox of buyboxs">{{buybox}}</option>
+              </select>
             </div>
           </div>
         </div>
@@ -142,57 +154,134 @@
           <div class="form-group">
             <label class="col-sm-3 control-label">Competitors</label>
             <div class="col-sm-8">
-              <input ionSlider type="text" data-min="0" data-max="5000" data-from="1000"
-                     data-to="4000" data-type="double" data-step="1" data-prefix="$" data-prettify="false"
-                     data-hasgrid="true">
+              <dx-slider
+                      [min]="0"
+                      [max]="100"
+                      [(value)]="productFilterForm.value.competitor">
+                <dxo-label
+                        [visible]="true"
+                        position="top"
+                ></dxo-label>
+                <dxo-tooltip
+                        [enabled]="true"
+                        showMode="onHover"
+                        position="top"
+                ></dxo-tooltip>
+              </dx-slider>
             </div>
           </div>
           <div class="form-group">
             <label class="col-sm-3 control-label">Competitors offering Prime</label>
             <div class="col-sm-8">
-              <input ionSlider type="text" data-min="0" data-max="5000" data-from="1000"
-                     data-to="4000" data-type="double" data-step="1" data-prefix="$" data-prettify="false"
-                     data-hasgrid="true">
+              <dx-slider
+                      [min]="0"
+                      [max]="100"
+                      [(value)]="productFilterForm.value.offeringPrime">
+                <dxo-label
+                        [visible]="true"
+                        position="top"
+                ></dxo-label>
+                <dxo-tooltip
+                        [enabled]="true"
+                        showMode="onHover"
+                        position="top"
+                ></dxo-tooltip>
+              </dx-slider>
             </div>
           </div>
           <div class="form-group">
             <label class="col-sm-3 control-label">BSR</label>
             <div class="col-sm-8">
-              <input ionSlider type="text" data-min="0" data-max="5000" data-from="1000"
-                     data-to="4000" data-type="double" data-step="1" data-prefix="$" data-prettify="false"
-                     data-hasgrid="true">
+              <dx-slider
+                      [min]="0"
+                      [max]="100"
+                      [(value)]="productFilterForm.value.bsr">
+                <dxo-label
+                        [visible]="true"
+                        position="top"
+                ></dxo-label>
+                <dxo-tooltip
+                        [enabled]="true"
+                        showMode="onHover"
+                        position="top"
+                ></dxo-tooltip>
+              </dx-slider>
             </div>
           </div>
           <div class="form-group">
             <label class="col-sm-3 control-label">Price</label>
             <div class="col-sm-8">
-              <input ionSlider type="text" data-min="0" data-max="5000" data-from="1000"
-                     data-to="4000" data-type="double" data-step="1" data-prefix="$" data-prettify="false"
-                     data-hasgrid="true">
+              <dx-slider
+                      [min]="0"
+                      [max]="100"
+                      [(value)]="productFilterForm.value.price">
+                <dxo-label
+                        [visible]="true"
+                        position="top"
+                ></dxo-label>
+                <dxo-tooltip
+                        [enabled]="true"
+                        showMode="onHover"
+                        position="top"
+                ></dxo-tooltip>
+              </dx-slider>
             </div>
           </div>
           <div class="form-group">
             <label class="col-sm-3 control-label">Optimization</label>
             <div class="col-sm-8">
-              <input ionSlider type="text" data-min="0" data-max="5000" data-from="1000"
-                     data-to="4000" data-type="double" data-step="1" data-prefix="$" data-prettify="false"
-                     data-hasgrid="true">
+              <dx-slider
+                      [min]="0"
+                      [max]="100"
+                      [(value)]="productFilterForm.value.optimization">
+                <dxo-label
+                        [visible]="true"
+                        position="top"
+                ></dxo-label>
+                <dxo-tooltip
+                        [enabled]="true"
+                        showMode="onHover"
+                        position="top"
+                ></dxo-tooltip>
+              </dx-slider>
             </div>
           </div>
           <div class="form-group">
             <label class="col-sm-3 control-label">Rating</label>
             <div class="col-sm-8">
-              <input ionSlider type="text" data-min="0" data-max="5000" data-from="1000"
-                     data-to="4000" data-type="double" data-step="1" data-prefix="$" data-prettify="false"
-                     data-hasgrid="true">
+              <dx-slider
+                      [min]="0"
+                      [max]="100"
+                      [(value)]="productFilterForm.value.rating">
+                <dxo-label
+                        [visible]="true"
+                        position="top"
+                ></dxo-label>
+                <dxo-tooltip
+                        [enabled]="true"
+                        showMode="onHover"
+                        position="top"
+                ></dxo-tooltip>
+              </dx-slider>
             </div>
           </div>
           <div class="form-group">
             <label class="col-sm-3 control-label">Reviews</label>
             <div class="col-sm-8">
-              <input ionSlider type="text" data-min="0" data-max="5000" data-from="1000"
-                     data-to="4000" data-type="double" data-step="1" data-prefix="$" data-prettify="false"
-                     data-hasgrid="true">
+              <dx-slider
+                      [min]="0"
+                      [max]="100"
+                      [(value)]="productFilterForm.value.review">
+                <dxo-label
+                        [visible]="true"
+                        position="top"
+                ></dxo-label>
+                <dxo-tooltip
+                        [enabled]="true"
+                        showMode="onHover"
+                        position="top"
+                ></dxo-tooltip>
+              </dx-slider>
             </div>
           </div>
         </div>

@@ -8,6 +8,7 @@ import { SmartadminFormsModule } from '../../../shared/forms/smartadmin-forms.mo
 import { SmartadminModule } from '../../../shared/smartadmin.module';
 import { DynamicDatatableModule } from '../../../shared/ui/dynamic-datatable/dynamic-datatable.module';
 import { TagInputModule } from 'ngx-chips';
+import { DxSliderModule } from 'devextreme-angular';
 
 @NgModule({
   imports: [
@@ -18,7 +19,8 @@ import { TagInputModule } from 'ngx-chips';
     SmartadminFormsModule,
     SmartadminModule,
     DynamicDatatableModule,
-    TagInputModule
+    TagInputModule,
+    DxSliderModule
   ],
   declarations: [ProductsComponent]
 })
