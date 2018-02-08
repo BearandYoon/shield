@@ -14,6 +14,8 @@ export class DynamicDatatableComponent implements OnInit, OnChanges {
   @Input() schema: any[];
   @Input() rootField: string;
 
+  loading = false;
+
   data: any[];
 
   sizes = [10, 20, 50];
@@ -38,12 +40,15 @@ export class DynamicDatatableComponent implements OnInit, OnChanges {
   }
 
   getData() {
+    this.loading = true;
     const data = { pagination: this.pagination, filters: this.filters || {} };
     this.http.post(this.url, data)
         .subscribe(res => {
           this.data = this.transformData(res[this.rootField]);
+          this.loading = false;
         }, error => {
-          alert(error);
+          // do something with error
+          this.loading = false;
         })
   }
 
