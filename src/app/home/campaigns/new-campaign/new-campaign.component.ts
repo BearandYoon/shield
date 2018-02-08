@@ -31,6 +31,9 @@ export class NewCampaignComponent implements OnInit, OnDestroy, DoCheck {
     merchants: any[];
     marketplaces: any[];
 
+    asinValidating = false;
+    skuValidating = false;
+
     types = Object.keys(TYPES);
 
     campaignForm: FormGroup;
@@ -178,9 +181,11 @@ export class NewCampaignComponent implements OnInit, OnDestroy, DoCheck {
         const marketplace = this.campaignForm.controls['marketplace'].value;
         const asin = this.campaignForm.controls['asin'].value;
 
+        this.skuValidating = true;
         this.campaignsService.checkSku({skus: [{sku, marketplace, asin}]})
             .subscribe(() => {
                 this.campaignForm.controls['skus'].setValue(prevSkus);
+                this.skuValidating = false;
             }, (error) => {
                 this.notificationService.smallBox({
                     content: error,
@@ -190,6 +195,7 @@ export class NewCampaignComponent implements OnInit, OnDestroy, DoCheck {
                 });
                 prevSkus.pop(); // delete newly added sku
                 this.campaignForm.controls['skus'].setValue(prevSkus);
+                this.skuValidating = false;
             })
     }
 
@@ -223,9 +229,11 @@ export class NewCampaignComponent implements OnInit, OnDestroy, DoCheck {
         const asin = this.campaignForm.controls['asin'].value;
         const marketplace = this.campaignForm.controls['marketplace'].value;
         if (asin) {
+            this.asinValidating = true;
             this.campaignsService.checkAsin({asins: [{ asin, marketplace }]})
                 .subscribe(() => {
                     this.campaignForm.controls['asin'].setErrors(null);
+                    this.asinValidating = false;
                 }, (error) => {
                     this.notificationService.smallBox({
                         content: error,
@@ -234,8 +242,13 @@ export class NewCampaignComponent implements OnInit, OnDestroy, DoCheck {
                         icon: "fa fa-warning shake animated"
                     });
                     this.campaignForm.controls['asin'].setErrors({invalid: true});
+                    this.asinValidating = false;
                 })
         }
+    }
+
+    getSkuClasses() {
+        return this.skuValidating ? 'form-control ui-autocomplete-loading' : 'form-control';
     }
 
     createCampaign() {

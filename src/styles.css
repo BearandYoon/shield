@@ -84,7 +84,7 @@
 
 tag-input {
     border: 1px solid #ccc;
-    padding: 0 12px;
+    padding-left: 8px;
 }
 
 .has-error tag-input {
