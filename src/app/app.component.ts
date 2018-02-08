@@ -22,19 +22,19 @@ export class AppComponent implements OnInit {
     ) {}
 
   ngOnInit() {
-    this.authSubscription = this.auth.loginStatusChange
-        .subscribe((isLoggedIn) => {
-          if (isLoggedIn) {
-            this.checkStatusSubscription = TimerObservable.create(this.interval, this.interval)
-                .switchMap(() => this.auth.checkStatus())
-                .subscribe(
-                    () => {},
-                    () => { this.router.navigate(['/auth']); }
-                );
-          } else if (this.checkStatusSubscription) {
-            this.checkStatusSubscription.unsubscribe();
-          }
-        });
+    // this.authSubscription = this.auth.loginStatusChange
+    //     .subscribe((isLoggedIn) => {
+    //       if (isLoggedIn) {
+    //         this.checkStatusSubscription = TimerObservable.create(this.interval, this.interval)
+    //             .switchMap(() => this.auth.checkStatus())
+    //             .subscribe(
+    //                 () => {},
+    //                 () => { this.router.navigate(['/auth']); }
+    //             );
+    //       } else if (this.checkStatusSubscription) {
+    //         this.checkStatusSubscription.unsubscribe();
+    //       }
+    //     });
   }
 
 }

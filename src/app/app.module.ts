@@ -37,31 +37,25 @@ type StoreType = {
 @NgModule({
   bootstrap: [ AppComponent ],
   declarations: [
-    AppComponent,
-
+    AppComponent
   ],
   imports: [ // import Angular's modules
     BrowserModule,
     BrowserAnimationsModule,
     FormsModule,
-
     ModalModule.forRoot(),
-
     CoreModule,
     SmartadminLayoutModule,
-
     routing
   ],
-  exports: [
-  ],
+  exports: [],
   providers: [ // expose our Services and Providers into Angular's dependency injection
     // ENV_PROVIDERS,
     APP_PROVIDERS
   ]
 })
+
 export class AppModule {
   constructor(public appRef: ApplicationRef, public appState: AppState) {}
-
-
 }
 

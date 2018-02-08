@@ -60,6 +60,8 @@
     "clone": "2.1.1",
     "core-js": "2.5.1",
     "debounce": "1.1.0",
+    "devextreme": "^17.2.5",
+    "devextreme-angular": "^17.2.5",
     "dropzone": "5.2.0",
     "dygraphs": "2.0.0",
     "fuelux": "3.16.2",
