@@ -106,7 +106,8 @@ export class CampaignsComponent implements OnInit, OnDestroy {
     modalConfig = {
         animated: true,
         keyboard: true,
-        backdrop: true,
+        backdrop: 'static',
+        keyboard: false,
         ignoreBackdropClick: true
     };
 
@@ -147,7 +148,7 @@ export class CampaignsComponent implements OnInit, OnDestroy {
             .map(merchantId => this.campaignsService.getMarketplaces(merchantId))
             .subscribe(marketplaces => {
                 this.marketplaces = marketplaces;
-            })
+            });
     }
 
     createCampaign() {
