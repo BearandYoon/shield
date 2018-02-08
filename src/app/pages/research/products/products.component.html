@@ -19,7 +19,7 @@
   </div>
 
   <div class="well" *ngIf="showFilter">
-    <form class="form-horizontal" [formGroup]="productFilterForm" (submit)="applyFilter(productFilterForm.value)">
+    <form class="form-horizontal" [formGroup]="productFilterForm">
       <div class="row">
         <div class="col-md-4 col-sm-6 col-xs-12">
           <div class="form-group">
@@ -27,13 +27,12 @@
             <div class="col-sm-8">
               <tag-input id="asin"
                          placeholder="+ asin"
-                         secondaryPlaceholder="Enter a asin and press Enter"
+                         secondaryPlaceholder="Enter a ASIN and press Enter"
                          inputClass="form-control"
                          allowDupes="false"
                          addOnBlur="true"
                          modelAsStrings="true"
-                         formControlName="asin"
-                         (onAdd)="validateTagsInput($event, 'asin')">
+                         formControlName="asins">
               </tag-input>
             </div>
           </div>
@@ -42,13 +41,12 @@
             <div class="col-sm-8">
               <tag-input id="upc"
                          placeholder="+ asin"
-                         secondaryPlaceholder="Enter a asin and press Enter"
+                         secondaryPlaceholder="Enter a UPC and press Enter"
                          inputClass="form-control"
                          allowDupes="false"
                          addOnBlur="true"
                          modelAsStrings="true"
-                         formControlName="upc"
-                         (onAdd)="validateTagsInput($event, 'upc')">
+                         formControlName="upcs">
               </tag-input>
             </div>
           </div>
@@ -63,13 +61,12 @@
             <div class="col-sm-8">
               <tag-input id="brand"
                          placeholder="+ brand"
-                         secondaryPlaceholder="Enter a asin and press Enter"
+                         secondaryPlaceholder="Enter a Brand and press Enter"
                          inputClass="form-control"
                          allowDupes="false"
                          addOnBlur="true"
                          modelAsStrings="true"
-                         formControlName="brand"
-                         (onAdd)="validateTagsInput($event, 'brand')">
+                         formControlName="brands">
               </tag-input>
             </div>
           </div>
@@ -78,13 +75,12 @@
             <div class="col-sm-8">
               <tag-input id="seller"
                          placeholder="+ seller"
-                         secondaryPlaceholder="Enter a asin and press Enter"
+                         secondaryPlaceholder="Enter a Seller and press Enter"
                          inputClass="form-control"
                          allowDupes="false"
                          addOnBlur="true"
                          modelAsStrings="true"
-                         formControlName="seller"
-                         (onAdd)="validateTagsInput($event, 'seller')">
+                         formControlName="merchants">
               </tag-input>
             </div>
           </div>
@@ -103,7 +99,7 @@
           <div class="form-group">
             <label for="marketplace" class="col-sm-3 control-label">Marketplace</label>
             <div class="col-sm-8">
-              <select class="form-control" id="marketplace" formControlName="marketPlace">
+              <select class="form-control" id="marketplace" formControlName="marketplace">
                 <option *ngFor="let marketplace of marketplaces">{{marketplace.name}}</option>
               </select>
             </div>
@@ -113,13 +109,12 @@
             <div class="col-sm-8">
               <tag-input id="category"
                          placeholder="+ category"
-                         secondaryPlaceholder="Enter a asin and press Enter"
+                         secondaryPlaceholder="Enter a Category and press Enter"
                          inputClass="form-control"
                          allowDupes="false"
                          addOnBlur="true"
                          modelAsStrings="true"
-                         formControlName="category"
-                         (onAdd)="validateTagsInput($event, 'category')">
+                         formControlName="categories">
               </tag-input>
             </div>
           </div>
@@ -135,16 +130,28 @@
           <div class="form-group">
             <label for="sponsor" class="col-sm-3 control-label">Sponsored Products</label>
             <div class="col-sm-8">
-              <select class="form-control" id="sponsor" formControlName="sponsor">
-                <!--<option *ngFor="let sponsor of sponsors">{{sponsor}}</option>-->
+              <select class="form-control" id="sponsor" formControlName="advertising.spa">
+                <option>true</option>
+                <option>false</option>
               </select>
             </div>
           </div>
           <div class="form-group">
-            <label for="boybox" class="col-sm-3 control-label">Boybox</label>
+            <label for="buybox" class="col-sm-3 control-label">Buybox</label>
             <div class="col-sm-8">
-              <select class="form-control" id="boybox">
-                <option *ngFor="let buybox of buyboxs">{{buybox}}</option>
+              <select class="form-control" id="buybox" formControlName="buybox">
+                <option>true</option>
+                <option>false</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="type" class="col-sm-3 control-label">Type</label>
+            <div class="col-sm-8">
+              <select class="form-control" id="type" formControlName="type">
+                <option>CHILD</option>
+                <option>PARENT</option>
+                <option>STANDALONE</option>
               </select>
             </div>
           </div>
@@ -157,7 +164,8 @@
               <dx-slider
                       [min]="0"
                       [max]="100"
-                      [(value)]="productFilterForm.value.competitor">
+                      (onValueChanged)="onSliderChanged()"
+                      [(value)]="sliderValues.competitor">
                 <dxo-label
                         [visible]="true"
                         position="top"
@@ -176,7 +184,8 @@
               <dx-slider
                       [min]="0"
                       [max]="100"
-                      [(value)]="productFilterForm.value.offeringPrime">
+                      (onValueChanged)="onSliderChanged()"
+                      [(value)]="sliderValues.offeringPrime">
                 <dxo-label
                         [visible]="true"
                         position="top"
@@ -195,7 +204,8 @@
               <dx-slider
                       [min]="0"
                       [max]="100"
-                      [(value)]="productFilterForm.value.bsr">
+                      (onValueChanged)="onSliderChanged()"
+                      [(value)]="sliderValues.bsr">
                 <dxo-label
                         [visible]="true"
                         position="top"
@@ -214,7 +224,8 @@
               <dx-slider
                       [min]="0"
                       [max]="100"
-                      [(value)]="productFilterForm.value.price">
+                      (onValueChanged)="onSliderChanged()"
+                      [(value)]="sliderValues.price">
                 <dxo-label
                         [visible]="true"
                         position="top"
@@ -233,7 +244,8 @@
               <dx-slider
                       [min]="0"
                       [max]="100"
-                      [(value)]="productFilterForm.value.optimization">
+                      (onValueChanged)="onSliderChanged()"
+                      [(value)]="sliderValues.optimization">
                 <dxo-label
                         [visible]="true"
                         position="top"
@@ -252,7 +264,8 @@
               <dx-slider
                       [min]="0"
                       [max]="100"
-                      [(value)]="productFilterForm.value.rating">
+                      (onValueChanged)="onSliderChanged()"
+                      [(value)]="sliderValues.rating">
                 <dxo-label
                         [visible]="true"
                         position="top"
@@ -271,7 +284,8 @@
               <dx-slider
                       [min]="0"
                       [max]="100"
-                      [(value)]="productFilterForm.value.review">
+                      (onValueChanged)="onSliderChanged()"
+                      [(value)]="sliderValues.review">
                 <dxo-label
                         [visible]="true"
                         position="top"
@@ -285,10 +299,6 @@
             </div>
           </div>
         </div>
-        <button type="submit" class="btn btn-success pull-right new-campaign">
-          <i class="glyphicon glyphicon-plus"></i>
-          Apply Filter
-        </button>
       </div>
     </form>
   </div>

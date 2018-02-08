@@ -132,33 +132,20 @@ export class ProductsComponent implements OnInit {
   buyboxs: any[];
   showFilter = false;
   productFilterForm: any;
+  sliderValues = {
+    'competitor': 0,
+    'offeringPrime': 0,
+    'bsr': 0,
+    'price': 0,
+    'optimization': 0,
+    'rating': 0,
+    'review': 0,
+  };
 
   constructor(
     private researchService: ResearchService,
     private fb: FormBuilder
-  ) {
-    this.productFilterForm = this.fb.group({
-      'asin': '',
-      'upc': '',
-      'title': '',
-      'brand': '',
-      'seller': '',
-      'available': 'true',
-      'marketPlace': '',
-      'category': '',
-      'prime': 'true',
-      'sponsor': '',
-      'boybox': '',
-      'type': '',
-      'competitor': '',
-      'offeringPrime': '70',
-      'bsr': '',
-      'price': '',
-      'optimization': '',
-      'rating': '',
-      'review': '',
-    });
-  }
+  ) { }
 
   ngOnInit() {
     this.researchService.getResearchProducts().subscribe(res => {
@@ -167,26 +154,68 @@ export class ProductsComponent implements OnInit {
 
     this.marketplaces = this.researchService.getMarketplaces();
 
+    let selectedMarketPlace = '';
     if (this.marketplaces) {
       this.filters = {
         marketplace: this.marketplaces[0].id
       };
-
-      // this.productFilterForm.setValue({
-      //   marketplaces: this.marketplaces
-      // })
+      selectedMarketPlace = this.marketplaces[0].name;
     }
+
+    this.productFilterForm = this.fb.group({
+      'asins': '',
+      'upcs': '',
+      'title': '',
+      'brands': '',
+      'merchants': '',
+      'available': 'true',
+      'marketplace': selectedMarketPlace,
+      'categories': '',
+      'prime': 'true',
+      'advertising.spa': 'true',
+      'buybox': 'true',
+      'type': 'CHILD'
+    });
+
+    this.onFilterFormChanges();
   }
 
   openFilter() {
     this.showFilter = !this.showFilter;
   };
 
-  applyFilter(formValue) {
-    console.log(formValue);
+  onFilterFormChanges() {
+    this.productFilterForm.valueChanges.subscribe(val => {
+      this.applyFilter();
+    })
   }
 
-  validateTagsInput(chip, tagName) {
-    console.log(chip, tagName);
+  onSliderChanged() {
+    // this.applyFilter();
+  }
+
+  applyFilter() {
+    const mkId = this.getMarketPlaceIdbyName(this.productFilterForm.value.marketplace);
+    // this.filters = {
+    //   ...this.productFilterForm.value,
+    //   // ...this.sliderValues,
+    //   marketplace: mkId
+    // };
+
+    this.filters = {
+      asins: this.productFilterForm.value.asins,
+      marketplace: mkId
+    };
+
+    console.log('=====', this.filters);
+  }
+
+  getMarketPlaceIdbyName(name): string {
+    const matchedMarketPlace = this.marketplaces.find(function (marketplace) {
+      return marketplace.name === name;
+    });
+
+    console.log(matchedMarketPlace);
+    return matchedMarketPlace.id;
   }
 }

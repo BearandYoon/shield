@@ -2,10 +2,10 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs/Subscription';
 
-import { CampaignsService } from "./services/campaigns.service";
+import { CampaignsService } from './services/campaigns.service';
 import { TYPES, PROGRESS } from './campaigns.constants';
-import { BsModalService } from "ngx-bootstrap";
-import { NewCampaignComponent } from "./new-campaign/new-campaign.component";
+import { BsModalService } from 'ngx-bootstrap';
+import { NewCampaignComponent } from './new-campaign/new-campaign.component';
 import { environment } from '../../../environments/environment';
 
 @Component({
@@ -105,7 +105,6 @@ export class CampaignsComponent implements OnInit, OnDestroy {
 
     modalConfig = {
         animated: true,
-        keyboard: true,
         backdrop: 'static',
         keyboard: false,
         ignoreBackdropClick: true
