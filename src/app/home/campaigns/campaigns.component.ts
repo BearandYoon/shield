@@ -105,7 +105,6 @@ export class CampaignsComponent implements OnInit, OnDestroy {
 
     modalConfig = {
         animated: true,
-        keyboard: true,
         backdrop: 'static',
         keyboard: false,
         ignoreBackdropClick: true
