@@ -10,9 +10,11 @@ import * as jp from 'jsonpath';
 export class DynamicDatatableComponent implements OnInit, OnChanges {
 
   @Input() url: string;
-  @Input() filters: Object = {};
+  @Input() filters: Object;
   @Input() schema: any[];
   @Input() rootField: string;
+
+  loading = false;
 
   data: any[];
 
@@ -31,8 +33,6 @@ export class DynamicDatatableComponent implements OnInit, OnChanges {
   ngOnInit() {
     this.columns = this.schema.map(field => ({ 'data': field.name }));
     this.displayColumns = this.schema.map(field => field.display);
-
-    this.getData();
   }
 
   ngOnChanges() {
@@ -40,13 +40,15 @@ export class DynamicDatatableComponent implements OnInit, OnChanges {
   }
 
   getData() {
-    const data = { pagination: this.pagination, filters: this.filters };
+    this.loading = true;
+    const data = { pagination: this.pagination, filters: this.filters || {} };
     this.http.post(this.url, data)
         .subscribe(res => {
           this.data = this.transformData(res[this.rootField]);
+          this.loading = false;
         }, error => {
-          console.log('dynamic data table error = ', error);
-          // alert(error);
+          // do something with error
+          this.loading = false;
         })
   }
 

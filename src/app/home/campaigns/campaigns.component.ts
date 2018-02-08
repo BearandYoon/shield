@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Subscription } from 'rxjs/Subscription';
+
 import { CampaignsService } from "./services/campaigns.service";
 import { TYPES, PROGRESS } from './campaigns.constants';
 import { BsModalService } from "ngx-bootstrap";
@@ -11,7 +13,7 @@ import { environment } from '../../../environments/environment';
     templateUrl: './campaigns.component.html',
     styleUrls: ['./campaigns.component.css']
 })
-export class CampaignsComponent implements OnInit {
+export class CampaignsComponent implements OnInit, OnDestroy {
 
     url = environment.baseUrl + '/advertising.campaigns.get';
 
@@ -83,13 +85,13 @@ export class CampaignsComponent implements OnInit {
         }
     ];
 
-    filters: any;
+    filters = {};
 
     ////////////////
 
     campaigns: any[];
     merchants: any[];
-    marketplaces: any[];
+    marketplaces: any[] = [];
 
     progress = Object.keys(PROGRESS);
     types = Object.keys(TYPES);
@@ -104,12 +106,15 @@ export class CampaignsComponent implements OnInit {
     modalConfig = {
         animated: true,
         keyboard: true,
-        backdrop: true,
+        backdrop: 'static',
+        keyboard: false,
         ignoreBackdropClick: true
     };
 
     quickFilterForm: FormGroup;
     filterForm: FormGroup;
+
+    merchantSubscription: Subscription;
 
     constructor(private fb: FormBuilder,
                 private modalService: BsModalService,
@@ -117,7 +122,6 @@ export class CampaignsComponent implements OnInit {
 
     ngOnInit() {
         this.merchants = this.campaignsService.getMerchants();
-        this.marketplaces = this.campaignsService.getMarketplaces();
 
         this.quickFilterForm = this.fb.group({
             'amalyze.generic': ['', Validators.required]
@@ -126,12 +130,25 @@ export class CampaignsComponent implements OnInit {
         this.filterForm = this.fb.group({
             'start': '',  // not in api
             'end': '',  // not in api
-            'amalyze.progress': this.progress[0],
-            'campaign.type': this.types[0],
-            'merchant': this.merchants[0].id,
-            'marketplace': this.marketplaces[0].id,
+            'amalyze.progress': '',
+            'campaign.type': '',
+            'merchant': '',
+            'marketplace': '',
             'asin': ''
         });
+
+        this.merchantSubscription = this.filterForm.controls['merchant'].valueChanges
+            .do(merchantId => {
+                if (!merchantId) {
+                    this.marketplaces = [];
+                    this.filterForm.controls['marketplace'].setValue('');
+                }
+            })
+            .filter(merchantId => merchantId)
+            .map(merchantId => this.campaignsService.getMarketplaces(merchantId))
+            .subscribe(marketplaces => {
+                this.marketplaces = marketplaces;
+            });
     }
 
     createCampaign() {
@@ -139,12 +156,15 @@ export class CampaignsComponent implements OnInit {
     }
 
     doFilter(data) {
-        console.log(data);
         this.filters = data;
     }
 
     toggleFilter() {
         this.showFilter = !this.showFilter;
+    }
+
+    ngOnDestroy() {
+        this.merchantSubscription.unsubscribe();
     }
 
 }
