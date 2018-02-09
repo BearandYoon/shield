@@ -1,10 +1,17 @@
 <div>
   <div class="row search-bar">
     <div class="col-sm-6">
-      <button type="button" class="btn btn-primary">
-        <i class="glyphicon glyphicon-search"></i>
-        Search for Title, Brand, ASIN
-      </button>
+      <form class="form-inline full-search-form"
+            [formGroup]="quickFilterForm"
+            (submit)="doFilter(quickFilterForm.value)">
+        <input type="text"
+               class="form-control full-search"
+               placeholder="Search for campaign name, ASIN, SKU"
+               formControlName="amalyze.generic" />
+        <button type="submit" class="btn btn-primary" [disabled]="!quickFilterForm.valid">
+          Search
+        </button>
+      </form>
     </div>
     <div class="col-sm-6 buttons">
       <button type="button" class="btn btn-success pull-right" (click)="openFilter()">
@@ -19,7 +26,7 @@
   </div>
 
   <div class="well" *ngIf="showFilter">
-    <form class="form-horizontal" [formGroup]="productFilterForm">
+    <form class="form-horizontal filter-form" [formGroup]="productFilterForm" (submit)="applyFilter(productFilterForm.value)">
       <div class="row">
         <div class="col-md-4 col-sm-6 col-xs-12">
           <div class="form-group">
@@ -93,6 +100,7 @@
               <select class="form-control" id="available" formControlName="available">
                 <option value="true">true</option>
                 <option value="false">false</option>
+                <option value="empty">empty</option>
               </select>
             </div>
           </div>
@@ -122,8 +130,9 @@
             <label for="prime" class="col-sm-3 control-label">Prime</label>
             <div class="col-sm-8">
               <select class="form-control" id="prime" formControlName="prime">
-                <option>true</option>
-                <option>false</option>
+                <option value="true">true</option>
+                <option value="false">false</option>
+                <option value="empty">empty</option>
               </select>
             </div>
           </div>
@@ -131,8 +140,9 @@
             <label for="sponsor" class="col-sm-3 control-label">Sponsored Products</label>
             <div class="col-sm-8">
               <select class="form-control" id="sponsor" formControlName="advertising.spa">
-                <option>true</option>
-                <option>false</option>
+                <option value="true">true</option>
+                <option value="false">false</option>
+                <option value="empty">empty</option>
               </select>
             </div>
           </div>
@@ -140,8 +150,9 @@
             <label for="buybox" class="col-sm-3 control-label">Buybox</label>
             <div class="col-sm-8">
               <select class="form-control" id="buybox" formControlName="buybox">
-                <option>true</option>
-                <option>false</option>
+                <option value="true">true</option>
+                <option value="false">false</option>
+                <option value="empty">empty</option>
               </select>
             </div>
           </div>
@@ -149,9 +160,10 @@
             <label for="type" class="col-sm-3 control-label">Type</label>
             <div class="col-sm-8">
               <select class="form-control" id="type" formControlName="type">
-                <option>CHILD</option>
-                <option>PARENT</option>
-                <option>STANDALONE</option>
+                <option value="child">child</option>
+                <option value="parent">parent</option>
+                <option value="standalone">standalone</option>
+                <option value="empty">empty</option>
               </select>
             </div>
           </div>
@@ -161,145 +173,106 @@
           <div class="form-group">
             <label class="col-sm-3 control-label">Competitors</label>
             <div class="col-sm-8">
-              <dx-slider
-                      [min]="0"
-                      [max]="100"
-                      (onValueChanged)="onSliderChanged()"
-                      [(value)]="sliderValues.competitor">
-                <dxo-label
-                        [visible]="true"
-                        position="top"
-                ></dxo-label>
-                <dxo-tooltip
-                        [enabled]="true"
-                        showMode="onHover"
-                        position="top"
-                ></dxo-tooltip>
-              </dx-slider>
+              <dx-range-slider
+                      [min]="this.defaultFilterValue.competitors.min"
+                      [max]="this.defaultFilterValue.competitors.max"
+                      [(start)]="this.rangeSliderFilterObj.competitors.min"
+                      [(end)]="this.rangeSliderFilterObj.competitors.max"
+                      [step]="1"
+                      [label]="sliderLabel"
+                      [tooltip]="sliderToolTipEnabled"
+              ></dx-range-slider>
             </div>
           </div>
           <div class="form-group">
             <label class="col-sm-3 control-label">Competitors offering Prime</label>
             <div class="col-sm-8">
-              <dx-slider
-                      [min]="0"
-                      [max]="100"
-                      (onValueChanged)="onSliderChanged()"
-                      [(value)]="sliderValues.offeringPrime">
-                <dxo-label
-                        [visible]="true"
-                        position="top"
-                ></dxo-label>
-                <dxo-tooltip
-                        [enabled]="true"
-                        showMode="onHover"
-                        position="top"
-                ></dxo-tooltip>
-              </dx-slider>
+              <dx-range-slider
+                      [min]="this.defaultFilterValue['competitors.prime'].min"
+                      [max]="this.defaultFilterValue['competitors.prime'].max"
+                      [(start)]="this.rangeSliderFilterObj['competitors.prime'].min"
+                      [(end)]="this.rangeSliderFilterObj['competitors.prime'].max"
+                      [step]="1"
+                      [label]="sliderLabel"
+                      [tooltip]="sliderToolTipEnabled"
+              ></dx-range-slider>
             </div>
           </div>
           <div class="form-group">
             <label class="col-sm-3 control-label">BSR</label>
             <div class="col-sm-8">
-              <dx-slider
-                      [min]="0"
-                      [max]="100"
-                      (onValueChanged)="onSliderChanged()"
-                      [(value)]="sliderValues.bsr">
-                <dxo-label
-                        [visible]="true"
-                        position="top"
-                ></dxo-label>
-                <dxo-tooltip
-                        [enabled]="true"
-                        showMode="onHover"
-                        position="top"
-                ></dxo-tooltip>
-              </dx-slider>
+              <dx-range-slider
+                      [min]="this.defaultFilterValue.bsr.min"
+                      [max]="this.defaultFilterValue.bsr.max"
+                      [(start)]="this.rangeSliderFilterObj.bsr.min"
+                      [(end)]="this.rangeSliderFilterObj.bsr.max"
+                      [step]="1"
+                      [label]="sliderLabel"
+                      [tooltip]="sliderToolTipEnabled"
+              ></dx-range-slider>
             </div>
           </div>
           <div class="form-group">
             <label class="col-sm-3 control-label">Price</label>
             <div class="col-sm-8">
-              <dx-slider
-                      [min]="0"
-                      [max]="100"
-                      (onValueChanged)="onSliderChanged()"
-                      [(value)]="sliderValues.price">
-                <dxo-label
-                        [visible]="true"
-                        position="top"
-                ></dxo-label>
-                <dxo-tooltip
-                        [enabled]="true"
-                        showMode="onHover"
-                        position="top"
-                ></dxo-tooltip>
-              </dx-slider>
+              <dx-range-slider
+                      [min]="this.defaultFilterValue.price.min"
+                      [max]="this.defaultFilterValue.price.max"
+                      [(start)]="this.rangeSliderFilterObj.price.min"
+                      [(end)]="this.rangeSliderFilterObj.price.max"
+                      [step]="1"
+                      [label]="sliderLabel"
+                      [tooltip]="sliderToolTipEnabled"
+              ></dx-range-slider>
             </div>
           </div>
           <div class="form-group">
             <label class="col-sm-3 control-label">Optimization</label>
             <div class="col-sm-8">
-              <dx-slider
-                      [min]="0"
-                      [max]="100"
-                      (onValueChanged)="onSliderChanged()"
-                      [(value)]="sliderValues.optimization">
-                <dxo-label
-                        [visible]="true"
-                        position="top"
-                ></dxo-label>
-                <dxo-tooltip
-                        [enabled]="true"
-                        showMode="onHover"
-                        position="top"
-                ></dxo-tooltip>
-              </dx-slider>
+              <dx-range-slider
+                      [min]="this.defaultFilterValue.optimization.min"
+                      [max]="this.defaultFilterValue.optimization.max"
+                      [(start)]="this.rangeSliderFilterObj.optimization.min"
+                      [(end)]="this.rangeSliderFilterObj.optimization.max"
+                      [step]="1"
+                      [label]="sliderLabel"
+                      [tooltip]="sliderToolTipEnabled"
+              ></dx-range-slider>
             </div>
           </div>
           <div class="form-group">
             <label class="col-sm-3 control-label">Rating</label>
             <div class="col-sm-8">
-              <dx-slider
-                      [min]="0"
-                      [max]="100"
-                      (onValueChanged)="onSliderChanged()"
-                      [(value)]="sliderValues.rating">
-                <dxo-label
-                        [visible]="true"
-                        position="top"
-                ></dxo-label>
-                <dxo-tooltip
-                        [enabled]="true"
-                        showMode="onHover"
-                        position="top"
-                ></dxo-tooltip>
-              </dx-slider>
+              <dx-range-slider
+                      [min]="this.defaultFilterValue.rating.min"
+                      [max]="this.defaultFilterValue.rating.max"
+                      [(start)]="this.rangeSliderFilterObj.rating.min"
+                      [(end)]="this.rangeSliderFilterObj.rating.max"
+                      [step]="1"
+                      [label]="sliderLabel"
+                      [tooltip]="sliderToolTipEnabled"
+              ></dx-range-slider>
             </div>
           </div>
           <div class="form-group">
             <label class="col-sm-3 control-label">Reviews</label>
             <div class="col-sm-8">
-              <dx-slider
-                      [min]="0"
-                      [max]="100"
-                      (onValueChanged)="onSliderChanged()"
-                      [(value)]="sliderValues.review">
-                <dxo-label
-                        [visible]="true"
-                        position="top"
-                ></dxo-label>
-                <dxo-tooltip
-                        [enabled]="true"
-                        showMode="onHover"
-                        position="top"
-                ></dxo-tooltip>
-              </dx-slider>
+              <dx-range-slider
+                      [min]="this.defaultFilterValue.reviews.min"
+                      [max]="this.defaultFilterValue.reviews.max"
+                      [(start)]="this.rangeSliderFilterObj.reviews.min"
+                      [(end)]="this.rangeSliderFilterObj.reviews.max"
+                      [step]="1"
+                      [label]="sliderLabel"
+                      [tooltip]="sliderToolTipEnabled"
+              ></dx-range-slider>
             </div>
           </div>
         </div>
       </div>
+      <button type="submit" class="btn btn-primary pull-right">
+        Apply
+      </button>
     </form>
   </div>
 

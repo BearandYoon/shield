@@ -127,25 +127,99 @@ export class ProductsComponent implements OnInit {
       path: ''
     }
   ];
+  defaultFilterValue = {
+    'asins': '',
+    'upcs': '',
+    'title': '',
+    'brands': '',
+    'merchants': '',
+    'available': 'empty',
+    'marketplace': '',
+    'categories': '',
+    'prime': 'empty',
+    'advertising.spa': 'empty',
+    'buybox': 'empty',
+    'type': 'empty',
+    'competitors': {
+      'min': 1,
+      'max': 999999
+    },
+    'competitors.prime': {
+      'min': 1,
+      'max': 999999
+    },
+    'bsr': {
+      'min': 1,
+      'max': 999999
+    },
+    'price': {
+      'min': 0,
+      'max': 999999
+    },
+    'optimization': {
+      'min': 0,
+      'max': 100
+    },
+    'rating': {
+      'min': 0,
+      'max': 5
+    },
+    'reviews': {
+      'min': 0,
+      'max': 5
+    }
+  };
+
+  rangeSliderFilterObj = {
+    'competitors': {
+      'min': 1,
+      'max': 999999
+    },
+    'competitors.prime': {
+      'min': 1,
+      'max': 999999
+    },
+    'bsr': {
+      'min': 1,
+      'max': 999999
+    },
+    'price': {
+      'min': 0,
+      'max': 999999
+    },
+    'optimization': {
+      'min': 0,
+      'max': 100
+    },
+    'rating': {
+      'min': 0,
+      'max': 5
+    },
+    'reviews': {
+      'min': 0,
+      'max': 5
+    }
+  };
   filters: any;
   marketplaces: any[];
-  buyboxs: any[];
   showFilter = false;
-  productFilterForm: any;
-  sliderValues = {
-    'competitor': 0,
-    'offeringPrime': 0,
-    'bsr': 0,
-    'price': 0,
-    'optimization': 0,
-    'rating': 0,
-    'review': 0,
-  };
+  productFilterForm: FormGroup;
+  quickFilterForm: FormGroup;
+  sliderLabel: any;
+  sliderToolTipEnabled: any;
 
   constructor(
     private researchService: ResearchService,
     private fb: FormBuilder
-  ) { }
+  ) {
+    this.sliderLabel = {
+      visible: true,
+      position: 'top'
+    };
+    this.sliderToolTipEnabled = {
+      enabled: true
+    };
+  }
 
   ngOnInit() {
     this.marketplaces = this.researchService.getMarketplaces();
@@ -158,62 +232,45 @@ export class ProductsComponent implements OnInit {
       selectedMarketPlace = this.marketplaces[0].name;
     }
 
+    this.quickFilterForm = this.fb.group({
+      'amalyze.generic': ['', Validators.required]
+    });
+
     this.productFilterForm = this.fb.group({
       'asins': '',
       'upcs': '',
       'title': '',
       'brands': '',
       'merchants': '',
-      'available': 'true',
+      'available': 'empty',
       'marketplace': selectedMarketPlace,
       'categories': '',
-      'prime': 'true',
-      'advertising.spa': 'true',
-      'buybox': 'true',
-      'type': 'CHILD'
+      'prime': 'empty',
+      'advertising.spa': 'empty',
+      'buybox': 'empty',
+      'type': 'empty'
     });
-
-    this.onFilterFormChanges();
   }
 
   openFilter() {
     this.showFilter = !this.showFilter;
   };
 
-  onFilterFormChanges() {
-    this.productFilterForm.valueChanges.subscribe(val => {
-      this.applyFilter();
-    })
-  }
-
-  onSliderChanged() {
-    // this.applyFilter();
-  }
-
   applyFilter() {
     const mkId = this.getMarketPlaceIdbyName(this.productFilterForm.value.marketplace);
+    this.filters = {};
+    Object.keys(this.productFilterForm.value).forEach((key) => {
+      if (this.productFilterForm.value[key] !== this.defaultFilterValue[key]) {
+        this.filters[key] = this.productFilterForm.value[key];
+      }
+    });
 
-    this.filters = {
-      asins: this.productFilterForm.value.asins.length ? this.productFilterForm.value.asins : null,
-      upcs: this.productFilterForm.value.upcs.length ? this.productFilterForm.value.upcs : null,
-      // title: this.productFilterForm.value.title ? this.productFilterForm.value.title : null,
-      // brands: this.productFilterForm.value.brands.length ? this.productFilterForm.value.brands : null,
-      // merchants: this.productFilterForm.value.merchants.length ? this.productFilterForm.value.merchants : null,
-      // available: this.productFilterForm.value.available === 'true' ? true : false,
-      marketplace: mkId,
-      // categories: this.productFilterForm.value.categories.length ? this.productFilterForm.value.categories : null,
-      // prime: this.productFilterForm.value.prime === 'true' ? true : false,
-      // 'advertising.spa': this.productFilterForm.value['advertising.spa'] === 'true' ? true : false,
-      // buybox: this.productFilterForm.value.buybox === 'true' ? true : false,
-      // type: this.productFilterForm.value.type,
-      // competitor: this.sliderValues.competitor > 0 ? this.sliderValues.competitor : null,
-      // offeringPrime: this.sliderValues.offeringPrime > 0 ? this.sliderValues.offeringPrime : null,
-      // bsr: this.sliderValues.bsr > 0 ? this.sliderValues.bsr : null,
-      // price: this.sliderValues.price > 0 ? this.sliderValues.price : null,
-      // optimization: this.sliderValues.optimization > 0 ? this.sliderValues.optimization : null,
-      // rating: this.sliderValues.rating > 0 ? this.sliderValues.rating : null,
-      // review: this.sliderValues.review > 0 ? this.sliderValues.review : null
-    };
+    Object.keys(this.rangeSliderFilterObj).forEach((key) => {
+      if (this.rangeSliderFilterObj[key] !== this.defaultFilterValue[key]) {
+        this.filters[key] = this.rangeSliderFilterObj[key];
+      }
+    });
+    this.filters.marketplace = mkId;
 
     console.log('filter = ', this.filters);
   }

@@ -6,6 +6,10 @@
     margin-bottom: 20px;
 }
 
+.filter-form {
+    overflow: hidden;
+}
+
 .product-list-container {
     float: left;
     width: 100%;
