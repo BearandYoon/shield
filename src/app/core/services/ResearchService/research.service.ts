@@ -29,7 +29,7 @@ export class ResearchService {
 
   getMarketplaces() {
     const userInfo = this.storage.get();
-    return userInfo ? userInfo.user.entity.modules.advertising[0].marketplaces : null;
+    return userInfo ? userInfo.user.entity.modules.research.marketplaces : null;
   }
 
   private handleError(data: any) {

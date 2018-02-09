@@ -15,6 +15,7 @@ export class DynamicDatatableComponent implements OnInit, OnChanges {
   @Input() rootField: string;
 
   loading = false;
+  render = true;
 
   data: any[];
 
@@ -28,7 +29,9 @@ export class DynamicDatatableComponent implements OnInit, OnChanges {
   columns: any[];
   displayColumns: string[];
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient
+  ) {}
 
   ngOnInit() {
     this.columns = this.schema.map(field => ({ 'data': field.name }));
@@ -45,7 +48,10 @@ export class DynamicDatatableComponent implements OnInit, OnChanges {
     this.http.post(this.url, data)
         .subscribe(res => {
           this.data = this.transformData(res[this.rootField]);
-          console.log('received dynamic dataTable data = ', this.data);
+          this.render = false;
+          setTimeout(() => {
+            this.render = true;
+          }, 10);
           this.loading = false;
         }, error => {
           // do something with error
