@@ -45,7 +45,7 @@ export class DynamicDatatableComponent implements OnInit, OnChanges {
     this.http.post(this.url, data)
         .subscribe(res => {
           this.data = this.transformData(res[this.rootField]);
-          console.log('dynamic dataTable = ', this.data);
+          console.log('received dynamic dataTable data = ', this.data);
           this.loading = false;
         }, error => {
           // do something with error
