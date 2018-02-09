@@ -196,15 +196,27 @@ export class ProductsComponent implements OnInit {
 
   applyFilter() {
     const mkId = this.getMarketPlaceIdbyName(this.productFilterForm.value.marketplace);
-    // this.filters = {
-    //   ...this.productFilterForm.value,
-    //   // ...this.sliderValues,
-    //   marketplace: mkId
-    // };
 
     this.filters = {
-      asins: this.productFilterForm.value.asins,
-      marketplace: mkId
+      asins: this.productFilterForm.value.asins.length ? this.productFilterForm.value.asins : null,
+      upcs: this.productFilterForm.value.upcs.length ? this.productFilterForm.value.upcs : null,
+      title: this.productFilterForm.value.title ? this.productFilterForm.value.title : null,
+      brands: this.productFilterForm.value.brands.length ? this.productFilterForm.value.brands : null,
+      merchants: this.productFilterForm.value.merchants.length ? this.productFilterForm.value.merchants : null,
+      available: this.productFilterForm.value.upcs.available,
+      marketplace: mkId,
+      categories: this.productFilterForm.value.categories.length ? this.productFilterForm.value.categories : null,
+      prime: this.productFilterForm.value.prime,
+      'advertising.spa': this.productFilterForm.value['advertising.spa'],
+      buybox: this.productFilterForm.value.buybox,
+      type: this.productFilterForm.value.type,
+      competitor: this.sliderValues.competitor > 0 ? this.sliderValues.competitor : null,
+      offeringPrime: this.sliderValues.offeringPrime > 0 ? this.sliderValues.offeringPrime : null,
+      bsr: this.sliderValues.bsr > 0 ? this.sliderValues.bsr : null,
+      price: this.sliderValues.price > 0 ? this.sliderValues.price : null,
+      optimization: this.sliderValues.optimization > 0 ? this.sliderValues.optimization : null,
+      rating: this.sliderValues.rating > 0 ? this.sliderValues.rating : null,
+      review: this.sliderValues.review > 0 ? this.sliderValues.review : null
     };
 
     console.log('=====', this.filters);
@@ -214,8 +226,6 @@ export class ProductsComponent implements OnInit {
     const matchedMarketPlace = this.marketplaces.find(function (marketplace) {
       return marketplace.name === name;
     });
-
-    console.log(matchedMarketPlace);
     return matchedMarketPlace.id;
   }
 }
