@@ -6,7 +6,6 @@
 </div>
 <div class="modal-body">
     <div>
-        <!--{{campaignForm.value | json}}-->
         <div class="widget-body">
 
             <div class="row">
@@ -155,20 +154,22 @@
                                              campaignForm.controls.asin.touched}">
                                             <label for="asin" class="col-sm-2 control-label">ASIN</label>
                                             <div class="col-sm-10">
-                                                <input type="text" class="form-control" id="asin"
+                                                <input type="text" id="asin"
+                                                       class="form-control"
+                                                       [ngClass]="{'ui-autocomplete-loading': asinValidating}"
                                                        formControlName="asin"
                                                        (blur)="validateAsin()">
 
                                                 <span *ngIf="campaignForm.controls.asin.errors &&
                                                 campaignForm.controls.asin.errors.required &&
                                                 campaignForm.controls.asin.touched" class="help-block">
-                                                  This field is required
+                                                  Asin in required
                                                 </span>
 
                                                 <span *ngIf="campaignForm.controls.asin.errors &&
                                                 campaignForm.controls.asin.errors.invalid &&
                                                 campaignForm.controls.asin.touched" class="help-block">
-                                                  This field is invalid
+                                                  Asin is invalid
                                                 </span>
                                             </div>
                                         </div>
@@ -180,7 +181,7 @@
                                                 <tag-input id="sku"
                                                            placeholder="+ sku"
                                                            secondaryPlaceholder="Enter a sku and press Enter"
-                                                           inputClass="form-control"
+                                                           [inputClass]="getSkuClasses()"
                                                            allowDupes="false"
                                                            addOnBlur="true"
                                                            modelAsStrings="true"
