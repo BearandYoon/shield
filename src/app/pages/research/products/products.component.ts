@@ -148,10 +148,6 @@ export class ProductsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.researchService.getResearchProducts().subscribe(res => {
-      // console.log(res);
-    });
-
     this.marketplaces = this.researchService.getMarketplaces();
 
     let selectedMarketPlace = '';
