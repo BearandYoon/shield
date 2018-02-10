@@ -2,6 +2,8 @@ import { Component, OnInit, OnChanges, Input } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import * as jp from 'jsonpath';
 
+import { NotificationService } from '../../utils/notification.service';
+
 @Component({
   selector: 'dynamic-datatable',
   templateUrl: './dynamic-datatable.component.html',
@@ -30,7 +32,8 @@ export class DynamicDatatableComponent implements OnInit, OnChanges {
   displayColumns: string[];
 
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private notificationService: NotificationService
   ) {}
 
   ngOnInit() {
@@ -55,6 +58,12 @@ export class DynamicDatatableComponent implements OnInit, OnChanges {
           this.loading = false;
         }, error => {
           // do something with error
+          this.notificationService.smallBox({
+            content: 'Something went wrong',
+            color: '#a90329',
+            timeout: 4000,
+            icon: 'fa fa-warning shake animated'
+          });
           this.loading = false;
         })
   }
