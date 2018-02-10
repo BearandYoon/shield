@@ -3,12 +3,12 @@
     <div class="col-sm-6">
       <form class="form-inline full-search-form"
             [formGroup]="quickFilterForm"
-            (submit)="doFilter(quickFilterForm.value)">
+            (submit)="applyFilter()">
         <input type="text"
                class="form-control full-search"
                placeholder="Search for campaign name, ASIN, SKU"
                formControlName="amalyze.generic" />
-        <button type="submit" class="btn btn-primary" [disabled]="!quickFilterForm.valid">
+        <button class="btn btn-primary" [disabled]="!quickFilterForm.valid">
           Search
         </button>
       </form>
@@ -26,7 +26,7 @@
   </div>
 
   <div class="well" *ngIf="showFilter">
-    <form class="form-horizontal filter-form" [formGroup]="productFilterForm" (submit)="applyFilter(productFilterForm.value)">
+    <form class="form-horizontal filter-form" [formGroup]="productFilterForm" (submit)="applyFilter()">
       <div class="row">
         <div class="col-md-4 col-sm-6 col-xs-12">
           <div class="form-group">

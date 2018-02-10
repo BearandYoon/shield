@@ -6,8 +6,13 @@
     margin-bottom: 20px;
 }
 
+.well {
+    padding: 0;
+}
+
 .filter-form {
     overflow: hidden;
+    padding: 18px;
 }
 
 .product-list-container {

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
+import { NotificationService } from '../../../shared/utils/notification.service';
 import { ResearchService } from '../../../core/services/ResearchService/research.service';
 import { environment } from '../../../../environments/environment';
 
@@ -210,7 +211,8 @@ export class ProductsComponent implements OnInit {
 
   constructor(
     private researchService: ResearchService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private notificationService: NotificationService
   ) {
     this.sliderLabel = {
       visible: true,
@@ -259,20 +261,23 @@ export class ProductsComponent implements OnInit {
   applyFilter() {
     const mkId = this.getMarketPlaceIdbyName(this.productFilterForm.value.marketplace);
     this.filters = {};
+
+    if (this.quickFilterForm.value['amalyze.generic']) {
+      this.filters['amalyze.generic'] = this.quickFilterForm.value['amalyze.generic'];
+    }
+
     Object.keys(this.productFilterForm.value).forEach((key) => {
-      if (this.productFilterForm.value[key] !== this.defaultFilterValue[key]) {
+      if (this.productFilterForm.value[key].length && this.productFilterForm.value[key] !== this.defaultFilterValue[key]) {
         this.filters[key] = this.productFilterForm.value[key];
       }
     });
 
     Object.keys(this.rangeSliderFilterObj).forEach((key) => {
-      if (this.rangeSliderFilterObj[key] !== this.defaultFilterValue[key]) {
+      if (JSON.stringify(this.rangeSliderFilterObj[key]) !== JSON.stringify(this.defaultFilterValue[key])) {
         this.filters[key] = this.rangeSliderFilterObj[key];
       }
     });
     this.filters.marketplace = mkId;
-
-    console.log('filter = ', this.filters);
   }
 
   getMarketPlaceIdbyName(name): string {
