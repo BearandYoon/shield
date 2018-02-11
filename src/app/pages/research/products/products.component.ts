@@ -67,34 +67,34 @@ export class ProductsComponent implements OnInit {
       display: 'Color',
       path: '$.amazon.color'
     }, {
-    //   name: 'pieces',
-    //   display: 'Pieces',
-    //   path: ''
-    // }, {
-    //   name: 'sales_30',
-    //   display: 'Sales (30 days)',
-    //   path: ''
-    // }, {
-    //   name: 'sales_7',
-    //   display: 'Sales (7 days)',
-    //   path: ''
-    // }, {
-    //   name: 'sales_1',
-    //   display: 'Sales (1 days)',
-    //   path: ''
-    // }, {
-    //   name: 'revenue_30',
-    //   display: 'Revenue (30 days)',
-    //   path: ''
-    // }, {
-    //   name: 'revenue_7',
-    //   display: 'Revenue (7 days)',
-    //   path: ''
-    // }, {
-    //   name: 'revenue_1',
-    //   display: 'Revenue (1 days)',
-    //   path: ''
-    // }, {
+      name: 'pieces',
+      display: 'Pieces',
+      path: ''
+    }, {
+      name: 'sales_30',
+      display: 'Sales (30 days)',
+      path: ''
+    }, {
+      name: 'sales_7',
+      display: 'Sales (7 days)',
+      path: ''
+    }, {
+      name: 'sales_1',
+      display: 'Sales (1 days)',
+      path: ''
+    }, {
+      name: 'revenue_30',
+      display: 'Revenue (30 days)',
+      path: ''
+    }, {
+      name: 'revenue_7',
+      display: 'Revenue (7 days)',
+      path: ''
+    }, {
+      name: 'revenue_1',
+      display: 'Revenue (1 days)',
+      path: ''
+    }, {
       name: 'rrp',
       display: 'RRP',
       path: ''
