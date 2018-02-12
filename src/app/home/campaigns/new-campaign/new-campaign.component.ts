@@ -219,9 +219,27 @@ export class NewCampaignComponent implements OnInit, OnDestroy, DoCheck {
     }
 
     prevStep() {
+        const activeStep = this.activeStep;
         const idx = this.steps.indexOf(this.activeStep);
-        if (idx > 0) {
-            this.activeStep = this.steps[idx - 1]
+        switch (activeStep.key) {
+            case 'step1':
+                break;
+            case 'step3':
+                if (this.campaignForm.controls['targeting'].value) {
+                    this.campaignForm.controls['targeting'].setValue('');
+                } else {
+                    this.activeStep = this.steps[idx - 1];
+                }
+                break;
+            case 'step4':
+                if (this.campaignForm.controls['optimization'].value) {
+                    this.campaignForm.controls['optimization'].setValue('');
+                } else {
+                    this.activeStep = this.steps[idx - 1];
+                }
+                break;
+            default:
+                this.activeStep = this.steps[idx - 1];
         }
     }
 

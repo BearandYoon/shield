@@ -286,7 +286,7 @@
                                     </div>
                                 </div>
 
-                                <div *ngIf="calculation">
+                                <div *ngIf="campaignForm.controls['optimization'].value && calculation">
                                     <form class="calculation"  [formGroup]="calcForm">
                                         <table class="table optimization" >
                                             <tr>
