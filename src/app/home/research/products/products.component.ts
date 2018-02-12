@@ -293,6 +293,10 @@ export class ProductsComponent implements OnInit {
     this.filters = {};
 
     Object.keys(this.productFilterForm.value).forEach((key) => {
+      if (!this.productFilterForm.value[key].length) {
+        this.productFilterForm.value[key] = '';
+      }
+
       if (this.productFilterForm.value[key].length && this.productFilterForm.value[key] !== this.defaultFilterValue[key]) {
         this.filters[key] = this.productFilterForm.value[key];
       }
