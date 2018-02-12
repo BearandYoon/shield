@@ -367,13 +367,13 @@ export class NewCampaignComponent implements OnInit, OnDestroy, DoCheck {
     calculateCustomAmazonSalesFee() {
         const amazonSalesFeeRate = this.calcForm.controls['amazonSalesFeeRate'].value;
         const customSellingPrice = this.calcForm.controls['customSellingPrice'].value;
-        this.customAmazonSalesFee = amazonSalesFeeRate * customSellingPrice / 100;
+        this.customAmazonSalesFee = amazonSalesFeeRate / 100 * customSellingPrice;
     }
 
     calculateTax() {
-        const taxRate = this.calcForm.controls['taxRate'].value;
+        const taxRate = this.calcForm.controls['taxRate'].value / 100;
         const customSellingPrice = this.calcForm.controls['customSellingPrice'].value;
-        this.tax = customSellingPrice * (1 / (1 + (taxRate / 100)));
+        this.tax = customSellingPrice * (taxRate / (taxRate + 1));
     }
 
     calculateGrossMargin() {
@@ -392,7 +392,7 @@ export class NewCampaignComponent implements OnInit, OnDestroy, DoCheck {
 
     calculateResultingBid() {
         const assumedConversionRate = this.calcForm.controls['conversionRate'].value;
-        this.resultingBid = this.grossMargin * assumedConversionRate;
+        this.resultingBid = this.grossMargin * assumedConversionRate / 100;
     }
 
     createCampaign() {
