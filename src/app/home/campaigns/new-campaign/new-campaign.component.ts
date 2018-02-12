@@ -323,10 +323,10 @@ export class NewCampaignComponent implements OnInit, OnDestroy, DoCheck {
     }
 
     //calculated fields
-    private customAmazonSalesFee =  0;
-    private tax = 0;
-    private grossMargin = 0;
-    private resultingBid = 0;
+    customAmazonSalesFee =  0;
+    tax = 0;
+    grossMargin = 0;
+    resultingBid = 0;
 
     getCalculation() {
         const data = {
