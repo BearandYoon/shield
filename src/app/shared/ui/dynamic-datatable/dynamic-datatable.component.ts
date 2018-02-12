@@ -12,9 +12,11 @@ import { NotificationService } from '../../utils/notification.service';
 export class DynamicDatatableComponent implements OnInit, OnChanges {
 
   @Input() url: string;
-  @Input() filters: Object;
+  @Input() filters = {};
   @Input() schema: any[];
   @Input() rootField: string;
+  @Input() options: Object;
+  @Input() serverPagination = true;
 
   loading = false;
   render = true;
@@ -47,7 +49,10 @@ export class DynamicDatatableComponent implements OnInit, OnChanges {
 
   getData() {
     this.loading = true;
-    const data = { pagination: this.pagination, filters: this.filters || {} };
+    const data = Object.assign({ filters: this.filters }, this.options);
+    if (this.serverPagination) {
+      Object.assign(data, { pagination: this.pagination });
+    }
     this.http.post(this.url, data)
         .subscribe(res => {
           this.data = this.transformData(res[this.rootField]);
@@ -59,7 +64,7 @@ export class DynamicDatatableComponent implements OnInit, OnChanges {
         }, error => {
           // do something with error
           this.notificationService.smallBox({
-            content: 'Something went wrong',
+            content: error,
             color: '#a90329',
             timeout: 4000,
             icon: 'fa fa-warning shake animated'

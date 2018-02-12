@@ -26,6 +26,28 @@
     vertical-align: middle;
 }
 
+.well.unavailable {
+    opacity: 0.6;
+    cursor: auto;
+}
+
 .optimization {
     text-align: center;
+}
+
+.calculation th {
+    text-align: center;
+}
+
+.calculation tr td {
+    vertical-align: middle;
+}
+
+.calculation tr td:first-child {
+    text-align: left;
+}
+
+.calculation input {
+    display: inline-block;
+    width: 60px;
 }

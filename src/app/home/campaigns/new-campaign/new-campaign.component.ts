@@ -1,13 +1,14 @@
 import { Component, OnInit, OnDestroy, DoCheck } from '@angular/core';
 import { trigger, state, style, transition, animate } from '@angular/animations'
-import { BsModalRef} from "ngx-bootstrap";
+import { BsModalRef} from 'ngx-bootstrap';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 
 import { TYPES, PROGRESS } from '../campaigns.constants';
-import { NotificationService } from "../../../shared/utils/notification.service";
+import { NotificationService } from '../../../shared/utils/notification.service';
 import { CampaignsService } from '../services/campaigns.service';
+import { environment } from '../../../../environments/environment';
 
 @Component({
     selector: 'app-new-campaign',
@@ -38,12 +39,70 @@ export class NewCampaignComponent implements OnInit, OnDestroy, DoCheck {
 
     campaignForm: FormGroup;
 
+    calcForm: FormGroup;
+
     bsConfig = {
         dateInputFormat: 'DD/MM/YYYY',
         containerClass: 'theme-blue'
     };
 
     merchantSubscription: Subscription;
+
+    competitorsUrl = environment.baseUrl + '/advertising.campaign.spa.targeting.competitors.get';
+    keywordsUrl = environment.baseUrl + '/advertising.campaign.spa.targeting.keywords.get';
+
+    competitorsSchema = [
+        {
+            name: 'title',
+            display: 'Product',
+            path: '$.title'
+        },
+        {
+            name: 'brand',
+            display: 'Brand',
+            path: '$.brand'
+        },
+        {
+            name: 'asin',
+            display: 'ASIN',
+            path: '$.asin'
+        },
+        {
+            name: 'category',
+            display: 'Category',
+            path: '$.category'
+        },
+        {
+            name: 'keywords',
+            display: 'Keywords',
+            path: '$.keywords.*.count'
+        }
+    ];
+
+    keywordsSchema = [
+        {
+            name: 'keyword',
+            display: 'Keyword',
+            path: '$.keyword'
+        },
+        {
+            name: 'asins',
+            display: 'ASINS',
+            path: '$.asins'
+        },
+        {
+            name: 'keyword',
+            display: 'Keywords',
+            path: '$.keyword'
+        }
+    ];
+
+    competitorsField = 'competitors';
+    keywordsField = 'keywords';
+
+    competitorsOptions: Object;
+
+    calculation: any;
 
     constructor(public fb: FormBuilder,
                 public bsModalRef: BsModalRef,
@@ -84,7 +143,19 @@ export class NewCampaignComponent implements OnInit, OnDestroy, DoCheck {
                 this.marketplaces = marketplaces;
             });
 
-        this.getCompetitors();
+        this.calcForm = this.fb.group({
+            customSellingPrice: 0,
+            amazonSalesFeeRate: 0,
+            customAmazonVariableFee: 0,
+            customFeePerArticle: 0,
+            customFba: 0,
+            increasedFbaFee: 0,
+            taxRate: 0,
+            buyingCost: 0,
+            otherCost: 0,
+            conversionRate: 0,
+            lowestBid: 0
+        });
     }
 
     public steps = [
@@ -129,11 +200,11 @@ export class NewCampaignComponent implements OnInit, OnDestroy, DoCheck {
 
     close() {
         this.notificationService.smartMessageBox({
-            title: "",
-            content: "Are you sure you want to close the window and discard the changes?",
+            title: '',
+            content: 'Are you sure you want to close the window and discard the changes?',
             buttons: '[No][Yes]'
         }, (ButtonPressed) => {
-            if (ButtonPressed === "Yes") {
+            if (ButtonPressed === 'Yes') {
                 this.bsModalRef.hide();
             }
         });
@@ -148,7 +219,7 @@ export class NewCampaignComponent implements OnInit, OnDestroy, DoCheck {
     }
 
     prevStep() {
-        let idx = this.steps.indexOf(this.activeStep);
+        const idx = this.steps.indexOf(this.activeStep);
         if (idx > 0) {
             this.activeStep = this.steps[idx - 1]
         }
@@ -156,17 +227,17 @@ export class NewCampaignComponent implements OnInit, OnDestroy, DoCheck {
 
     nextStep() {
         this.activeStep.submitted = true;
-        if(!this.activeStep.valid){
+        if (!this.activeStep.valid) {
             return;
         }
         this.activeStep.checked = true;
-        if (this.steps.every(it=>(it.valid && it.checked))) {
+        if (this.steps.every(it => (it.valid && it.checked))) {
             this.onWizardComplete(this.campaignForm.value)
         } else {
             let idx = this.steps.indexOf(this.activeStep);
             this.activeStep = null;
             while (!this.activeStep) {
-                idx = idx == this.steps.length - 1 ? 0 : idx + 1;
+                idx = idx === this.steps.length - 1 ? 0 : idx + 1;
                 if (!this.steps[idx].valid || !this.steps[idx].checked ) {
                     this.activeStep = this.steps[idx]
                 }
@@ -189,9 +260,9 @@ export class NewCampaignComponent implements OnInit, OnDestroy, DoCheck {
             }, (error) => {
                 this.notificationService.smallBox({
                     content: error,
-                    color: "#a90329",
+                    color: '#a90329',
                     timeout: 4000,
-                    icon: "fa fa-warning shake animated"
+                    icon: 'fa fa-warning shake animated'
                 });
                 prevSkus.pop(); // delete newly added sku
                 this.campaignForm.controls['skus'].setValue(prevSkus);
@@ -213,16 +284,16 @@ export class NewCampaignComponent implements OnInit, OnDestroy, DoCheck {
 
     chooseTarget(target: string) {
         this.campaignForm.controls['targeting'].setValue(target);
-    }
 
-    competitors: Observable<any[]>;
-
-    getCompetitors() {
-        this.competitors = this.campaignsService.getTargetingCompetitors();
+        this.competitorsOptions = {
+            asin: this.campaignForm.controls['asin'].value,
+            marketplace: this.campaignForm.controls['marketplace'].value
+        };
     }
 
     chooseOptimization(optimization: string) {
         this.campaignForm.controls['optimization'].setValue(optimization);
+        this.getCalculation();
     }
 
     validateAsin() {
@@ -237,9 +308,9 @@ export class NewCampaignComponent implements OnInit, OnDestroy, DoCheck {
                 }, (error) => {
                     this.notificationService.smallBox({
                         content: error,
-                        color: "#a90329",
+                        color: '#a90329',
                         timeout: 4000,
-                        icon: "fa fa-warning shake animated"
+                        icon: 'fa fa-warning shake animated'
                     });
                     this.campaignForm.controls['asin'].setErrors({invalid: true});
                     this.asinValidating = false;
@@ -249,6 +320,79 @@ export class NewCampaignComponent implements OnInit, OnDestroy, DoCheck {
 
     getSkuClasses() {
         return this.skuValidating ? 'form-control ui-autocomplete-loading' : 'form-control';
+    }
+
+    //calculated fields
+    private customAmazonSalesFee =  0;
+    private tax = 0;
+    private grossMargin = 0;
+    private resultingBid = 0;
+
+    getCalculation() {
+        const data = {
+            asin: this.campaignForm.controls['asin'].value,
+            marketplace: this.campaignForm.controls['marketplace'].value
+        };
+        this.campaignsService.getCalculation(data).subscribe(res => {
+            this.calculation = res.calculcation;
+            this.calcForm.reset({
+                customSellingPrice: this.calculation.default.price.amount || 0.00,
+                amazonSalesFeeRate: this.calculation.custom.fees.referral.rate * 100 || 0,
+                customAmazonVariableFee: this.calculation.default.fees.variable.amount || 0.00,
+                customFeePerArticle: this.calculation.default.fees.peritem.amount || 0.00,
+                customFba: this.calculation.default.fees.fba.amount || 0.00,
+                increasedFbaFee: this.calculation.custom.fees.increased.amount || 0.00,
+                taxRate: this.calculation.custom.tax.rate * 100 || 0,
+                buyingCost: this.calculation.custom.buying.amount || 0.00,
+                otherCost: this.calculation.custom.other.amount || 0.00,
+                conversionRate: this.calculation.custom.cr * 100 || 0.00,
+                lowestBid: this.calculation.custom.bid.min || 0.00
+            });
+
+            this.calculateCustomAmazonSalesFee();
+            this.calculateTax();
+            this.calculateGrossMargin();
+            this.calculateResultingBid();
+
+            this.calcForm.valueChanges.subscribe(() => {
+                this.calculateCustomAmazonSalesFee();
+                this.calculateTax();
+                this.calculateGrossMargin();
+                this.calculateResultingBid();
+            });
+
+        })
+    }
+
+    calculateCustomAmazonSalesFee() {
+        const amazonSalesFeeRate = this.calcForm.controls['amazonSalesFeeRate'].value;
+        const customSellingPrice = this.calcForm.controls['customSellingPrice'].value;
+        this.customAmazonSalesFee = amazonSalesFeeRate * customSellingPrice / 100;
+    }
+
+    calculateTax() {
+        const taxRate = this.calcForm.controls['taxRate'].value;
+        const customSellingPrice = this.calcForm.controls['customSellingPrice'].value;
+        this.tax = customSellingPrice * (1 / (1 + (taxRate / 100)));
+    }
+
+    calculateGrossMargin() {
+        const customSellingPrice = this.calcForm.controls['customSellingPrice'].value;
+        const amazonSalesFee = this.customAmazonSalesFee;
+        const amazonVariableFee = this.calcForm.controls['customAmazonVariableFee'].value;
+        const feePerArticle = this.calcForm.controls['customFeePerArticle'].value;
+        const customFba = this.calcForm.controls['customFba'].value;
+        const increasedFbaFee = this.calcForm.controls['increasedFbaFee'].value;
+        const tax = this.tax;
+        const buyingCost = this.calcForm.controls['buyingCost'].value;
+        const otherCost = this.calcForm.controls['otherCost'].value;
+
+        this.grossMargin = customSellingPrice - amazonSalesFee - amazonVariableFee - feePerArticle - customFba - increasedFbaFee - tax - buyingCost - otherCost;
+    }
+
+    calculateResultingBid() {
+        const assumedConversionRate = this.calcForm.controls['conversionRate'].value;
+        this.resultingBid = this.grossMargin * assumedConversionRate;
     }
 
     createCampaign() {
@@ -268,15 +412,15 @@ export class NewCampaignComponent implements OnInit, OnDestroy, DoCheck {
             // backup model to compare further with
             this.lastValue = Object.assign({}, value)
         } else {
-            if (Object.keys(value).some(it=>value[it] != this.lastValue[it])) {
+            if (Object.keys(value).some(it => value[it] !== this.lastValue[it])) {
                 // change detected
-                this.steps.find(it=>it.key == 'step1').valid = this.campaignForm.controls['type'].valid;
-                this.steps.find(it=>it.key == 'step2').valid = this.campaignForm.controls['name'].valid &&
+                this.steps.find(it => it.key === 'step1').valid = this.campaignForm.controls['type'].valid;
+                this.steps.find(it => it.key === 'step2').valid = this.campaignForm.controls['name'].valid &&
                     this.campaignForm.controls['budget'].valid && this.campaignForm.controls['asin'].valid &&
                     this.campaignForm.controls['skus'].valid;
-                this.steps.find(it=>it.key == 'step3').valid = true;
-                this.steps.find(it=>it.key == 'step4').valid = true;
-                this.steps.find(it=>it.key == 'step5').valid = true;
+                this.steps.find(it => it.key === 'step3').valid = true;
+                this.steps.find(it => it.key === 'step4').valid = true;
+                this.steps.find(it => it.key === 'step5').valid = true;
 
                 this.lastValue = Object.assign({}, value)
             }

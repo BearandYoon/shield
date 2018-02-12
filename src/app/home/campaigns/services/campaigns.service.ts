@@ -37,13 +37,8 @@ export class CampaignsService {
             .catch(this.handleError)
     }
 
-    getTargetingCompetitors() {
-        return this.http.post(environment.baseUrl + '/advertising.campaigns.targeting.competitors.get', null)
-            .catch(this.handleError)
-    }
-
-    getCalculation() {
-        return this.http.post(environment.baseUrl + '/advertising.campaigns.calculation.get', null)
+    getCalculation(data) {
+        return this.http.post(environment.baseUrl + '/advertising.campaign.spa.optimization.genius.calculation.get', data)
             .catch(this.handleError)
     }
 
