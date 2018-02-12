@@ -39,6 +39,8 @@
                          allowDupes="false"
                          addOnBlur="true"
                          modelAsStrings="true"
+                         (onAdd)="onFilterChanged($event)"
+                         (onRemove)="onFilterChanged($event)"
                          formControlName="asins">
               </tag-input>
             </div>
@@ -53,6 +55,8 @@
                          allowDupes="false"
                          addOnBlur="true"
                          modelAsStrings="true"
+                         (onAdd)="onFilterChanged($event)"
+                         (onRemove)="onFilterChanged($event)"
                          formControlName="upcs">
               </tag-input>
             </div>
@@ -73,6 +77,8 @@
                          allowDupes="false"
                          addOnBlur="true"
                          modelAsStrings="true"
+                         (onAdd)="onFilterChanged($event)"
+                         (onRemove)="onFilterChanged($event)"
                          formControlName="brands">
               </tag-input>
             </div>
@@ -87,6 +93,8 @@
                          allowDupes="false"
                          addOnBlur="true"
                          modelAsStrings="true"
+                         (onAdd)="onFilterChanged($event)"
+                         (onRemove)="onFilterChanged($event)"
                          formControlName="merchants">
               </tag-input>
             </div>
@@ -122,6 +130,8 @@
                          allowDupes="false"
                          addOnBlur="true"
                          modelAsStrings="true"
+                         (onAdd)="onFilterChanged($event)"
+                         (onRemove)="onFilterChanged($event)"
                          formControlName="categories">
               </tag-input>
             </div>

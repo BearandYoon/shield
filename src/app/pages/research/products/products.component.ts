@@ -286,4 +286,8 @@ export class ProductsComponent implements OnInit {
     });
     return matchedMarketPlace.id;
   }
+
+  onFilterChanged(event) {
+    this.applyFilter();
+  }
 }
