@@ -11,7 +11,7 @@ import { JsonApiService } from 'app/core/api/json-api.service';
 })
 export class MainLayoutComponent implements OnInit {
 
-  constructor(private cache: CacheService, private jsonApi: JsonApiService) { }
+  constructor(private jsonApi: JsonApiService) { }
 
   ngOnInit() {
   }

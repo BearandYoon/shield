@@ -9,7 +9,9 @@ import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class ContentTypeInterceptor implements HttpInterceptor {
+
     constructor() {}
+
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
         request = request.clone({

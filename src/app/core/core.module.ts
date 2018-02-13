@@ -16,51 +16,56 @@ import { AuthService } from './auth/auth.service';
 import { UserStorageService } from './storage/storage.service';
 import { AuthGuardService } from './guards/auth-guard';
 import { UnauthGuardService} from './guards/unauth-guard';
-import { CacheService } from 'app/core/cache/cache.service';
 
 import { TokensInterceptor } from './interceptors/tokens-interceptor';
 import { ContentTypeInterceptor } from './interceptors/content-type-interceptor';
+import { ErrorHandlerInterceptor } from './interceptors/error-handler-interceptor';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    TooltipModule.forRoot(),
-    BsDropdownModule.forRoot(),
-    ProgressbarModule.forRoot(),
-    AlertModule.forRoot(),
-    TabsModule.forRoot(),
-  ],
-  exports: [
-    HttpClientModule
-  ],
-  declarations: [],
-  providers: [
-    JsonApiService,
-    LayoutService,
-    UserService,
-    VoiceControlService,
-    VoiceRecognitionService,
-    SoundService,
+    imports: [
+        CommonModule,
+        TooltipModule.forRoot(),
+        BsDropdownModule.forRoot(),
+        ProgressbarModule.forRoot(),
+        AlertModule.forRoot(),
+        TabsModule.forRoot()
+    ],
+    exports: [
+        HttpClientModule
+    ],
+    declarations: [],
+    providers: [
+        JsonApiService,
+        LayoutService,
+        UserService,
+        VoiceControlService,
+        VoiceRecognitionService,
+        SoundService,
 
-    AuthService,
-    UserStorageService,
-    CacheService,
+        AuthService,
+        UserStorageService,
 
-    AuthGuardService,
-    UnauthGuardService,
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: ContentTypeInterceptor,
-      multi: true
-    }, {
-      provide: HTTP_INTERCEPTORS,
-      useClass: TokensInterceptor,
-      multi: true
-    }
-  ]
+        AuthGuardService,
+        UnauthGuardService,
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: ContentTypeInterceptor,
+            multi: true
+        },
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: TokensInterceptor,
+            multi: true
+        },
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: ErrorHandlerInterceptor,
+            multi: true
+        }
+    ]
 })
 export class CoreModule {
-  constructor( @Optional() @SkipSelf() parentModule: CoreModule) {
-    throwIfAlreadyLoaded(parentModule, 'CoreModule');
-  }
+    constructor( @Optional() @SkipSelf() parentModule: CoreModule) {
+        throwIfAlreadyLoaded(parentModule, 'CoreModule');
+    }
 }
