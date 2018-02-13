@@ -10,7 +10,7 @@ const routes: Routes = [
         children: [
             {
                 path: 'product',
-                loadChildren: 'app/pages/research/products/products.module#ProductsModule'
+                loadChildren: 'app/home/research/products/products.module#ProductsModule'
             }, {
                 path: '',
                 pathMatch: 'full',

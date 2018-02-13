@@ -63,8 +63,10 @@ export class DynamicDatatableComponent implements OnInit, OnChanges {
           this.loading = false;
         }, error => {
           // do something with error
+          const errMsg = (error.error && error.error.request  && error.error.request.error && error.error.request.error.code ) ?
+            error.error.request.error.code : 'Server error';
           this.notificationService.smallBox({
-            content: error,
+            content: errMsg,
             color: '#a90329',
             timeout: 4000,
             icon: 'fa fa-warning shake animated'

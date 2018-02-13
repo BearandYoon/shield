@@ -7,15 +7,16 @@ export const homeRoutes: Routes = [
         path: '',
         component: HomeComponent,
         children: [
-            {
-                path: 'dashboard',
-                loadChildren: 'app/home/dashboard/dashboard.module#DashboardModule'
-            },
-            {
-                path: 'advertising/campaigns',
-                loadChildren: 'app/home/campaigns/campaigns.module#CampaignsModule'
-            },
-            {
+          {
+            path: 'dashboard',
+            loadChildren: 'app/home/dashboard/dashboard.module#DashboardModule'
+          }, {
+            path: 'advertising/campaigns',
+            loadChildren: 'app/home/campaigns/campaigns.module#CampaignsModule'
+          }, {
+            path: 'research',
+            loadChildren: 'app/home/research/research.module#ResearchModule'
+          }, {
                 path: '',
                 pathMatch: 'full',
                 redirectTo: 'dashboard'

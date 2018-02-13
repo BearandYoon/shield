@@ -134,13 +134,16 @@ export class ProductsComponent implements OnInit {
     'title': '',
     'brands': '',
     'merchants': '',
-    'available': 'empty',
+    'available': '',
     'marketplace': '',
     'categories': '',
-    'prime': 'empty',
-    'advertising.spa': 'empty',
-    'buybox': 'empty',
-    'type': 'empty',
+    'prime': '',
+    'advertising.spa': '',
+    'buybox': '',
+    'type': ''
+  };
+
+  defaultSliderValue = {
     'competitors': {
       'min': 1,
       'max': 999999
@@ -208,11 +211,11 @@ export class ProductsComponent implements OnInit {
   quickFilterForm: FormGroup;
   sliderLabel: any;
   sliderToolTipEnabled: any;
+  genericFilterEnabled = false;
 
   constructor(
     private researchService: ResearchService,
-    private fb: FormBuilder,
-    private notificationService: NotificationService
+    private fb: FormBuilder
   ) {
     this.sliderLabel = {
       visible: true,
@@ -234,24 +237,51 @@ export class ProductsComponent implements OnInit {
       selectedMarketPlace = this.marketplaces[0].name;
     }
 
-    this.quickFilterForm = this.fb.group({
-      'amalyze.generic': ['', Validators.required]
-    });
-
     this.productFilterForm = this.fb.group({
       'asins': '',
       'upcs': '',
       'title': '',
       'brands': '',
       'merchants': '',
-      'available': 'empty',
+      'available': '',
       'marketplace': selectedMarketPlace,
       'categories': '',
-      'prime': 'empty',
-      'advertising.spa': 'empty',
-      'buybox': 'empty',
-      'type': 'empty'
+      'prime': '',
+      'advertising.spa': '',
+      'buybox': '',
+      'type': ''
     });
+
+    this.quickFilterForm = this.fb.group({
+      'amalyze.generic': ['', [Validators.required]]
+    });
+
+    this.defaultFilterValue.marketplace = selectedMarketPlace;
+
+    this.onChangeGenericFilter();
+  }
+
+  onChangeGenericFilter() {
+    this.productFilterForm.valueChanges.subscribe(val => {
+      this.isAvailableGenericFilter();
+    });
+
+    this.quickFilterForm.valueChanges.subscribe(val => {
+      this.isAvailableGenericFilter();
+    })
+  }
+
+  onSliderChanged() {
+    this.isAvailableGenericFilter();
+  }
+
+  isAvailableGenericFilter() {
+    if ((JSON.stringify(this.productFilterForm.value) === JSON.stringify(this.defaultFilterValue))
+      && (JSON.stringify(this.rangeSliderFilterObj) === JSON.stringify(this.defaultSliderValue))) {
+      this.genericFilterEnabled = true;
+    } else {
+      this.genericFilterEnabled = false;
+    }
   }
 
   openFilter() {
@@ -262,18 +292,18 @@ export class ProductsComponent implements OnInit {
     const mkId = this.getMarketPlaceIdbyName(this.productFilterForm.value.marketplace);
     this.filters = {};
 
-    if (this.quickFilterForm.value['amalyze.generic']) {
-      this.filters['amalyze.generic'] = this.quickFilterForm.value['amalyze.generic'];
-    }
-
     Object.keys(this.productFilterForm.value).forEach((key) => {
+      if (!this.productFilterForm.value[key].length) {
+        this.productFilterForm.value[key] = '';
+      }
+
       if (this.productFilterForm.value[key].length && this.productFilterForm.value[key] !== this.defaultFilterValue[key]) {
         this.filters[key] = this.productFilterForm.value[key];
       }
     });
 
     Object.keys(this.rangeSliderFilterObj).forEach((key) => {
-      if (JSON.stringify(this.rangeSliderFilterObj[key]) !== JSON.stringify(this.defaultFilterValue[key])) {
+      if (JSON.stringify(this.rangeSliderFilterObj[key]) !== JSON.stringify(this.defaultSliderValue[key])) {
         this.filters[key] = this.rangeSliderFilterObj[key];
       }
     });
@@ -285,5 +315,19 @@ export class ProductsComponent implements OnInit {
       return marketplace.name === name;
     });
     return matchedMarketPlace.id;
+  }
+
+  onFilterChanged(event) {
+    this.applyFilter();
+  }
+
+  applyGenericFilter() {
+    const mkId = this.getMarketPlaceIdbyName(this.productFilterForm.value.marketplace);
+    this.filters = {};
+
+    this.filters.marketplace = mkId;
+    if (this.quickFilterForm.value['amalyze.generic']) {
+      this.filters['amalyze.generic'] = this.quickFilterForm.value['amalyze.generic'];
+    }
   }
 }

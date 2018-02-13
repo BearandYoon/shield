@@ -3,12 +3,12 @@
     <div class="col-sm-6">
       <form class="form-inline full-search-form"
             [formGroup]="quickFilterForm"
-            (submit)="applyFilter()">
+            (submit)="applyGenericFilter()">
         <input type="text"
                class="form-control full-search"
                placeholder="Search for product name, ASIN, SKU"
-               formControlName="amalyze.generic" />
-        <button class="btn btn-primary" [disabled]="!quickFilterForm.valid">
+               formControlName="amalyze.generic"/>
+        <button class="btn btn-primary" [disabled]="!quickFilterForm.valid || !genericFilterEnabled">
           Search
         </button>
       </form>
@@ -39,6 +39,8 @@
                          allowDupes="false"
                          addOnBlur="true"
                          modelAsStrings="true"
+                         (onAdd)="onFilterChanged($event)"
+                         (onRemove)="onFilterChanged($event)"
                          formControlName="asins">
               </tag-input>
             </div>
@@ -53,6 +55,8 @@
                          allowDupes="false"
                          addOnBlur="true"
                          modelAsStrings="true"
+                         (onAdd)="onFilterChanged($event)"
+                         (onRemove)="onFilterChanged($event)"
                          formControlName="upcs">
               </tag-input>
             </div>
@@ -73,6 +77,8 @@
                          allowDupes="false"
                          addOnBlur="true"
                          modelAsStrings="true"
+                         (onAdd)="onFilterChanged($event)"
+                         (onRemove)="onFilterChanged($event)"
                          formControlName="brands">
               </tag-input>
             </div>
@@ -87,6 +93,8 @@
                          allowDupes="false"
                          addOnBlur="true"
                          modelAsStrings="true"
+                         (onAdd)="onFilterChanged($event)"
+                         (onRemove)="onFilterChanged($event)"
                          formControlName="merchants">
               </tag-input>
             </div>
@@ -98,9 +106,9 @@
             <label for="available" class="col-sm-3 control-label">Available</label>
             <div class="col-sm-8">
               <select class="form-control" id="available" formControlName="available">
+                <option value=""></option>
                 <option value="true">true</option>
                 <option value="false">false</option>
-                <option value="empty">empty</option>
               </select>
             </div>
           </div>
@@ -122,6 +130,8 @@
                          allowDupes="false"
                          addOnBlur="true"
                          modelAsStrings="true"
+                         (onAdd)="onFilterChanged($event)"
+                         (onRemove)="onFilterChanged($event)"
                          formControlName="categories">
               </tag-input>
             </div>
@@ -130,9 +140,9 @@
             <label for="prime" class="col-sm-3 control-label">Prime</label>
             <div class="col-sm-8">
               <select class="form-control" id="prime" formControlName="prime">
+                <option value=""></option>
                 <option value="true">true</option>
                 <option value="false">false</option>
-                <option value="empty">empty</option>
               </select>
             </div>
           </div>
@@ -140,9 +150,9 @@
             <label for="sponsor" class="col-sm-3 control-label">Sponsored Products</label>
             <div class="col-sm-8">
               <select class="form-control" id="sponsor" formControlName="advertising.spa">
+                <option value=""></option>
                 <option value="true">true</option>
                 <option value="false">false</option>
-                <option value="empty">empty</option>
               </select>
             </div>
           </div>
@@ -150,9 +160,9 @@
             <label for="buybox" class="col-sm-3 control-label">Buybox</label>
             <div class="col-sm-8">
               <select class="form-control" id="buybox" formControlName="buybox">
+                <option value=""></option>
                 <option value="true">true</option>
                 <option value="false">false</option>
-                <option value="empty">empty</option>
               </select>
             </div>
           </div>
@@ -160,10 +170,10 @@
             <label for="type" class="col-sm-3 control-label">Type</label>
             <div class="col-sm-8">
               <select class="form-control" id="type" formControlName="type">
+                <option value=""></option>
                 <option value="child">child</option>
                 <option value="parent">parent</option>
                 <option value="standalone">standalone</option>
-                <option value="empty">empty</option>
               </select>
             </div>
           </div>
@@ -174,13 +184,14 @@
             <label class="col-sm-3 control-label">Competitors</label>
             <div class="col-sm-8">
               <dx-range-slider
-                      [min]="this.defaultFilterValue.competitors.min"
-                      [max]="this.defaultFilterValue.competitors.max"
+                      [min]="this.defaultSliderValue.competitors.min"
+                      [max]="this.defaultSliderValue.competitors.max"
                       [(start)]="this.rangeSliderFilterObj.competitors.min"
                       [(end)]="this.rangeSliderFilterObj.competitors.max"
                       [step]="1"
                       [label]="sliderLabel"
                       [tooltip]="sliderToolTipEnabled"
+                      (onValueChanged)="onSliderChanged()"
               ></dx-range-slider>
             </div>
           </div>
@@ -188,13 +199,14 @@
             <label class="col-sm-3 control-label">Competitors offering Prime</label>
             <div class="col-sm-8">
               <dx-range-slider
-                      [min]="this.defaultFilterValue['competitors.prime'].min"
-                      [max]="this.defaultFilterValue['competitors.prime'].max"
+                      [min]="this.defaultSliderValue['competitors.prime'].min"
+                      [max]="this.defaultSliderValue['competitors.prime'].max"
                       [(start)]="this.rangeSliderFilterObj['competitors.prime'].min"
                       [(end)]="this.rangeSliderFilterObj['competitors.prime'].max"
                       [step]="1"
                       [label]="sliderLabel"
                       [tooltip]="sliderToolTipEnabled"
+                      (onValueChanged)="onSliderChanged()"
               ></dx-range-slider>
             </div>
           </div>
@@ -202,13 +214,14 @@
             <label class="col-sm-3 control-label">BSR</label>
             <div class="col-sm-8">
               <dx-range-slider
-                      [min]="this.defaultFilterValue.bsr.min"
-                      [max]="this.defaultFilterValue.bsr.max"
+                      [min]="this.defaultSliderValue.bsr.min"
+                      [max]="this.defaultSliderValue.bsr.max"
                       [(start)]="this.rangeSliderFilterObj.bsr.min"
                       [(end)]="this.rangeSliderFilterObj.bsr.max"
                       [step]="1"
                       [label]="sliderLabel"
                       [tooltip]="sliderToolTipEnabled"
+                      (onValueChanged)="onSliderChanged()"
               ></dx-range-slider>
             </div>
           </div>
@@ -216,13 +229,14 @@
             <label class="col-sm-3 control-label">Price</label>
             <div class="col-sm-8">
               <dx-range-slider
-                      [min]="this.defaultFilterValue.price.min"
-                      [max]="this.defaultFilterValue.price.max"
+                      [min]="this.defaultSliderValue.price.min"
+                      [max]="this.defaultSliderValue.price.max"
                       [(start)]="this.rangeSliderFilterObj.price.min"
                       [(end)]="this.rangeSliderFilterObj.price.max"
                       [step]="1"
                       [label]="sliderLabel"
                       [tooltip]="sliderToolTipEnabled"
+                      (onValueChanged)="onSliderChanged()"
               ></dx-range-slider>
             </div>
           </div>
@@ -230,13 +244,14 @@
             <label class="col-sm-3 control-label">Optimization</label>
             <div class="col-sm-8">
               <dx-range-slider
-                      [min]="this.defaultFilterValue.optimization.min"
-                      [max]="this.defaultFilterValue.optimization.max"
+                      [min]="this.defaultSliderValue.optimization.min"
+                      [max]="this.defaultSliderValue.optimization.max"
                       [(start)]="this.rangeSliderFilterObj.optimization.min"
                       [(end)]="this.rangeSliderFilterObj.optimization.max"
                       [step]="1"
                       [label]="sliderLabel"
                       [tooltip]="sliderToolTipEnabled"
+                      (onValueChanged)="onSliderChanged()"
               ></dx-range-slider>
             </div>
           </div>
@@ -244,13 +259,14 @@
             <label class="col-sm-3 control-label">Rating</label>
             <div class="col-sm-8">
               <dx-range-slider
-                      [min]="this.defaultFilterValue.rating.min"
-                      [max]="this.defaultFilterValue.rating.max"
+                      [min]="this.defaultSliderValue.rating.min"
+                      [max]="this.defaultSliderValue.rating.max"
                       [(start)]="this.rangeSliderFilterObj.rating.min"
                       [(end)]="this.rangeSliderFilterObj.rating.max"
                       [step]="1"
                       [label]="sliderLabel"
                       [tooltip]="sliderToolTipEnabled"
+                      (onValueChanged)="onSliderChanged()"
               ></dx-range-slider>
             </div>
           </div>
@@ -258,13 +274,14 @@
             <label class="col-sm-3 control-label">Reviews</label>
             <div class="col-sm-8">
               <dx-range-slider
-                      [min]="this.defaultFilterValue.reviews.min"
-                      [max]="this.defaultFilterValue.reviews.max"
+                      [min]="this.defaultSliderValue.reviews.min"
+                      [max]="this.defaultSliderValue.reviews.max"
                       [(start)]="this.rangeSliderFilterObj.reviews.min"
                       [(end)]="this.rangeSliderFilterObj.reviews.max"
                       [step]="1"
                       [label]="sliderLabel"
                       [tooltip]="sliderToolTipEnabled"
+                      (onValueChanged)="onSliderChanged()"
               ></dx-range-slider>
             </div>
           </div>

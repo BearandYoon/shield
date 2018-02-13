@@ -14,9 +14,6 @@ export const routes: Routes = [
                 path: '',
                 loadChildren: 'app/home/home.module#HomeModule'
             }, {
-                path: 'research',
-                loadChildren: 'app/pages/research/research.module#ResearchModule'
-            }, {
                 path: '',
                 redirectTo: 'home',
                 pathMatch: 'full'
