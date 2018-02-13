@@ -134,13 +134,13 @@ export class ProductsComponent implements OnInit {
     'title': '',
     'brands': '',
     'merchants': '',
-    'available': 'empty',
+    'available': '',
     'marketplace': '',
     'categories': '',
-    'prime': 'empty',
-    'advertising.spa': 'empty',
-    'buybox': 'empty',
-    'type': 'empty'
+    'prime': '',
+    'advertising.spa': '',
+    'buybox': '',
+    'type': ''
   };
 
   defaultSliderValue = {
@@ -243,13 +243,13 @@ export class ProductsComponent implements OnInit {
       'title': '',
       'brands': '',
       'merchants': '',
-      'available': 'empty',
+      'available': '',
       'marketplace': selectedMarketPlace,
       'categories': '',
-      'prime': 'empty',
-      'advertising.spa': 'empty',
-      'buybox': 'empty',
-      'type': 'empty'
+      'prime': '',
+      'advertising.spa': '',
+      'buybox': '',
+      'type': ''
     });
 
     this.quickFilterForm = this.fb.group({
