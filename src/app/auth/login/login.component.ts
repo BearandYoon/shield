@@ -34,11 +34,11 @@ export class LoginComponent implements OnInit {
       persist: true
     });
 
-    this.loginForm.setValue({
-        username: 'im@amalyze.com',
-        password: 'ohr5Gaep',
-        persist: true
-    });
+    // this.loginForm.setValue({
+    //     username: 'im@amalyze.com',
+    //     password: 'ohr5Gaep',
+    //     persist: true
+    // });
   }
 
   login(captcha, data) {
