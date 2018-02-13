@@ -62,11 +62,8 @@ export class DynamicDatatableComponent implements OnInit, OnChanges {
           }, 10);
           this.loading = false;
         }, error => {
-          // do something with error
-          const errMsg = (error.error && error.error.request  && error.error.request.error && error.error.request.error.code ) ?
-            error.error.request.error.code : 'Server error';
           this.notificationService.smallBox({
-            content: errMsg,
+            content: this.handleError(error),
             color: '#a90329',
             timeout: 4000,
             icon: 'fa fa-warning shake animated'
@@ -89,6 +86,11 @@ export class DynamicDatatableComponent implements OnInit, OnChanges {
       transformedEntries.push(transformedEntry);
     });
     return transformedEntries;
+  }
+
+  handleError(error) {
+    return (error.error && error.error.request  && error.error.request.error && error.error.request.error.code ) ?
+      error.error.request.error.code : 'Server error';
   }
 
 }

@@ -180,114 +180,333 @@
         </div>
 
         <div class="col-md-4 col-sm-6 col-xs-12">
-          <div class="form-group">
+          <div formGroupName="competitors" class="form-group" 
+            [ngClass]="{'has-error':!productFilterForm.controls.competitors.valid && productFilterForm.controls.competitors.touched}">
             <label class="col-sm-3 control-label">Competitors</label>
-            <div class="col-sm-8">
-              <dx-range-slider
-                      [min]="this.defaultSliderValue.competitors.min"
-                      [max]="this.defaultSliderValue.competitors.max"
-                      [(start)]="this.rangeSliderFilterObj.competitors.min"
-                      [(end)]="this.rangeSliderFilterObj.competitors.max"
-                      [step]="1"
-                      [label]="sliderLabel"
-                      [tooltip]="sliderToolTipEnabled"
-                      (onValueChanged)="onSliderChanged()"
-              ></dx-range-slider>
+            <div class="col-sm-9">
+              <div class="row">
+                <div class="col-sm-6 needMinus">
+                  <input type="number"
+                         min="1" max="999999"
+                         class="form-control"
+                         [ngClass]="{'ui-autocomplete-loading': asinValidating}"
+                         formControlName="min"
+                         (blur)="validateRangeValue(productFilterForm.controls.competitors)">
+
+                  <span *ngIf="productFilterForm.controls.competitors.controls.min.errors &&
+                               productFilterForm.controls.competitors.controls.min.errors.required &&
+                               productFilterForm.controls.competitors.controls.min.touched" class="help-block">
+                    This field is required
+                  </span>
+
+                  <span *ngIf="productFilterForm.controls.competitors.controls.min.errors &&
+                               productFilterForm.controls.competitors.controls.min.errors.invalid &&
+                               productFilterForm.controls.competitors.controls.min.touched" class="help-block">
+                    This field is invalid
+                  </span>
+                </div>
+                <div class="col-sm-6">
+                  <input type="number"
+                         min="1" max="999999"
+                         class="form-control"
+                         [ngClass]="{'ui-autocomplete-loading': asinValidating}"
+                         formControlName="max"
+                         (blur)="validateRangeValue(productFilterForm.controls.competitors)">
+
+                  <span *ngIf="productFilterForm.controls.competitors.controls.max.errors &&
+                               productFilterForm.controls.competitors.controls.max.errors.required &&
+                               productFilterForm.controls.competitors.controls.max.touched" class="help-block">
+                    This field is required
+                  </span>
+
+                  <span *ngIf="productFilterForm.controls.competitors.controls.max.errors &&
+                               productFilterForm.controls.competitors.controls.max.errors.invalid &&
+                               productFilterForm.controls.competitors.controls.max.touched" class="help-block">
+                    This field is invalid
+                  </span>
+                </div>
+              </div>
             </div>
           </div>
-          <div class="form-group">
+          <div formGroupName="competitors_prime" class="form-group" 
+            [ngClass]="{'has-error':!productFilterForm.controls.competitors_prime.valid && productFilterForm.controls.competitors_prime.touched}">
             <label class="col-sm-3 control-label">Competitors offering Prime</label>
-            <div class="col-sm-8">
-              <dx-range-slider
-                      [min]="this.defaultSliderValue['competitors.prime'].min"
-                      [max]="this.defaultSliderValue['competitors.prime'].max"
-                      [(start)]="this.rangeSliderFilterObj['competitors.prime'].min"
-                      [(end)]="this.rangeSliderFilterObj['competitors.prime'].max"
-                      [step]="1"
-                      [label]="sliderLabel"
-                      [tooltip]="sliderToolTipEnabled"
-                      (onValueChanged)="onSliderChanged()"
-              ></dx-range-slider>
+            <div class="col-sm-9">
+              <div class="row">
+                <div class="col-sm-6 needMinus">
+                  <input type="number"
+                         class="form-control"
+                         [ngClass]="{'ui-autocomplete-loading': asinValidating}"
+                         formControlName="min"
+                         (blur)="validateRangeValue(productFilterForm.controls.competitors_prime)">
+
+                  <span *ngIf="productFilterForm.controls.competitors_prime.controls.min.errors &&
+                               productFilterForm.controls.competitors_prime.controls.min.errors.required &&
+                               productFilterForm.controls.competitors_prime.controls.min.touched" class="help-block">
+                    This field is required
+                  </span>
+
+                  <span *ngIf="productFilterForm.controls.competitors_prime.controls.min.errors &&
+                               productFilterForm.controls.competitors_prime.controls.min.errors.invalid &&
+                               productFilterForm.controls.competitors_prime.controls.min.touched" class="help-block">
+                    This field is invalid
+                  </span>
+                </div>
+                <div class="col-sm-6">
+                  <input type="number"
+                         class="form-control"
+                         [ngClass]="{'ui-autocomplete-loading': asinValidating}"
+                         formControlName="max"
+                         (blur)="validateRangeValue(productFilterForm.controls.competitors_prime)">
+
+                  <span *ngIf="productFilterForm.controls.competitors_prime.controls.max.errors &&
+                               productFilterForm.controls.competitors_prime.controls.max.errors.required &&
+                               productFilterForm.controls.competitors_prime.controls.max.touched" class="help-block">
+                    This field is required
+                  </span>
+
+                  <span *ngIf="productFilterForm.controls.competitors_prime.controls.max.errors &&
+                               productFilterForm.controls.competitors_prime.controls.max.errors.invalid &&
+                               productFilterForm.controls.competitors_prime.controls.max.touched" class="help-block">
+                    This field is invalid
+                  </span>
+                </div>
+              </div>
             </div>
           </div>
-          <div class="form-group">
+          <div formGroupName="bsr" class="form-group" 
+            [ngClass]="{'has-error':!productFilterForm.controls.bsr.valid && productFilterForm.controls.bsr.touched}">
             <label class="col-sm-3 control-label">BSR</label>
-            <div class="col-sm-8">
-              <dx-range-slider
-                      [min]="this.defaultSliderValue.bsr.min"
-                      [max]="this.defaultSliderValue.bsr.max"
-                      [(start)]="this.rangeSliderFilterObj.bsr.min"
-                      [(end)]="this.rangeSliderFilterObj.bsr.max"
-                      [step]="1"
-                      [label]="sliderLabel"
-                      [tooltip]="sliderToolTipEnabled"
-                      (onValueChanged)="onSliderChanged()"
-              ></dx-range-slider>
+            <div class="col-sm-9">
+              <div class="row">
+                <div class="col-sm-6 needMinus">
+                  <input type="number"
+                         class="form-control"
+                         [ngClass]="{'ui-autocomplete-loading': asinValidating}"
+                         formControlName="min"
+                         (blur)="validateRangeValue(productFilterForm.controls.bsr)">
+
+                  <span *ngIf="productFilterForm.controls.bsr.controls.min.errors &&
+                               productFilterForm.controls.bsr.controls.min.errors.required &&
+                               productFilterForm.controls.bsr.controls.min.touched" class="help-block">
+                    This field is required
+                  </span>
+
+                  <span *ngIf="productFilterForm.controls.bsr.controls.min.errors &&
+                               productFilterForm.controls.bsr.controls.min.errors.invalid &&
+                               productFilterForm.controls.bsr.controls.min.touched" class="help-block">
+                    This field is invalid
+                  </span>
+                </div>
+                <div class="col-sm-6">
+                  <input type="number"
+                         class="form-control"
+                         [ngClass]="{'ui-autocomplete-loading': asinValidating}"
+                         formControlName="max"
+                         (blur)="validateRangeValue(productFilterForm.controls.bsr)">
+
+                  <span *ngIf="productFilterForm.controls.bsr.controls.max.errors &&
+                               productFilterForm.controls.bsr.controls.max.errors.required &&
+                               productFilterForm.controls.bsr.controls.max.touched" class="help-block">
+                    This field is required
+                  </span>
+
+                  <span *ngIf="productFilterForm.controls.bsr.controls.max.errors &&
+                               productFilterForm.controls.bsr.controls.max.errors.invalid &&
+                               productFilterForm.controls.bsr.controls.max.touched" class="help-block">
+                    This field is invalid
+                  </span>
+                </div>
+              </div>
             </div>
           </div>
-          <div class="form-group">
+          <div formGroupName="price" class="form-group" 
+            [ngClass]="{'has-error':!productFilterForm.controls.price.valid && productFilterForm.controls.price.touched}">
             <label class="col-sm-3 control-label">Price</label>
-            <div class="col-sm-8">
-              <dx-range-slider
-                      [min]="this.defaultSliderValue.price.min"
-                      [max]="this.defaultSliderValue.price.max"
-                      [(start)]="this.rangeSliderFilterObj.price.min"
-                      [(end)]="this.rangeSliderFilterObj.price.max"
-                      [step]="1"
-                      [label]="sliderLabel"
-                      [tooltip]="sliderToolTipEnabled"
-                      (onValueChanged)="onSliderChanged()"
-              ></dx-range-slider>
+            <div class="col-sm-9">
+              <div class="row">
+                <div class="col-sm-6 needMinus">
+                  <input type="number"
+                         class="form-control"
+                         [ngClass]="{'ui-autocomplete-loading': asinValidating}"
+                         formControlName="min"
+                         (blur)="validateRangeValue(productFilterForm.controls.price)">
+
+                  <span *ngIf="productFilterForm.controls.price.controls.min.errors &&
+                               productFilterForm.controls.price.controls.min.errors.required &&
+                               productFilterForm.controls.price.controls.min.touched" class="help-block">
+                    This field is required
+                  </span>
+
+                  <span *ngIf="productFilterForm.controls.price.controls.min.errors &&
+                               productFilterForm.controls.price.controls.min.errors.invalid &&
+                               productFilterForm.controls.price.controls.min.touched" class="help-block">
+                    This field is invalid
+                  </span>
+                </div>
+                <div class="col-sm-6">
+                  <input type="number"
+                         class="form-control"
+                         [ngClass]="{'ui-autocomplete-loading': asinValidating}"
+                         formControlName="max"
+                         (blur)="validateRangeValue(productFilterForm.controls.price)">
+
+                  <span *ngIf="productFilterForm.controls.price.controls.max.errors &&
+                               productFilterForm.controls.price.controls.max.errors.required &&
+                               productFilterForm.controls.price.controls.max.touched" class="help-block">
+                    This field is required
+                  </span>
+
+                  <span *ngIf="productFilterForm.controls.price.controls.max.errors &&
+                               productFilterForm.controls.price.controls.max.errors.invalid &&
+                               productFilterForm.controls.price.controls.max.touched" class="help-block">
+                    This field is invalid
+                  </span>
+                </div>
+              </div>
             </div>
           </div>
-          <div class="form-group">
+          <div formGroupName="optimization" class="form-group" 
+            [ngClass]="{'has-error':!productFilterForm.controls.optimization.valid && productFilterForm.controls.optimization.touched}">
             <label class="col-sm-3 control-label">Optimization</label>
-            <div class="col-sm-8">
-              <dx-range-slider
-                      [min]="this.defaultSliderValue.optimization.min"
-                      [max]="this.defaultSliderValue.optimization.max"
-                      [(start)]="this.rangeSliderFilterObj.optimization.min"
-                      [(end)]="this.rangeSliderFilterObj.optimization.max"
-                      [step]="1"
-                      [label]="sliderLabel"
-                      [tooltip]="sliderToolTipEnabled"
-                      (onValueChanged)="onSliderChanged()"
-              ></dx-range-slider>
+            <div class="col-sm-9">
+              <div class="row">
+                <div class="col-sm-6 needMinus">
+                  <input type="number"
+                         class="form-control"
+                         [ngClass]="{'ui-autocomplete-loading': asinValidating}"
+                         formControlName="min"
+                         (blur)="validateRangeValue(productFilterForm.controls.optimization)">
+
+                  <span *ngIf="productFilterForm.controls.optimization.controls.min.errors &&
+                               productFilterForm.controls.optimization.controls.min.errors.required &&
+                               productFilterForm.controls.optimization.controls.min.touched" class="help-block">
+                    This field is required
+                  </span>
+
+                  <span *ngIf="productFilterForm.controls.optimization.controls.min.errors &&
+                               productFilterForm.controls.optimization.controls.min.errors.invalid &&
+                               productFilterForm.controls.optimization.controls.min.touched" class="help-block">
+                    This field is invalid
+                  </span>
+                </div>
+                <div class="col-sm-6">
+                  <input type="number"
+                         class="form-control"
+                         [ngClass]="{'ui-autocomplete-loading': asinValidating}"
+                         formControlName="max"
+                         (blur)="validateRangeValue(productFilterForm.controls.optimization)">
+
+                  <span *ngIf="productFilterForm.controls.optimization.controls.max.errors &&
+                               productFilterForm.controls.optimization.controls.max.errors.required &&
+                               productFilterForm.controls.optimization.controls.max.touched" class="help-block">
+                    This field is required
+                  </span>
+
+                  <span *ngIf="productFilterForm.controls.optimization.controls.max.errors &&
+                               productFilterForm.controls.optimization.controls.max.errors.invalid &&
+                               productFilterForm.controls.optimization.controls.max.touched" class="help-block">
+                    This field is invalid
+                  </span>
+                </div>
+              </div>
             </div>
           </div>
-          <div class="form-group">
+          <div formGroupName="rating" class="form-group" 
+            [ngClass]="{'has-error':!productFilterForm.controls.rating.valid && productFilterForm.controls.rating.touched}">
             <label class="col-sm-3 control-label">Rating</label>
-            <div class="col-sm-8">
-              <dx-range-slider
-                      [min]="this.defaultSliderValue.rating.min"
-                      [max]="this.defaultSliderValue.rating.max"
-                      [(start)]="this.rangeSliderFilterObj.rating.min"
-                      [(end)]="this.rangeSliderFilterObj.rating.max"
-                      [step]="1"
-                      [label]="sliderLabel"
-                      [tooltip]="sliderToolTipEnabled"
-                      (onValueChanged)="onSliderChanged()"
-              ></dx-range-slider>
+            <div class="col-sm-9">
+              <div class="row">
+                <div class="col-sm-6 needMinus">
+                  <input type="number"
+                         class="form-control"
+                         [ngClass]="{'ui-autocomplete-loading': asinValidating}"
+                         formControlName="min"
+                         (blur)="validateRangeValue(productFilterForm.controls.rating)">
+
+                  <span *ngIf="productFilterForm.controls.rating.controls.min.errors &&
+                               productFilterForm.controls.rating.controls.min.errors.required &&
+                               productFilterForm.controls.rating.controls.min.touched" class="help-block">
+                    This field is required
+                  </span>
+
+                  <span *ngIf="productFilterForm.controls.rating.controls.min.errors &&
+                               productFilterForm.controls.rating.controls.min.errors.invalid &&
+                               productFilterForm.controls.rating.controls.min.touched" class="help-block">
+                    This field is invalid
+                  </span>
+                </div>
+                <div class="col-sm-6">
+                  <input type="number"
+                         class="form-control"
+                         [ngClass]="{'ui-autocomplete-loading': asinValidating}"
+                         formControlName="max"
+                         (blur)="validateRangeValue(productFilterForm.controls.rating)">
+
+                  <span *ngIf="productFilterForm.controls.rating.controls.max.errors &&
+                               productFilterForm.controls.rating.controls.max.errors.required &&
+                               productFilterForm.controls.rating.controls.max.touched" class="help-block">
+                    This field is required
+                  </span>
+
+                  <span *ngIf="productFilterForm.controls.rating.controls.max.errors &&
+                               productFilterForm.controls.rating.controls.max.errors.invalid &&
+                               productFilterForm.controls.rating.controls.max.touched" class="help-block">
+                    This field is invalid
+                  </span>
+                </div>
+              </div>
             </div>
           </div>
-          <div class="form-group">
+          <div formGroupName="reviews" class="form-group" 
+            [ngClass]="{'has-error':!productFilterForm.controls.reviews.valid && productFilterForm.controls.reviews.touched}">
             <label class="col-sm-3 control-label">Reviews</label>
-            <div class="col-sm-8">
-              <dx-range-slider
-                      [min]="this.defaultSliderValue.reviews.min"
-                      [max]="this.defaultSliderValue.reviews.max"
-                      [(start)]="this.rangeSliderFilterObj.reviews.min"
-                      [(end)]="this.rangeSliderFilterObj.reviews.max"
-                      [step]="1"
-                      [label]="sliderLabel"
-                      [tooltip]="sliderToolTipEnabled"
-                      (onValueChanged)="onSliderChanged()"
-              ></dx-range-slider>
+            <div class="col-sm-9">
+              <div class="row">
+                <div class="col-sm-6 needMinus">
+                  <input type="number"
+                         class="form-control"
+                         [ngClass]="{'ui-autocomplete-loading': asinValidating}"
+                         formControlName="min"
+                         (blur)="validateRangeValue(productFilterForm.controls.review)">
+
+                  <span *ngIf="productFilterForm.controls.reviews.controls.min.errors &&
+                               productFilterForm.controls.reviews.controls.min.errors.required &&
+                               productFilterForm.controls.reviews.controls.min.touched" class="help-block">
+                    This field is required
+                  </span>
+
+                  <span *ngIf="productFilterForm.controls.reviews.controls.min.errors &&
+                               productFilterForm.controls.reviews.controls.min.errors.invalid &&
+                               productFilterForm.controls.reviews.controls.min.touched" class="help-block">
+                    This field is invalid
+                  </span>
+                </div>
+                <div class="col-sm-6">
+                  <input type="number"
+                         class="form-control"
+                         [ngClass]="{'ui-autocomplete-loading': asinValidating}"
+                         formControlName="max"
+                         (blur)="validateRangeValue(productFilterForm.controls.review)">
+
+                  <span *ngIf="productFilterForm.controls.reviews.controls.max.errors &&
+                               productFilterForm.controls.reviews.controls.max.errors.required &&
+                               productFilterForm.controls.reviews.controls.max.touched" class="help-block">
+                    This field is required
+                  </span>
+
+                  <span *ngIf="productFilterForm.controls.reviews.controls.max.errors &&
+                               productFilterForm.controls.reviews.controls.max.errors.invalid &&
+                               productFilterForm.controls.reviews.controls.max.touched" class="help-block">
+                    This field is invalid
+                  </span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
-      <button type="submit" class="btn btn-primary pull-right">
+      <button type="submit" class="btn btn-primary pull-right" [disabled]="productFilterForm.invalid">
         Apply
       </button>
     </form>
