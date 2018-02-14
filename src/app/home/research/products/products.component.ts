@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
-import { NotificationService } from '../../../shared/utils/notification.service';
+import * as _ from 'lodash';
+
 import { ResearchService } from '../../../core/services/ResearchService/research.service';
 import { environment } from '../../../../environments/environment';
 
@@ -272,7 +273,7 @@ export class ProductsComponent implements OnInit {
   }
 
   isAvailableGenericFilter() {
-    if (JSON.stringify(this.productFilterForm.value) === JSON.stringify(this.defaultFilterValue)) {
+    if (_.isEqual(this.productFilterForm.value, this.defaultFilterValue)) {
       this.genericFilterEnabled = true;
     } else {
       this.genericFilterEnabled = false;
@@ -292,19 +293,17 @@ export class ProductsComponent implements OnInit {
         this.productFilterForm.value[key] = '';
       }
 
-      if (JSON.stringify(this.productFilterForm.value[key]) !== JSON.stringify(this.defaultFilterValue[key])) {
+      if (!_.isEqual(this.productFilterForm.value[key], this.defaultFilterValue[key])) {
         this.filters[key] = this.productFilterForm.value[key];
       }
     });
 
-    if (JSON.stringify(this.productFilterForm.value['competitors_prime']) !== JSON.stringify(this.defaultFilterValue['competitors_prime'])) {
+    if (!_.isEqual(this.productFilterForm.value['competitors_prime'], this.defaultFilterValue['competitors_prime'])) {
       this.filters['competitors.prime'] = this.productFilterForm.value['competitors_prime'];
-    } else {
-      delete this.filters.competitors_prime;
     }
+    delete this.filters.competitors_prime;
 
     this.filters.marketplace = mkId;
-    console.log(this.filters);
   }
 
   getMarketPlaceIdbyName(name): string {
@@ -331,28 +330,18 @@ export class ProductsComponent implements OnInit {
   validateRangeValue(control) {
     if (control.value.min > control.value.max) {
       control.setErrors({invalid: true});
-    } else {
-      control.setErrors(null);
     }
 
     if (!this.isValidRangeValue(control.controls.min)) {
       control.controls.min.setErrors({invalid: true});
-    } else {
-      control.controls.min.setErrors(null);
     }
 
     if (!this.isValidRangeValue(control.controls.max)) {
       control.controls.max.setErrors({invalid: true});
-    } else {
-      control.controls.max.setErrors(null);
     }
   }
 
   isValidRangeValue(control) {
-    if ((control.value >= 0 && control.value <= 100) || this.validRangeValues.indexOf(Number(control.value)) !== -1) {
-      return true;
-    } else {
-      return false;
-    }
+    return (control.value >= 0 && control.value <= 100) || this.validRangeValues.indexOf(Number(control.value)) !== -1
   }
 }

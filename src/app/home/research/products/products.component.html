@@ -185,20 +185,19 @@
             <label class="col-sm-3 control-label">Competitors</label>
             <div class="col-sm-9">
               <div class="row">
-                <div class="col-sm-6 needMinus">
-                  <input type="number"
-                         min="1" max="999999"
-                         class="form-control"
-                         [ngClass]="{'ui-autocomplete-loading': asinValidating}"
-                         formControlName="min"
-                         (blur)="validateRangeValue(productFilterForm.controls.competitors)">
-
+                <div class="col-sm-6">
+                  <div class="needMinus">
+                    <input type="number"
+                           min="1" max="999999"
+                           class="form-control"
+                           formControlName="min"
+                           (blur)="validateRangeValue(productFilterForm.controls.competitors)">
+                  </div>
                   <span *ngIf="productFilterForm.controls.competitors.controls.min.errors &&
                                productFilterForm.controls.competitors.controls.min.errors.required &&
                                productFilterForm.controls.competitors.controls.min.touched" class="help-block">
                     This field is required
                   </span>
-
                   <span *ngIf="productFilterForm.controls.competitors.controls.min.errors &&
                                productFilterForm.controls.competitors.controls.min.errors.invalid &&
                                productFilterForm.controls.competitors.controls.min.touched" class="help-block">
@@ -209,16 +208,13 @@
                   <input type="number"
                          min="1" max="999999"
                          class="form-control"
-                         [ngClass]="{'ui-autocomplete-loading': asinValidating}"
                          formControlName="max"
                          (blur)="validateRangeValue(productFilterForm.controls.competitors)">
-
                   <span *ngIf="productFilterForm.controls.competitors.controls.max.errors &&
                                productFilterForm.controls.competitors.controls.max.errors.required &&
                                productFilterForm.controls.competitors.controls.max.touched" class="help-block">
                     This field is required
                   </span>
-
                   <span *ngIf="productFilterForm.controls.competitors.controls.max.errors &&
                                productFilterForm.controls.competitors.controls.max.errors.invalid &&
                                productFilterForm.controls.competitors.controls.max.touched" class="help-block">
@@ -233,19 +229,18 @@
             <label class="col-sm-3 control-label">Competitors offering Prime</label>
             <div class="col-sm-9">
               <div class="row">
-                <div class="col-sm-6 needMinus">
-                  <input type="number"
-                         class="form-control"
-                         [ngClass]="{'ui-autocomplete-loading': asinValidating}"
-                         formControlName="min"
-                         (blur)="validateRangeValue(productFilterForm.controls.competitors_prime)">
-
+                <div class="col-sm-6">
+                  <div class="needMinus">
+                    <input type="number"
+                           class="form-control"
+                           formControlName="min"
+                           (blur)="validateRangeValue(productFilterForm.controls.competitors_prime)">
+                  </div>
                   <span *ngIf="productFilterForm.controls.competitors_prime.controls.min.errors &&
                                productFilterForm.controls.competitors_prime.controls.min.errors.required &&
                                productFilterForm.controls.competitors_prime.controls.min.touched" class="help-block">
                     This field is required
                   </span>
-
                   <span *ngIf="productFilterForm.controls.competitors_prime.controls.min.errors &&
                                productFilterForm.controls.competitors_prime.controls.min.errors.invalid &&
                                productFilterForm.controls.competitors_prime.controls.min.touched" class="help-block">
@@ -255,16 +250,13 @@
                 <div class="col-sm-6">
                   <input type="number"
                          class="form-control"
-                         [ngClass]="{'ui-autocomplete-loading': asinValidating}"
                          formControlName="max"
                          (blur)="validateRangeValue(productFilterForm.controls.competitors_prime)">
-
                   <span *ngIf="productFilterForm.controls.competitors_prime.controls.max.errors &&
                                productFilterForm.controls.competitors_prime.controls.max.errors.required &&
                                productFilterForm.controls.competitors_prime.controls.max.touched" class="help-block">
                     This field is required
                   </span>
-
                   <span *ngIf="productFilterForm.controls.competitors_prime.controls.max.errors &&
                                productFilterForm.controls.competitors_prime.controls.max.errors.invalid &&
                                productFilterForm.controls.competitors_prime.controls.max.touched" class="help-block">
@@ -279,19 +271,18 @@
             <label class="col-sm-3 control-label">BSR</label>
             <div class="col-sm-9">
               <div class="row">
-                <div class="col-sm-6 needMinus">
-                  <input type="number"
-                         class="form-control"
-                         [ngClass]="{'ui-autocomplete-loading': asinValidating}"
-                         formControlName="min"
-                         (blur)="validateRangeValue(productFilterForm.controls.bsr)">
-
+                <div class="col-sm-6">
+                  <div class="needMinus">
+                    <input type="number"
+                           class="form-control"
+                           formControlName="min"
+                           (blur)="validateRangeValue(productFilterForm.controls.bsr)">
+                  </div>
                   <span *ngIf="productFilterForm.controls.bsr.controls.min.errors &&
                                productFilterForm.controls.bsr.controls.min.errors.required &&
                                productFilterForm.controls.bsr.controls.min.touched" class="help-block">
                     This field is required
                   </span>
-
                   <span *ngIf="productFilterForm.controls.bsr.controls.min.errors &&
                                productFilterForm.controls.bsr.controls.min.errors.invalid &&
                                productFilterForm.controls.bsr.controls.min.touched" class="help-block">
@@ -301,16 +292,13 @@
                 <div class="col-sm-6">
                   <input type="number"
                          class="form-control"
-                         [ngClass]="{'ui-autocomplete-loading': asinValidating}"
                          formControlName="max"
                          (blur)="validateRangeValue(productFilterForm.controls.bsr)">
-
                   <span *ngIf="productFilterForm.controls.bsr.controls.max.errors &&
                                productFilterForm.controls.bsr.controls.max.errors.required &&
                                productFilterForm.controls.bsr.controls.max.touched" class="help-block">
                     This field is required
                   </span>
-
                   <span *ngIf="productFilterForm.controls.bsr.controls.max.errors &&
                                productFilterForm.controls.bsr.controls.max.errors.invalid &&
                                productFilterForm.controls.bsr.controls.max.touched" class="help-block">
@@ -325,19 +313,18 @@
             <label class="col-sm-3 control-label">Price</label>
             <div class="col-sm-9">
               <div class="row">
-                <div class="col-sm-6 needMinus">
-                  <input type="number"
-                         class="form-control"
-                         [ngClass]="{'ui-autocomplete-loading': asinValidating}"
-                         formControlName="min"
-                         (blur)="validateRangeValue(productFilterForm.controls.price)">
-
+                <div class="col-sm-6">
+                  <div class="needMinus">
+                    <input type="number"
+                           class="form-control"
+                           formControlName="min"
+                           (blur)="validateRangeValue(productFilterForm.controls.price)">
+                  </div>
                   <span *ngIf="productFilterForm.controls.price.controls.min.errors &&
                                productFilterForm.controls.price.controls.min.errors.required &&
                                productFilterForm.controls.price.controls.min.touched" class="help-block">
                     This field is required
                   </span>
-
                   <span *ngIf="productFilterForm.controls.price.controls.min.errors &&
                                productFilterForm.controls.price.controls.min.errors.invalid &&
                                productFilterForm.controls.price.controls.min.touched" class="help-block">
@@ -347,16 +334,13 @@
                 <div class="col-sm-6">
                   <input type="number"
                          class="form-control"
-                         [ngClass]="{'ui-autocomplete-loading': asinValidating}"
                          formControlName="max"
                          (blur)="validateRangeValue(productFilterForm.controls.price)">
-
                   <span *ngIf="productFilterForm.controls.price.controls.max.errors &&
                                productFilterForm.controls.price.controls.max.errors.required &&
                                productFilterForm.controls.price.controls.max.touched" class="help-block">
                     This field is required
                   </span>
-
                   <span *ngIf="productFilterForm.controls.price.controls.max.errors &&
                                productFilterForm.controls.price.controls.max.errors.invalid &&
                                productFilterForm.controls.price.controls.max.touched" class="help-block">
@@ -372,18 +356,17 @@
             <div class="col-sm-9">
               <div class="row">
                 <div class="col-sm-6 needMinus">
-                  <input type="number"
-                         class="form-control"
-                         [ngClass]="{'ui-autocomplete-loading': asinValidating}"
-                         formControlName="min"
-                         (blur)="validateRangeValue(productFilterForm.controls.optimization)">
-
+                  <div class="needMinus">
+                    <input type="number"
+                           class="form-control"
+                           formControlName="min"
+                           (blur)="validateRangeValue(productFilterForm.controls.optimization)">
+                  </div>
                   <span *ngIf="productFilterForm.controls.optimization.controls.min.errors &&
                                productFilterForm.controls.optimization.controls.min.errors.required &&
                                productFilterForm.controls.optimization.controls.min.touched" class="help-block">
                     This field is required
                   </span>
-
                   <span *ngIf="productFilterForm.controls.optimization.controls.min.errors &&
                                productFilterForm.controls.optimization.controls.min.errors.invalid &&
                                productFilterForm.controls.optimization.controls.min.touched" class="help-block">
@@ -393,16 +376,13 @@
                 <div class="col-sm-6">
                   <input type="number"
                          class="form-control"
-                         [ngClass]="{'ui-autocomplete-loading': asinValidating}"
                          formControlName="max"
                          (blur)="validateRangeValue(productFilterForm.controls.optimization)">
-
                   <span *ngIf="productFilterForm.controls.optimization.controls.max.errors &&
                                productFilterForm.controls.optimization.controls.max.errors.required &&
                                productFilterForm.controls.optimization.controls.max.touched" class="help-block">
                     This field is required
                   </span>
-
                   <span *ngIf="productFilterForm.controls.optimization.controls.max.errors &&
                                productFilterForm.controls.optimization.controls.max.errors.invalid &&
                                productFilterForm.controls.optimization.controls.max.touched" class="help-block">
@@ -417,19 +397,18 @@
             <label class="col-sm-3 control-label">Rating</label>
             <div class="col-sm-9">
               <div class="row">
-                <div class="col-sm-6 needMinus">
-                  <input type="number"
-                         class="form-control"
-                         [ngClass]="{'ui-autocomplete-loading': asinValidating}"
-                         formControlName="min"
-                         (blur)="validateRangeValue(productFilterForm.controls.rating)">
-
+                <div class="col-sm-6">
+                  <div class="needMinus">
+                    <input type="number"
+                           class="form-control"
+                           formControlName="min"
+                           (blur)="validateRangeValue(productFilterForm.controls.rating)">
+                  </div>
                   <span *ngIf="productFilterForm.controls.rating.controls.min.errors &&
                                productFilterForm.controls.rating.controls.min.errors.required &&
                                productFilterForm.controls.rating.controls.min.touched" class="help-block">
                     This field is required
                   </span>
-
                   <span *ngIf="productFilterForm.controls.rating.controls.min.errors &&
                                productFilterForm.controls.rating.controls.min.errors.invalid &&
                                productFilterForm.controls.rating.controls.min.touched" class="help-block">
@@ -439,16 +418,13 @@
                 <div class="col-sm-6">
                   <input type="number"
                          class="form-control"
-                         [ngClass]="{'ui-autocomplete-loading': asinValidating}"
                          formControlName="max"
                          (blur)="validateRangeValue(productFilterForm.controls.rating)">
-
                   <span *ngIf="productFilterForm.controls.rating.controls.max.errors &&
                                productFilterForm.controls.rating.controls.max.errors.required &&
                                productFilterForm.controls.rating.controls.max.touched" class="help-block">
                     This field is required
                   </span>
-
                   <span *ngIf="productFilterForm.controls.rating.controls.max.errors &&
                                productFilterForm.controls.rating.controls.max.errors.invalid &&
                                productFilterForm.controls.rating.controls.max.touched" class="help-block">
@@ -463,19 +439,18 @@
             <label class="col-sm-3 control-label">Reviews</label>
             <div class="col-sm-9">
               <div class="row">
-                <div class="col-sm-6 needMinus">
-                  <input type="number"
-                         class="form-control"
-                         [ngClass]="{'ui-autocomplete-loading': asinValidating}"
-                         formControlName="min"
-                         (blur)="validateRangeValue(productFilterForm.controls.review)">
-
+                <div class="col-sm-6">
+                  <div class="needMinus">
+                    <input type="number"
+                           class="form-control"
+                           formControlName="min"
+                           (blur)="validateRangeValue(productFilterForm.controls.review)">
+                  </div>
                   <span *ngIf="productFilterForm.controls.reviews.controls.min.errors &&
                                productFilterForm.controls.reviews.controls.min.errors.required &&
                                productFilterForm.controls.reviews.controls.min.touched" class="help-block">
                     This field is required
                   </span>
-
                   <span *ngIf="productFilterForm.controls.reviews.controls.min.errors &&
                                productFilterForm.controls.reviews.controls.min.errors.invalid &&
                                productFilterForm.controls.reviews.controls.min.touched" class="help-block">
@@ -485,16 +460,13 @@
                 <div class="col-sm-6">
                   <input type="number"
                          class="form-control"
-                         [ngClass]="{'ui-autocomplete-loading': asinValidating}"
                          formControlName="max"
                          (blur)="validateRangeValue(productFilterForm.controls.review)">
-
                   <span *ngIf="productFilterForm.controls.reviews.controls.max.errors &&
                                productFilterForm.controls.reviews.controls.max.errors.required &&
                                productFilterForm.controls.reviews.controls.max.touched" class="help-block">
                     This field is required
                   </span>
-
                   <span *ngIf="productFilterForm.controls.reviews.controls.max.errors &&
                                productFilterForm.controls.reviews.controls.max.errors.invalid &&
                                productFilterForm.controls.reviews.controls.max.touched" class="help-block">

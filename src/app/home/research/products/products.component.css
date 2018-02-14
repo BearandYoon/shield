@@ -39,6 +39,7 @@
 .needMinus {
     position: relative;
 }
+
 .needMinus:before {
     content: '';
     position: absolute;
@@ -46,5 +47,5 @@
     height: 1px;
     top: 50%;
     background-color: #333;
-    right: -6px;
+    right: -18px;
 }
