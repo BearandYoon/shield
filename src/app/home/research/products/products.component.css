@@ -35,3 +35,17 @@
     padding: 13px 13px 0;
     overflow: visible;
 }
+
+.needMinus {
+    position: relative;
+}
+
+.needMinus:before {
+    content: '';
+    position: absolute;
+    width: 10px;
+    height: 1px;
+    top: 50%;
+    background-color: #333;
+    right: -18px;
+}

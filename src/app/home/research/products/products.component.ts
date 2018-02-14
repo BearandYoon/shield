@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
-import { NotificationService } from '../../../shared/utils/notification.service';
-import { ResearchService } from '../../../core/services/ResearchService/research.service';
+import * as _ from 'lodash';
+
+import { ProductsService } from './services/products.service';
 import { environment } from '../../../../environments/environment';
 
 @Component({
@@ -140,15 +141,12 @@ export class ProductsComponent implements OnInit {
     'prime': '',
     'advertising.spa': '',
     'buybox': '',
-    'type': ''
-  };
-
-  defaultSliderValue = {
+    'type': '',
     'competitors': {
       'min': 1,
       'max': 999999
     },
-    'competitors.prime': {
+    'competitors_prime': {
       'min': 1,
       'max': 999999
     },
@@ -174,36 +172,11 @@ export class ProductsComponent implements OnInit {
     }
   };
 
-  rangeSliderFilterObj = {
-    'competitors': {
-      'min': 1,
-      'max': 999999
-    },
-    'competitors.prime': {
-      'min': 1,
-      'max': 999999
-    },
-    'bsr': {
-      'min': 1,
-      'max': 999999
-    },
-    'price': {
-      'min': 0,
-      'max': 999999
-    },
-    'optimization': {
-      'min': 0,
-      'max': 100
-    },
-    'rating': {
-      'min': 0,
-      'max': 5
-    },
-    'reviews': {
-      'min': 0,
-      'max': 5
-    }
-  };
+  validRangeValues = [
+    150, 200, 250, 300, 350, 400, 500, 600, 700, 800, 900, 1000, 1250, 1500, 1750, 2000, 2250, 2500,
+    3000, 3500, 4000, 4500, 5000, 7500, 10000, 15000, 20000, 25000, 50000, 75000, 100000, 250000, 500000, 750000, 999999
+  ];
+
   filters: any;
   marketplaces: any[];
   showFilter = false;
@@ -214,7 +187,7 @@ export class ProductsComponent implements OnInit {
   genericFilterEnabled = false;
 
   constructor(
-    private researchService: ResearchService,
+    private productsService: ProductsService,
     private fb: FormBuilder
   ) {
     this.sliderLabel = {
@@ -227,7 +200,7 @@ export class ProductsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.marketplaces = this.researchService.getMarketplaces();
+    this.marketplaces = this.productsService.getMarketplaces();
 
     let selectedMarketPlace = '';
     if (this.marketplaces) {
@@ -238,18 +211,46 @@ export class ProductsComponent implements OnInit {
     }
 
     this.productFilterForm = this.fb.group({
-      'asins': '',
-      'upcs': '',
-      'title': '',
-      'brands': '',
-      'merchants': '',
-      'available': '',
-      'marketplace': selectedMarketPlace,
-      'categories': '',
-      'prime': '',
+      asins: '',
+      upcs: '',
+      title: '',
+      brands: '',
+      merchants: '',
+      available: '',
+      marketplace: selectedMarketPlace,
+      categories: '',
+      prime: '',
       'advertising.spa': '',
-      'buybox': '',
-      'type': ''
+      buybox: '',
+      type: '',
+      competitors: this.fb.group({
+        min: [1, Validators.required],
+        max: [999999, Validators.required]
+      }),
+      competitors_prime: this.fb.group({
+        min: [1, Validators.required],
+        max: [999999, Validators.required]
+      }),
+      bsr: this.fb.group({
+        min: [1, Validators.required],
+        max: [999999, Validators.required]
+      }),
+      price: this.fb.group({
+        min: [0, Validators.required],
+        max: [999999, Validators.required]
+      }),
+      optimization: this.fb.group({
+        min: [0, Validators.required],
+        max: [100, Validators.required]
+      }),
+      rating: this.fb.group({
+        min: [0, Validators.required],
+        max: [5, Validators.required]
+      }),
+      reviews: this.fb.group({
+        min: [0, Validators.required],
+        max: [5, Validators.required]
+      })
     });
 
     this.quickFilterForm = this.fb.group({
@@ -271,13 +272,8 @@ export class ProductsComponent implements OnInit {
     })
   }
 
-  onSliderChanged() {
-    this.isAvailableGenericFilter();
-  }
-
   isAvailableGenericFilter() {
-    if ((JSON.stringify(this.productFilterForm.value) === JSON.stringify(this.defaultFilterValue))
-      && (JSON.stringify(this.rangeSliderFilterObj) === JSON.stringify(this.defaultSliderValue))) {
+    if (_.isEqual(this.productFilterForm.value, this.defaultFilterValue)) {
       this.genericFilterEnabled = true;
     } else {
       this.genericFilterEnabled = false;
@@ -293,20 +289,20 @@ export class ProductsComponent implements OnInit {
     this.filters = {};
 
     Object.keys(this.productFilterForm.value).forEach((key) => {
-      if (!this.productFilterForm.value[key].length) {
+      if (Array.isArray(this.productFilterForm.value[key]) && this.productFilterForm.value[key].length === 0) {
         this.productFilterForm.value[key] = '';
       }
 
-      if (this.productFilterForm.value[key].length && this.productFilterForm.value[key] !== this.defaultFilterValue[key]) {
+      if (!_.isEqual(this.productFilterForm.value[key], this.defaultFilterValue[key])) {
         this.filters[key] = this.productFilterForm.value[key];
       }
     });
 
-    Object.keys(this.rangeSliderFilterObj).forEach((key) => {
-      if (JSON.stringify(this.rangeSliderFilterObj[key]) !== JSON.stringify(this.defaultSliderValue[key])) {
-        this.filters[key] = this.rangeSliderFilterObj[key];
-      }
-    });
+    if (!_.isEqual(this.productFilterForm.value['competitors_prime'], this.defaultFilterValue['competitors_prime'])) {
+      this.filters['competitors.prime'] = this.productFilterForm.value['competitors_prime'];
+    }
+    delete this.filters.competitors_prime;
+
     this.filters.marketplace = mkId;
   }
 
@@ -329,5 +325,23 @@ export class ProductsComponent implements OnInit {
     if (this.quickFilterForm.value['amalyze.generic']) {
       this.filters['amalyze.generic'] = this.quickFilterForm.value['amalyze.generic'];
     }
+  }
+
+  validateRangeValue(control) {
+    if (control.value.min > control.value.max) {
+      control.setErrors({invalid: true});
+    }
+
+    if (!this.isValidRangeValue(control.controls.min)) {
+      control.controls.min.setErrors({invalid: true});
+    }
+
+    if (!this.isValidRangeValue(control.controls.max)) {
+      control.controls.max.setErrors({invalid: true});
+    }
+  }
+
+  isValidRangeValue(control) {
+    return (control.value >= 0 && control.value <= 100) || this.validRangeValues.indexOf(Number(control.value)) !== -1
   }
 }
