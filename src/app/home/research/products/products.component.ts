@@ -3,7 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import * as _ from 'lodash';
 
-import { ResearchService } from '../../../core/services/ResearchService/research.service';
+import { ProductsService } from './services/products.service';
 import { environment } from '../../../../environments/environment';
 
 @Component({
@@ -187,7 +187,7 @@ export class ProductsComponent implements OnInit {
   genericFilterEnabled = false;
 
   constructor(
-    private researchService: ResearchService,
+    private productsService: ProductsService,
     private fb: FormBuilder
   ) {
     this.sliderLabel = {
@@ -200,7 +200,7 @@ export class ProductsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.marketplaces = this.researchService.getMarketplaces();
+    this.marketplaces = this.productsService.getMarketplaces();
 
     let selectedMarketPlace = '';
     if (this.marketplaces) {
