@@ -132,6 +132,11 @@ export class NewCampaignComponent implements OnInit, OnDestroy, DoCheck {
             optimization: ['', Validators.required]
         });
 
+        this.campaignForm.controls['marketplace'].valueChanges
+            .subscribe(() => {
+                this.validateAsin();
+            });
+
         this.merchantSubscription = this.campaignForm.controls['merchant'].valueChanges
             .do(merchantId => {
                 if (!merchantId) {
@@ -265,6 +270,39 @@ export class NewCampaignComponent implements OnInit, OnDestroy, DoCheck {
         }
     }
 
+    validateSkus() {
+        const skus = this.campaignForm.controls['skus'].value;
+        const marketplace = this.campaignForm.controls['marketplace'].value;
+        const asin = this.campaignForm.controls['asin'].value;
+        if (skus.length) {
+            if (!marketplace || !asin) {
+                this.campaignForm.controls['skus'].setValue(null);
+            } else {
+                const skuData = skus.map(sku => ({ marketplace, asin, sku }));
+                this.skuValidating = true;
+                this.campaignsService.checkSku({skus: skuData})
+                    .subscribe((res: any) => {
+                        const validSkus = [];
+                        res.skus.forEach(sku => {
+                            if (sku.success) {
+                                validSkus.push(sku.sku);
+                            }
+                        });
+                        this.campaignForm.controls['skus'].setValue(validSkus);
+                        this.skuValidating = false;
+                    }, error => {
+                        this.notificationService.smallBox({
+                            content: error,
+                            color: '#a90329',
+                            timeout: 4000,
+                            icon: 'fa fa-warning shake animated'
+                        });
+                        this.skuValidating = false;
+                    })
+            }
+        }
+    }
+
     validateSku(chip) {
         const sku = chip.value;
         const prevSkus = this.campaignForm.controls['skus'].value;
@@ -320,21 +358,26 @@ export class NewCampaignComponent implements OnInit, OnDestroy, DoCheck {
         const asin = this.campaignForm.controls['asin'].value;
         const marketplace = this.campaignForm.controls['marketplace'].value;
         if (asin) {
-            this.asinValidating = true;
-            this.campaignsService.checkAsin({asins: [{ asin, marketplace }]})
-                .subscribe(() => {
-                    this.campaignForm.controls['asin'].setErrors(null);
-                    this.asinValidating = false;
-                }, (error) => {
-                    this.notificationService.smallBox({
-                        content: error,
-                        color: '#a90329',
-                        timeout: 4000,
-                        icon: 'fa fa-warning shake animated'
-                    });
-                    this.campaignForm.controls['asin'].setErrors({invalid: true});
-                    this.asinValidating = false;
-                })
+            if (!marketplace) {
+                this.campaignForm.controls['asin'].setValue(null);
+            } else {
+                this.asinValidating = true;
+                this.campaignsService.checkAsin({asins: [{ asin, marketplace }]})
+                    .subscribe(() => {
+                        this.asinValidating = false;
+                        this.validateSkus();
+                    }, (error) => {
+                        this.notificationService.smallBox({
+                            content: error,
+                            color: '#a90329',
+                            timeout: 4000,
+                            icon: 'fa fa-warning shake animated'
+                        });
+                        this.campaignForm.controls['asin'].setValue(null);
+                        this.asinValidating = false;
+                        this.validateSkus();
+                    })
+            }
         }
     }
 
