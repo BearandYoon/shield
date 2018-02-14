@@ -14,10 +14,12 @@
                         <div class="form-bootstrapWizard clearfix">
                             <ul class="bootstrapWizard">
                                 <li *ngFor="let pane of steps; let i = index" [class.active]="activeStep == pane">
-                                    <a (click)="setActiveStep(pane)"> <span class="step">
-                    <span *ngIf="!pane.checked">{{i + 1}}</span>
-                    <i class="fa fa-check" *ngIf="pane.checked"></i>
-                  </span> <span class="title">{{pane.title}}</span>
+                                    <a (click)="setActiveStep(pane)">
+                                        <span class="step">
+                                            <span *ngIf="!pane.checked">{{i + 1}}</span>
+                                            <i class="fa fa-check" *ngIf="pane.checked"></i>
+                                        </span>
+                                        <span class="title">{{pane.title}}</span>
                                     </a>
                                 </li>
                             </ul>
@@ -128,30 +130,60 @@
                                             </div>
                                         </div>
 
-                                        <div class="form-group" [ngClass]="{'has-error':!campaignForm.controls.merchant.valid &&
-                                             campaignForm.controls.merchant.touched}">
-                                            <label for="merchant" class="col-sm-2 control-label">Merchant</label>
-                                            <div class="col-sm-4">
-                                                <select id="merchant" class="form-control" formControlName="merchant">
-                                                    <option value=""></option>
-                                                    <option *ngFor="let merchant of merchants" [value]="merchant.id">
-                                                        {{merchant.name}}
-                                                    </option>
-                                                </select>
+                                        <div class="marketplace">
+                                            <div class="row">
+                                                <div class="col-sm-6">
+                                                    <div class="form-group"
+                                                         [ngClass]="{'has-error':!campaignForm.controls.merchant.valid &&
+                                                         campaignForm.controls.merchant.touched}">
+                                                        <label for="merchant" class="col-sm-4 control-label">Merchant</label>
+                                                        <div class="col-sm-8">
+                                                            <select id="merchant" class="form-control" formControlName="merchant">
+                                                                <option value=""></option>
+                                                                <option *ngFor="let merchant of merchants" [value]="merchant.id">
+                                                                    {{merchant.name}}
+                                                                </option>
+                                                            </select>
+
+                                                            <span [class.hidden]="campaignForm.controls.merchant.valid ||
+                                                            !campaignForm.controls.merchant.touched" class="help-block">
+                                                              Merchant in required
+                                                        </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-sm-6">
+                                                    <div class="form-group"
+                                                         [ngClass]="{'has-error':!campaignForm.controls.marketplace.valid &&
+                                                         (campaignForm.controls.marketplace.touched || campaignForm.controls.asin.touched ||
+                                                         campaignForm.controls.skus.touched)}">
+                                                        <label for="marketplace" class="col-sm-4 control-label">Marketplace</label>
+                                                        <div class="col-sm-8">
+                                                            <select id="marketplace" class="form-control" formControlName="marketplace">
+                                                                <option value=""></option>
+                                                                <option *ngFor="let marketplace of marketplaces" [value]="marketplace.id">
+                                                                    {{marketplace.name}}
+                                                                </option>
+                                                            </select>
+
+                                                            <span [class.hidden]="campaignForm.controls.marketplace.valid ||
+                                                            (!campaignForm.controls.marketplace.touched && !campaignForm.controls.asin.touched
+                                                            && !campaignForm.controls.skus.touched)"
+                                                                  class="help-block">
+                                                                Marketplace in required
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
                                             </div>
-                                            <label for="marketplace" class="col-sm-2 control-label">Marketplace</label>
-                                            <div class="col-sm-4">
-                                                <select id="marketplace" class="form-control" formControlName="marketplace">
-                                                    <option value=""></option>
-                                                    <option *ngFor="let marketplace of marketplaces" [value]="marketplace.id">
-                                                        {{marketplace.name}}
-                                                    </option>
-                                                </select>
-                                            </div>
+
+
                                         </div>
 
                                         <div class="form-group" [ngClass]="{'has-error':!campaignForm.controls.asin.valid &&
-                                             campaignForm.controls.asin.touched}">
+                                             (campaignForm.controls.asin.touched || campaignForm.controls.skus.touched)}">
                                             <label for="asin" class="col-sm-2 control-label">ASIN</label>
                                             <div class="col-sm-10">
                                                 <input type="text" id="asin"
@@ -160,16 +192,10 @@
                                                        formControlName="asin"
                                                        (blur)="validateAsin()">
 
-                                                <span *ngIf="campaignForm.controls.asin.errors &&
-                                                campaignForm.controls.asin.errors.required &&
-                                                campaignForm.controls.asin.touched" class="help-block">
-                                                  Asin in required
-                                                </span>
-
-                                                <span *ngIf="campaignForm.controls.asin.errors &&
-                                                campaignForm.controls.asin.errors.invalid &&
-                                                campaignForm.controls.asin.touched" class="help-block">
-                                                  Asin is invalid
+                                                <span [class.hidden]="campaignForm.controls.asin.valid ||
+                                                (!campaignForm.controls.asin.touched && !campaignForm.controls.skus.touched)"
+                                                      class="help-block">
+                                                  Asin is required
                                                 </span>
                                             </div>
                                         </div>
@@ -241,10 +267,10 @@
                                             Add
                                         </button>
                                     </form>
-                                    <dynamic-datatable [url]="keywordsUrl"
-                                                       [schema]="keywordsSchema"
-                                                       [rootField]="keywordsField">
-                                    </dynamic-datatable>
+                                    <app-dynamic-datatable [url]="keywordsUrl"
+                                                           [schema]="keywordsSchema"
+                                                           [rootField]="keywordsField">
+                                    </app-dynamic-datatable>
                                 </div>
                                 <div *ngIf="campaignForm.controls['targeting'].value === 'competitor based'">
                                     <form class="form-inline">
@@ -257,11 +283,11 @@
                                             Add
                                         </button>
                                     </form>
-                                    <dynamic-datatable [url]="competitorsUrl"
-                                                       [schema]="competitorsSchema"
-                                                       [rootField]="competitorsField"
-                                                       [options]="competitorsOptions">
-                                    </dynamic-datatable>
+                                    <app-dynamic-datatable [url]="competitorsUrl"
+                                                           [schema]="competitorsSchema"
+                                                           [rootField]="competitorsField"
+                                                           [options]="competitorsOptions">
+                                    </app-dynamic-datatable>
                                 </div>
                             </div>
 
@@ -286,7 +312,7 @@
                                     </div>
                                 </div>
 
-                                <div *ngIf="calculation">
+                                <div *ngIf="campaignForm.controls['optimization'].value && calculation">
                                     <form class="calculation"  [formGroup]="calcForm">
                                         <table class="table optimization" >
                                             <tr>
@@ -314,7 +340,7 @@
                                                            formControlName="amazonSalesFeeRate"
                                                            step="1"/>%
                                                 </td>
-                                                <td>{{customAmazonSalesFee}}</td>
+                                                <td>{{customAmazonSalesFee | number:'1.2-2' }}</td>
                                             </tr>
                                             <tr>
                                                 <td>Amazon variable fee</td>
@@ -342,7 +368,7 @@
                                             </tr>
                                             <tr>
                                                 <td>Increased FBA fees</td>
-                                                <td>-</td>
+                                                <td></td>
                                                 <td></td>
                                                 <td>
                                                     <input type="number" formControlName="increasedFbaFee" step="0.01">
@@ -354,11 +380,11 @@
                                                 <td>
                                                     <input type="number" class="form-control" formControlName="taxRate" step="1"/>%
                                                 </td>
-                                                <td>{{tax}}</td>
+                                                <td>{{tax | number:'1.2-2'}}</td>
                                             </tr>
                                             <tr>
                                                 <td>Buying cost</td>
-                                                <td>-</td>
+                                                <td></td>
                                                 <td></td>
                                                 <td>
                                                     <input type="number" class="form-control" formControlName="buyingCost" step="0.01"/>
@@ -366,7 +392,7 @@
                                             </tr>
                                             <tr>
                                                 <td>Other cost</td>
-                                                <td>-</td>
+                                                <td></td>
                                                 <td></td>
                                                 <td>
                                                     <input type="number" class="form-control" formControlName="otherCost" step="0.01"/>
@@ -376,7 +402,7 @@
                                                 <td><b>Gross margin</b></td>
                                                 <td></td>
                                                 <td></td>
-                                                <td><b>{{grossMargin}}</b></td>
+                                                <td><b>{{grossMargin | number:'1.2-2'}}</b></td>
                                             </tr>
 
                                             <tr>
@@ -385,7 +411,7 @@
                                                 <td>
                                                     <input type="number" class="form-control" formControlName="conversionRate" step="1"/>%
                                                 </td>
-                                                <td>Resulting bid {{resultingBid}}</td>
+                                                <td>Resulting bid {{resultingBid | number:'1.2-2'}}</td>
                                             </tr>
                                             <tr>
                                                 <td>Lowest bid</td>
@@ -423,7 +449,7 @@
                                         <table class="table">
                                             <tr>
                                                 <td>Type</td>
-                                                <td>{{campaignForm.controls['skus']['optimization']}}</td>
+                                                <td>{{campaignForm.controls['optimization'].value}}</td>
                                             </tr>
                                             <tr>
                                                 <td>Selling price</td>
@@ -431,19 +457,19 @@
                                             </tr>
                                             <tr>
                                                 <td>Gross margin</td>
-                                                <td>{{grossMargin}}</td>
+                                                <td>{{grossMargin | number:'1.2-2'}}</td>
                                             </tr>
                                             <tr>
                                                 <td>Assumed conversion rate</td>
-                                                <td>{{calcForm.controls['conversionRate'].value}}</td>
+                                                <td>{{calcForm.controls['conversionRate'].value}} %</td>
                                             </tr>
                                             <tr>
                                                 <td>Resulting CpC</td>
-                                                <td>0.30</td>
+                                                <td>{{resultingBid | number:'1.2-2'}}</td>
                                             </tr>
                                             <tr>
                                                 <td>Minimum bid</td>
-                                                <td>0.10</td>
+                                                <td>{{calcForm.controls['lowestBid'].value | number:'1.2-2'}}</td>
                                             </tr>
                                         </table>
                                     </div>
@@ -456,12 +482,12 @@
                                                 <td>{{campaignForm.controls['targeting'].value}}</td>
                                             </tr>
                                             <!--<tr>-->
-                                                <!--<td>Keywords</td>-->
-                                                <!--<td>123123</td>-->
+                                            <!--<td>Keywords</td>-->
+                                            <!--<td>123123</td>-->
                                             <!--</tr>-->
                                             <!--<tr>-->
-                                                <!--<td>Competitors</td>-->
-                                                <!--<td>25</td>-->
+                                            <!--<td>Competitors</td>-->
+                                            <!--<td>25</td>-->
                                             <!--</tr>-->
                                         </table>
                                     </div>

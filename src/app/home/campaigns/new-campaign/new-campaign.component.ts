@@ -9,6 +9,7 @@ import { TYPES, PROGRESS } from '../campaigns.constants';
 import { NotificationService } from '../../../shared/utils/notification.service';
 import { CampaignsService } from '../services/campaigns.service';
 import { environment } from '../../../../environments/environment';
+import {LoadingIndicatorService} from '../../../core/loading-indicator/loading-indicator.service';
 
 @Component({
     selector: 'app-new-campaign',
@@ -107,7 +108,8 @@ export class NewCampaignComponent implements OnInit, OnDestroy, DoCheck {
     constructor(public fb: FormBuilder,
                 public bsModalRef: BsModalRef,
                 public notificationService: NotificationService,
-                private campaignsService: CampaignsService) {
+                private campaignsService: CampaignsService,
+                private loadingIndicator: LoadingIndicatorService) {
     }
 
     ngOnInit() {
@@ -129,6 +131,11 @@ export class NewCampaignComponent implements OnInit, OnDestroy, DoCheck {
 
             optimization: ['', Validators.required]
         });
+
+        this.campaignForm.controls['marketplace'].valueChanges
+            .subscribe(() => {
+                this.validateAsin();
+            });
 
         this.merchantSubscription = this.campaignForm.controls['merchant'].valueChanges
             .do(merchantId => {
@@ -219,9 +226,27 @@ export class NewCampaignComponent implements OnInit, OnDestroy, DoCheck {
     }
 
     prevStep() {
+        const activeStep = this.activeStep;
         const idx = this.steps.indexOf(this.activeStep);
-        if (idx > 0) {
-            this.activeStep = this.steps[idx - 1]
+        switch (activeStep.key) {
+            case 'step1':
+                break;
+            case 'step3':
+                if (this.campaignForm.controls['targeting'].value) {
+                    this.campaignForm.controls['targeting'].setValue('');
+                } else {
+                    this.activeStep = this.steps[idx - 1];
+                }
+                break;
+            case 'step4':
+                if (this.campaignForm.controls['optimization'].value) {
+                    this.campaignForm.controls['optimization'].setValue('');
+                } else {
+                    this.activeStep = this.steps[idx - 1];
+                }
+                break;
+            default:
+                this.activeStep = this.steps[idx - 1];
         }
     }
 
@@ -241,6 +266,39 @@ export class NewCampaignComponent implements OnInit, OnDestroy, DoCheck {
                 if (!this.steps[idx].valid || !this.steps[idx].checked ) {
                     this.activeStep = this.steps[idx]
                 }
+            }
+        }
+    }
+
+    validateSkus() {
+        const skus = this.campaignForm.controls['skus'].value;
+        const marketplace = this.campaignForm.controls['marketplace'].value;
+        const asin = this.campaignForm.controls['asin'].value;
+        if (skus.length) {
+            if (!marketplace || !asin) {
+                this.campaignForm.controls['skus'].setValue(null);
+            } else {
+                const skuData = skus.map(sku => ({ marketplace, asin, sku }));
+                this.skuValidating = true;
+                this.campaignsService.checkSku({skus: skuData})
+                    .subscribe((res: any) => {
+                        const validSkus = [];
+                        res.skus.forEach(sku => {
+                            if (sku.success) {
+                                validSkus.push(sku.sku);
+                            }
+                        });
+                        this.campaignForm.controls['skus'].setValue(validSkus);
+                        this.skuValidating = false;
+                    }, error => {
+                        this.notificationService.smallBox({
+                            content: error,
+                            color: '#a90329',
+                            timeout: 4000,
+                            icon: 'fa fa-warning shake animated'
+                        });
+                        this.skuValidating = false;
+                    })
             }
         }
     }
@@ -300,21 +358,26 @@ export class NewCampaignComponent implements OnInit, OnDestroy, DoCheck {
         const asin = this.campaignForm.controls['asin'].value;
         const marketplace = this.campaignForm.controls['marketplace'].value;
         if (asin) {
-            this.asinValidating = true;
-            this.campaignsService.checkAsin({asins: [{ asin, marketplace }]})
-                .subscribe(() => {
-                    this.campaignForm.controls['asin'].setErrors(null);
-                    this.asinValidating = false;
-                }, (error) => {
-                    this.notificationService.smallBox({
-                        content: error,
-                        color: '#a90329',
-                        timeout: 4000,
-                        icon: 'fa fa-warning shake animated'
-                    });
-                    this.campaignForm.controls['asin'].setErrors({invalid: true});
-                    this.asinValidating = false;
-                })
+            if (!marketplace) {
+                this.campaignForm.controls['asin'].setValue(null);
+            } else {
+                this.asinValidating = true;
+                this.campaignsService.checkAsin({asins: [{ asin, marketplace }]})
+                    .subscribe(() => {
+                        this.asinValidating = false;
+                        this.validateSkus();
+                    }, (error) => {
+                        this.notificationService.smallBox({
+                            content: error,
+                            color: '#a90329',
+                            timeout: 4000,
+                            icon: 'fa fa-warning shake animated'
+                        });
+                        this.campaignForm.controls['asin'].setValue(null);
+                        this.asinValidating = false;
+                        this.validateSkus();
+                    })
+            }
         }
     }
 
@@ -333,7 +396,8 @@ export class NewCampaignComponent implements OnInit, OnDestroy, DoCheck {
             asin: this.campaignForm.controls['asin'].value,
             marketplace: this.campaignForm.controls['marketplace'].value
         };
-        this.campaignsService.getCalculation(data).subscribe(res => {
+        this.loadingIndicator.toggle(true);
+        this.campaignsService.getCalculation(data).subscribe((res: any) => {
             this.calculation = res.calculcation;
             this.calcForm.reset({
                 customSellingPrice: this.calculation.default.price.amount || 0.00,
@@ -360,20 +424,20 @@ export class NewCampaignComponent implements OnInit, OnDestroy, DoCheck {
                 this.calculateGrossMargin();
                 this.calculateResultingBid();
             });
-
+            this.loadingIndicator.toggle(false);
         })
     }
 
     calculateCustomAmazonSalesFee() {
         const amazonSalesFeeRate = this.calcForm.controls['amazonSalesFeeRate'].value;
         const customSellingPrice = this.calcForm.controls['customSellingPrice'].value;
-        this.customAmazonSalesFee = amazonSalesFeeRate * customSellingPrice / 100;
+        this.customAmazonSalesFee = amazonSalesFeeRate / 100 * customSellingPrice;
     }
 
     calculateTax() {
-        const taxRate = this.calcForm.controls['taxRate'].value;
+        const taxRate = this.calcForm.controls['taxRate'].value / 100;
         const customSellingPrice = this.calcForm.controls['customSellingPrice'].value;
-        this.tax = customSellingPrice * (1 / (1 + (taxRate / 100)));
+        this.tax = customSellingPrice * (taxRate / (taxRate + 1));
     }
 
     calculateGrossMargin() {
@@ -392,7 +456,7 @@ export class NewCampaignComponent implements OnInit, OnDestroy, DoCheck {
 
     calculateResultingBid() {
         const assumedConversionRate = this.calcForm.controls['conversionRate'].value;
-        this.resultingBid = this.grossMargin * assumedConversionRate;
+        this.resultingBid = this.grossMargin * assumedConversionRate / 100;
     }
 
     createCampaign() {

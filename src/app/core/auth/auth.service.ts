@@ -33,7 +33,6 @@ export class AuthService {
 
                 this.loginStatusChangeManager.next(true);
             })
-            .catch(this.handleError);
     }
 
     logout() {
@@ -42,7 +41,6 @@ export class AuthService {
                 this.userStorage.remove();
                 this.loginStatusChangeManager.next(false);
             })
-            .catch(this.handleError);
     }
 
     isLoggedIn() {
@@ -51,21 +49,13 @@ export class AuthService {
 
     resetPassword(data) {
         return this.http.post(environment.baseUrl + '/system.user.recover', data)
-            .catch(this.handleError);
     }
 
     checkStatus() {
         return this.http.post(environment.baseUrl + '/system.user.status', null)
-            .catch(error => {
+            .catch((error: string) => {
                 this.userStorage.remove();
-                return this.handleError(error);
+                return Observable.throw(error);
             })
-    }
-
-    private handleError(data:any) {
-        const errMsg = (data.error && data.error.request  && data.error.request.error && data.error.request.error.code ) ?
-            data.error.request.error.code : 'Server error';
-        console.error(errMsg); // log to console
-        return Observable.throw(`FALCON_ERR_${errMsg}`);
     }
 }

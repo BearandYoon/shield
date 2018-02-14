@@ -12,7 +12,9 @@ import constants from '../core.constants';
 
 @Injectable()
 export class TokensInterceptor implements HttpInterceptor {
+
     constructor(private storage: UserStorageService) {}
+
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         const xsrfToken = this.storage.getXsrfToken();
         const falconToken = this.storage.getFalconToken();
