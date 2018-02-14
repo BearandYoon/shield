@@ -19,10 +19,10 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
     }
 
     private handleError(data: any): Observable<any> {
-        const errMsg = (data.error && data.error.request  && data.error.request.error && data.error.request.error.code ) ?
-            data.error.request.error.code : 'Server error';
-        console.error(errMsg); // log to console
-        return Observable.throw(`FALCON_ERR_${errMsg}`);
+        const errCode = (data.error && data.error.request  && data.error.request.error && data.error.request.error.code ) ?
+            data.error.request.error.code : null;
+        const errMessage = errCode ? `FALCON_ERR_${errCode}` : 'Server error';
+        return Observable.throw(errMessage);
     }
 }
 
