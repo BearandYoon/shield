@@ -82,7 +82,11 @@ export class DynamicDatatableComponent implements OnInit, OnChanges {
             const transformedEntry = {};
             this.schema.forEach(rule => {
                 if (rule.path) {
-                    transformedEntry[rule.name] = jp.value(entry, rule.path);
+                    if (rule.fn) {
+                        transformedEntry[rule.name] = jp.apply(entry, rule.path, rule.fn)[0].value;
+                    } else {
+                        transformedEntry[rule.name] = jp.value(entry, rule.path);
+                    }
                 } else {
                     transformedEntry[rule.name] = '';
                 }
