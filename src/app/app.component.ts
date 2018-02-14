@@ -5,10 +5,14 @@ import { AuthService } from './core/auth/auth.service';
 import { Subscription } from 'rxjs/Subscription';
 import 'rxjs/add/operator/switchMap';
 import constants from './core/core.constants';
+import { LoadingIndicatorService} from './core/loading-indicator/loading-indicator.service';
 
 @Component({
   selector: 'app-root',
-  template: '<router-outlet></router-outlet>'
+  template: `
+      <app-loading-indicator [hidden]="!loadingIndicator.show"></app-loading-indicator>
+      <router-outlet></router-outlet>
+  `
 })
 export class AppComponent implements OnInit {
 
@@ -18,7 +22,8 @@ export class AppComponent implements OnInit {
 
     constructor (
         private auth: AuthService,
-        private router: Router
+        private router: Router,
+        public loadingIndicator: LoadingIndicatorService
     ) {}
 
   ngOnInit() {

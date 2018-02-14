@@ -1,5 +1,3 @@
-<app-loading-indicator *ngIf="loading"></app-loading-indicator>
-
 <div *ngIf="data">
     <sa-datatable *ngIf="render" [options]="{data: data, columns: columns, colReorder: true}"
                   tableClass="table table-striped table-bordered table-hover" width="100%">

@@ -6,10 +6,10 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import { TagInputModule } from 'ngx-chips';
 
 import { campaignsRouting } from './campaigns.routing';
-import { CampaignsComponent } from "./campaigns.component";
-import { CampaignsService } from "./services/campaigns.service";
+import { CampaignsComponent } from './campaigns.component';
+import { CampaignsService } from './services/campaigns.service';
 import { NewCampaignComponent } from './new-campaign/new-campaign.component';
-import { SmartadminInputModule } from "../../shared/forms/input/smartadmin-input.module";
+import { SmartadminInputModule } from '../../shared/forms/input/smartadmin-input.module';
 import { DynamicDatatableModule } from '../../shared/ui/dynamic-datatable/dynamic-datatable.module';
 
 @NgModule({

@@ -12,8 +12,9 @@ import { APP_RESOLVER_PROVIDERS } from './app.resolver';
 import { AppState, InternalStateType } from './app.service';
 
 // Core providers
-import {CoreModule} from './core/core.module';
-import {SmartadminLayoutModule} from './shared/layout/layout.module';
+import { CoreModule } from './core/core.module';
+import { SmartadminLayoutModule } from './shared/layout/layout.module';
+import { LoadingIndicatorModule } from './shared/ui/loading-indicator/loading-indicator.module';
 
 // Application wide providers
 const APP_PROVIDERS = [
@@ -40,6 +41,7 @@ type StoreType = {
         BrowserAnimationsModule,
         CoreModule,
         SmartadminLayoutModule,
+        LoadingIndicatorModule,
         routing
     ],
     exports: [],

@@ -4,13 +4,13 @@ import {CommonModule} from '@angular/common';
 // import {TreeViewModule} from './tree-view/tree-view.module';
 // import {JqueryUiModule} from './jquery-ui/jquery-ui.module';
 // import {NestableListModule} from './nestable-list/nestable-list.module';
-import { LoadingIndicatorModule } from './loading-indicator/loading-indicator.module';
 import { DynamicDatatableModule } from './dynamic-datatable/dynamic-datatable.module';
+import { LoadingIndicatorModule } from './loading-indicator/loading-indicator.module';
 
 @NgModule({
   imports: [CommonModule],
 
-  exports: [LoadingIndicatorModule, DynamicDatatableModule ],
+  exports: [ LoadingIndicatorModule, DynamicDatatableModule ],
 
   declarations: [],
   // exports: [SmartProgressbarModule, JqueryUiModule, NestableListModule, TreeViewModule, LoadingIndicatorModule],

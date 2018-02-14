@@ -9,6 +9,7 @@ import { TYPES, PROGRESS } from '../campaigns.constants';
 import { NotificationService } from '../../../shared/utils/notification.service';
 import { CampaignsService } from '../services/campaigns.service';
 import { environment } from '../../../../environments/environment';
+import {LoadingIndicatorService} from '../../../core/loading-indicator/loading-indicator.service';
 
 @Component({
     selector: 'app-new-campaign',
@@ -107,7 +108,8 @@ export class NewCampaignComponent implements OnInit, OnDestroy, DoCheck {
     constructor(public fb: FormBuilder,
                 public bsModalRef: BsModalRef,
                 public notificationService: NotificationService,
-                private campaignsService: CampaignsService) {
+                private campaignsService: CampaignsService,
+                private loadingIndicator: LoadingIndicatorService) {
     }
 
     ngOnInit() {
@@ -351,7 +353,8 @@ export class NewCampaignComponent implements OnInit, OnDestroy, DoCheck {
             asin: this.campaignForm.controls['asin'].value,
             marketplace: this.campaignForm.controls['marketplace'].value
         };
-        this.campaignsService.getCalculation(data).subscribe(res => {
+        this.loadingIndicator.toggle(true);
+        this.campaignsService.getCalculation(data).subscribe((res: any) => {
             this.calculation = res.calculcation;
             this.calcForm.reset({
                 customSellingPrice: this.calculation.default.price.amount || 0.00,
@@ -378,7 +381,7 @@ export class NewCampaignComponent implements OnInit, OnDestroy, DoCheck {
                 this.calculateGrossMargin();
                 this.calculateResultingBid();
             });
-
+            this.loadingIndicator.toggle(false);
         })
     }
 

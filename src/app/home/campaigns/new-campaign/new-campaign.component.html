@@ -241,10 +241,10 @@
                                             Add
                                         </button>
                                     </form>
-                                    <dynamic-datatable [url]="keywordsUrl"
-                                                       [schema]="keywordsSchema"
-                                                       [rootField]="keywordsField">
-                                    </dynamic-datatable>
+                                    <app-dynamic-datatable [url]="keywordsUrl"
+                                                           [schema]="keywordsSchema"
+                                                           [rootField]="keywordsField">
+                                    </app-dynamic-datatable>
                                 </div>
                                 <div *ngIf="campaignForm.controls['targeting'].value === 'competitor based'">
                                     <form class="form-inline">
@@ -257,11 +257,11 @@
                                             Add
                                         </button>
                                     </form>
-                                    <dynamic-datatable [url]="competitorsUrl"
+                                    <app-dynamic-datatable [url]="competitorsUrl"
                                                        [schema]="competitorsSchema"
                                                        [rootField]="competitorsField"
                                                        [options]="competitorsOptions">
-                                    </dynamic-datatable>
+                                    </app-dynamic-datatable>
                                 </div>
                             </div>
 

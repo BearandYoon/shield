@@ -20,6 +20,7 @@ import { UnauthGuardService} from './guards/unauth-guard';
 import { TokensInterceptor } from './interceptors/tokens-interceptor';
 import { ContentTypeInterceptor } from './interceptors/content-type-interceptor';
 import { ErrorHandlerInterceptor } from './interceptors/error-handler-interceptor';
+import { LoadingIndicatorService } from './loading-indicator/loading-indicator.service';
 
 @NgModule({
     imports: [
@@ -44,6 +45,7 @@ import { ErrorHandlerInterceptor } from './interceptors/error-handler-intercepto
 
         AuthService,
         UserStorageService,
+        LoadingIndicatorService,
 
         AuthGuardService,
         UnauthGuardService,
