@@ -9,7 +9,7 @@ import { ProductsRoutingModule } from './products-routing.module';
 import { ProductsComponent } from './products.component';
 import { SmartadminFormsModule } from '../../../shared/forms/smartadmin-forms.module';
 import { SmartadminModule } from '../../../shared/smartadmin.module';
-import { DynamicDatatableModule } from '../../../shared/ui/dynamic-datatable/dynamic-datatable.module';
+import { DynamicDatatableModule } from '../../../shared/dynamic-datatable/dynamic-datatable.module';
 import { ProductsService } from './services/products.service';
 
 @NgModule({

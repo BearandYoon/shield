@@ -1,0 +1,22 @@
+.table-actions {
+    margin-bottom: 10px;
+}
+
+.dropdown-menu {
+    padding: 5px 10px;
+    position: absolute;
+}
+
+.page-size, .actions {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.page-size {
+    margin-right: 20px;
+    width: 70px;
+}
+
+.datatable-header-cell > div {
+    width: 125px !important;
+}

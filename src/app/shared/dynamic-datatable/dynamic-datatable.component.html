@@ -1,0 +1,116 @@
+<div>
+    <div class="table-actions">
+        <select class="form-control page-size"
+                [(ngModel)]="pagination.size"
+                (change)="updatePageSize($event)">
+            <option *ngFor="let size of sizes" [value]="size">
+                {{size}}
+            </option>
+        </select>
+
+        <div class="actions">
+            <button type="button"
+                    class="btn btn-danger"
+                    tooltip="Export to excel file"
+                    placement="bottom">
+                <i class="glyphicon glyphicon-save-file"></i>
+            </button>
+
+            <button type="button"
+                    class="btn btn-primary"
+                    tooltip="Refresh"
+                    placement="bottom"
+                    (click)="refresh()">
+                <i class="glyphicon glyphicon-refresh"></i>
+            </button>
+
+            <div class="btn-group" dropdown #dropdown>
+                <button dropdownToggle type="button" class="btn btn-success">
+                    <i class="glyphicon glyphicon-cog"></i>
+                </button>
+                <ul *dropdownMenu class="dropdown-menu smart-form" >
+                    <li *ngFor="let column of columns">
+                        <label class="toggle">
+                            <input type="checkbox"
+                                   name="checkbox-toggle"
+                                   (click)="toggleColumn(column)"
+                                   [checked]="isColumnChecked(column)">
+                            <i data-swchon-text="ON" data-swchoff-text="OFF"></i>
+                            {{column.name}}
+                        </label>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="smart-form" *ngIf="data">
+        <ngx-datatable
+                #table
+                [rows]="data"
+                [columns]="columns"
+                [columnMode]="'standart'"
+                [headerHeight]="50"
+                [footerHeight]="50"
+                [rowHeight]="'auto'"
+                [scrollbarH]="true"
+                [scrollbarV]="false"
+
+                [externalPaging]="true"
+                [count]="total"
+                [offset]="pagination.page - 1"
+                [limit]="pagination.size"
+                (page)='setPage($event)'
+
+                [selected]="selected"
+                [selectionType]="'checkbox'"
+                (select)='onSelect($event)'
+
+                [reorderable]="true"
+
+                [cssClasses]= "{
+                sortAscending: 'fa fa-caret-up',
+                sortDescending: 'fa fa-caret-down',
+                pagerLeftArrow: 'fa  fa-angle-left',
+                pagerRightArrow: 'fa fa-angle-right',
+                pagerPrevious: 'fa fa-angle-double-left',
+                pagerNext: 'fa fa-angle-double-right'
+              }">
+            <ngx-datatable-column [width]="80"
+                                  [sortable]="false"
+                                  [canAutoResize]="false"
+                                  [draggable]="false"
+                                  [resizeable]="false">
+                <ng-template ngx-datatable-header-template
+                             let-value="value"
+                             let-allRowsSelected="allRowsSelected"
+                             let-selectFn="selectFn">
+                    <label class="toggle">
+                        <input type="checkbox"
+                               name="checkbox-toggle"
+                               [checked]="allRowsSelected"
+                               (change)="selectFn(!allRowsSelected)">
+                        <i data-swchon-text="ON" data-swchoff-text="OFF"></i>
+                    </label>
+                </ng-template>
+                <ng-template ngx-datatable-cell-template
+                             let-value="value"
+                             let-isSelected="isSelected"
+                             let-onCheckboxChangeFn="onCheckboxChangeFn">
+                    <label class="toggle">
+                        <input type="checkbox"
+                               name="checkbox-toggle"
+                               [checked]="isSelected"
+                               (change)="onCheckboxChangeFn($event)">
+                        <i data-swchon-text="ON" data-swchoff-text="OFF"></i>
+                    </label>
+                </ng-template>
+            </ngx-datatable-column>
+
+            <ngx-datatable-column
+                    *ngFor="let column of getShownColumns()"
+                    [name]="column.name">
+            </ngx-datatable-column>
+        </ngx-datatable>
+    </div>
+</div>

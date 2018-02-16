@@ -3,6 +3,9 @@
 /* #GOOGLE FONT */
 @import url("https://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,300,400,700");
 
+#main {
+    overflow: visible;
+}
 
 /*loader in index.html*/
 
@@ -119,3 +122,8 @@ delete-icon svg {
 delete-icon path {
     fill: #fff !important;
 }
+
+
+
+
+

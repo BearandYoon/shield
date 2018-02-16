@@ -484,9 +484,9 @@
     </form>
   </div>
 
-  <div class="product-list-container">
-    <div class="widget-body no-padding">
-      <app-dynamic-datatable [url]="url" [schema]="schema" [filters]="filters" rootField="products"></app-dynamic-datatable>
-    </div>
-  </div>
+  <app-dynamic-datatable [url]="url"
+                         [schema]="schema"
+                         [filters]="filters"
+                         rootField="products">
+  </app-dynamic-datatable>
 </div>
