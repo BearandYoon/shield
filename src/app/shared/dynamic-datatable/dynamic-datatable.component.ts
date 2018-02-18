@@ -4,7 +4,6 @@ import * as jp from 'jsonpath';
 
 import { NotificationService } from '../utils/notification.service';
 import { LoadingIndicatorService } from '../../core/loading-indicator/loading-indicator.service';
-import { DatatableComponent } from '@swimlane/ngx-datatable/release';
 
 @Component({
     selector: 'app-dynamic-datatable',
@@ -13,11 +12,14 @@ import { DatatableComponent } from '@swimlane/ngx-datatable/release';
 })
 export class DynamicDatatableComponent implements OnInit, OnChanges {
 
-    @Input() url: string;
-    @Input() filters = {};
+    // we pass either url, filters, rootField to make a request or rawData
+    @Input() url?: string;
+    @Input() filters? = {};
+    @Input() rootField?: string;
+
+    @Input() rawData?: any[];
+
     @Input() schema: any[];
-    @Input() rootField: string;
-    @Input() options: Object;
 
     data: any[];
 
@@ -46,25 +48,27 @@ export class DynamicDatatableComponent implements OnInit, OnChanges {
         private loadingIndicator: LoadingIndicatorService
     ) {}
 
-    ngOnInit() {
+    ngOnInit() {}
+
+    ngOnChanges() {
         this.columns = this.schema.map(field => ({
             name:  field.display,
             show: true
         }));
-        console.log(this.columns);
-    }
-
-    ngOnChanges() {
-        this.getData();
+        if (this.url) {
+            this.serverPagination = true;
+            this.getData();
+        } else if (this.rawData) {
+            this.serverPagination = false;
+            // we don't want to modify initial objects
+            this.data = this.transformData(this.rawData.map( entry => Object.assign({}, entry)));
+        }
     }
 
     getData() {
-        const data = Object.assign({ filters: this.filters }, this.options);
-        if (this.serverPagination) {
-            Object.assign(data, { pagination: this.pagination });
-        }
+        const reqData = { filters: this.filters, pagination: this.pagination };
         this.loadingIndicator.toggle(true);
-        this.http.post(this.url, data)
+        this.http.post(this.url, reqData)
             .subscribe(res => {
                 this.total = res['pagination']['filtered'];
 
@@ -105,7 +109,9 @@ export class DynamicDatatableComponent implements OnInit, OnChanges {
     updatePageSize(event) {
         this.pagination.page = 1;
         this.pagination.size = event.target.value;
-        this.getData();
+        if (this.serverPagination) {
+            this.getData();
+        }
     }
 
     getShownColumns() {
@@ -127,8 +133,10 @@ export class DynamicDatatableComponent implements OnInit, OnChanges {
     }
 
     setPage(pageInfo) {
-        this.pagination.page = pageInfo.offset + 1;
-        this.getData();
+        if (this.serverPagination) {
+            this.pagination.page = pageInfo.offset + 1;
+            this.getData();
+        }
     }
 
     onSelect({ selected }) {

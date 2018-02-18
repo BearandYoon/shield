@@ -257,36 +257,48 @@
                                 </div>
 
                                 <div *ngIf="campaignForm.controls['targeting'].value === 'keyword based'">
-                                    <form class="form-inline">
+                                    <form class="form-inline add-entry"
+                                          [formGroup]="keywordForm"
+                                          (submit)="addKeyword(keywordForm.value)">
                                         <div class="form-group">
                                             <label for="keyword">Add keyword</label>
-                                            <input type="text" class="form-control" id="keyword">
+                                            <input type="text"
+                                                   id="keyword"
+                                                   class="form-control"
+                                                   formControlName="keyword">
                                         </div>
-                                        <button type="submit" class="btn btn-primary">
+                                        <button type="submit"
+                                                class="btn btn-primary"
+                                                [disabled]="!keywordForm.valid">
                                             <i class="glyphicon glyphicon-plus"></i>
                                             Add
                                         </button>
                                     </form>
-                                    <app-dynamic-datatable [url]="keywordsUrl"
-                                                           [schema]="keywordsSchema"
-                                                           [rootField]="keywordsField">
+                                    <app-dynamic-datatable [rawData]="keywordsData"
+                                                           [schema]="keywordsSchema">
                                     </app-dynamic-datatable>
                                 </div>
+
                                 <div *ngIf="campaignForm.controls['targeting'].value === 'competitor based'">
-                                    <form class="form-inline">
+                                    <form class="form-inline add-entry"
+                                          [formGroup]="competitorsForm"
+                                          (submit)="addCompetitor(competitorsForm.value)">
                                         <div class="form-group">
-                                            <label for="new_asin">Add ASIN</label>
-                                            <input type="text" class="form-control" id="new_asin">
+                                            <label for="asin">Add ASIN</label>
+                                            <input type="text"
+                                                   id="asin"
+                                                   class="form-control"
+                                                   formControlName="asin">
                                         </div>
-                                        <button type="submit" class="btn btn-primary">
+                                        <button type="submit"
+                                                class="btn btn-primary"
+                                                [disabled]="!competitorsForm.valid">
                                             <i class="glyphicon glyphicon-plus"></i>
                                             Add
                                         </button>
                                     </form>
-                                    <app-dynamic-datatable [url]="competitorsUrl"
-                                                           [schema]="competitorsSchema"
-                                                           [rootField]="competitorsField"
-                                                           [options]="competitorsOptions">
+                                    <app-dynamic-datatable [rawData]="competitorsData"
+                                                           [schema]="competitorsSchema">
                                     </app-dynamic-datatable>
                                 </div>
                             </div>
@@ -313,7 +325,7 @@
                                 </div>
 
                                 <div *ngIf="campaignForm.controls['optimization'].value && calculation">
-                                    <form class="calculation"  [formGroup]="calcForm">
+                                    <form class="calculation" [formGroup]="calcForm">
                                         <table class="table optimization" >
                                             <tr>
                                                 <th></th>
@@ -326,7 +338,9 @@
                                                 <td>{{calculation.default.price.amount}}</td>
                                                 <td></td>
                                                 <td>
-                                                    <input type="number" formControlName="customSellingPrice" step="0.01">
+                                                    <input type="number"
+                                                           formControlName="customSellingPrice"
+                                                           step="0.01">
                                                 </td>
                                             </tr>
                                             <tr>
@@ -347,7 +361,9 @@
                                                 <td>{{calculation.default.fees.variable.amount}}</td>
                                                 <td></td>
                                                 <td>
-                                                    <input type="number" formControlName="customAmazonVariableFee" step="0.01">
+                                                    <input type="number"
+                                                           formControlName="customAmazonVariableFee"
+                                                           step="0.01">
                                                 </td>
                                             </tr>
                                             <tr>

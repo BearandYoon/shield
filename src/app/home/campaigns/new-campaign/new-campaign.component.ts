@@ -2,14 +2,15 @@ import { Component, OnInit, OnDestroy, DoCheck } from '@angular/core';
 import { trigger, state, style, transition, animate } from '@angular/animations'
 import { BsModalRef} from 'ngx-bootstrap';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
+
+import * as _ from 'lodash';
 
 import { TYPES, PROGRESS } from '../campaigns.constants';
 import { NotificationService } from '../../../shared/utils/notification.service';
 import { CampaignsService } from '../services/campaigns.service';
-import { environment } from '../../../../environments/environment';
-import {LoadingIndicatorService} from '../../../core/loading-indicator/loading-indicator.service';
+import { LoadingIndicatorService } from '../../../core/loading-indicator/loading-indicator.service';
+import { I18nService } from '../../../shared/i18n';
 
 @Component({
     selector: 'app-new-campaign',
@@ -42,6 +43,9 @@ export class NewCampaignComponent implements OnInit, OnDestroy, DoCheck {
 
     calcForm: FormGroup;
 
+    keywordForm: FormGroup;
+    competitorsForm: FormGroup;
+
     bsConfig = {
         dateInputFormat: 'DD/MM/YYYY',
         containerClass: 'theme-blue'
@@ -49,19 +53,16 @@ export class NewCampaignComponent implements OnInit, OnDestroy, DoCheck {
 
     merchantSubscription: Subscription;
 
-    competitorsUrl = environment.baseUrl + '/advertising.campaign.spa.targeting.competitors.get';
-    keywordsUrl = environment.baseUrl + '/advertising.campaign.spa.targeting.keywords.get';
-
     competitorsSchema = [
         {
             name: 'title',
-            display: 'Product',
+            display: 'Title',
             path: '$.title'
         },
         {
             name: 'brand',
             display: 'Brand',
-            path: '$.brand'
+            path: '$.brand.name'
         },
         {
             name: 'asin',
@@ -71,12 +72,41 @@ export class NewCampaignComponent implements OnInit, OnDestroy, DoCheck {
         {
             name: 'category',
             display: 'Category',
-            path: '$.category'
+            path: '$.category',
+            fn: value => this.i18n.getTranslation(`AMZ_CAT_${value}`)
         },
         {
             name: 'keywords',
             display: 'Keywords',
-            path: '$.keywords.*.count'
+            path: '$.keywords',
+            fn: value => {
+                const traverse = (obj, cb) => {
+                    _.forEach(obj, function (val, key) {
+
+                        if (_.isObject(val) || _.isArray(val)) {
+                            traverse(val, cb)
+                        } else {
+                            cb(val, key);
+                        }
+                    });
+                };
+
+                if (!_.isObject(value)) {
+                    return _.isNumber(value) ? value : 0;
+                }
+
+                let keywordsSum = 0;
+                let keywordsCount = 0;
+
+                traverse(value, val => {
+                    if (_.isNumber(val)) {
+                        keywordsSum += val;
+                        keywordsCount++;
+                    }
+                });
+
+                return (keywordsSum / keywordsCount || 0).toFixed(2);
+            }
         }
     ];
 
@@ -87,21 +117,39 @@ export class NewCampaignComponent implements OnInit, OnDestroy, DoCheck {
             path: '$.keyword'
         },
         {
-            name: 'asins',
-            display: 'ASINS',
-            path: '$.asins'
-        },
-        {
-            name: 'keyword',
+            name: 'keywords',
             display: 'Keywords',
-            path: '$.keyword'
+            path: '$.keywords',
+            fn: value => {
+                const traverse = (obj, cb) => {
+                    _.forEach(obj, function (val, key) {
+
+                        if (_.isObject(val) || _.isArray(val)) {
+                            traverse(val, cb)
+                        } else {
+                            cb(val, key);
+                        }
+                    });
+                };
+
+                if (!_.isObject(value)) {
+                    return _.isNumber(value) ? value : 0;
+                }
+
+                let keywordsSum = 0;
+                let keywordsCount = 0;
+
+                traverse(value, val => {
+                    if (_.isNumber(val)) {
+                        keywordsSum += val;
+                        keywordsCount++;
+                    }
+                });
+
+                return (keywordsSum / keywordsCount || 0).toFixed(2);
+            }
         }
     ];
-
-    competitorsField = 'competitors';
-    keywordsField = 'keywords';
-
-    competitorsOptions: Object;
 
     calculation: any;
 
@@ -109,7 +157,8 @@ export class NewCampaignComponent implements OnInit, OnDestroy, DoCheck {
                 public bsModalRef: BsModalRef,
                 public notificationService: NotificationService,
                 private campaignsService: CampaignsService,
-                private loadingIndicator: LoadingIndicatorService) {
+                private loadingIndicator: LoadingIndicatorService,
+                private i18n: I18nService) {
     }
 
     ngOnInit() {
@@ -125,7 +174,7 @@ export class NewCampaignComponent implements OnInit, OnDestroy, DoCheck {
             merchant: ['', Validators.required],
             marketplace: ['', Validators.required],
             asin: ['', Validators.required],
-            skus: ['', Validators.required],
+            skus: [[], Validators.required],
 
             targeting: ['', Validators.required],
 
@@ -162,6 +211,14 @@ export class NewCampaignComponent implements OnInit, OnDestroy, DoCheck {
             otherCost: 0,
             conversionRate: 0,
             lowestBid: 0
+        });
+
+        this.keywordForm = this.fb.group({
+            keyword: ['', Validators.required]
+        });
+
+        this.competitorsForm = this.fb.group({
+            asin: ['', Validators.required]
         });
     }
 
@@ -342,11 +399,6 @@ export class NewCampaignComponent implements OnInit, OnDestroy, DoCheck {
 
     chooseTarget(target: string) {
         this.campaignForm.controls['targeting'].setValue(target);
-
-        this.competitorsOptions = {
-            asin: this.campaignForm.controls['asin'].value,
-            marketplace: this.campaignForm.controls['marketplace'].value
-        };
     }
 
     chooseOptimization(optimization: string) {
@@ -457,6 +509,55 @@ export class NewCampaignComponent implements OnInit, OnDestroy, DoCheck {
     calculateResultingBid() {
         const assumedConversionRate = this.calcForm.controls['conversionRate'].value;
         this.resultingBid = this.grossMargin * assumedConversionRate / 100;
+    }
+
+    keywordsData = [];
+
+    addKeyword(data) {
+        const reqData = {
+            keywords: [
+                {
+                    keyword: data.keyword,
+                    marketplace: this.campaignForm.controls['marketplace'].value
+                }
+            ]
+        };
+        this.campaignsService.getKeywords(reqData).subscribe(res => {
+            this.keywordsData = [...res['keywords'], ...this.keywordsData];
+            this.keywordForm.reset();
+        }, error => {
+            this.notificationService.smallBox({
+                content: error,
+                color: '#a90329',
+                timeout: 4000,
+                icon: 'fa fa-warning shake animated'
+            });
+        })
+    }
+
+    competitorsData = [];
+
+    addCompetitor(data) {
+        const reqData = {
+            asin: data.asin,
+            marketplace: this.campaignForm.controls['marketplace'].value,
+
+            pagination: {
+                page: 1,
+                size: 100
+            }
+        };
+        this.campaignsService.getCompetitors(reqData).subscribe(res => {
+            this.competitorsData = [...res['competitors'], ...this.competitorsData];
+            this.competitorsForm.reset();
+        }, error => {
+            this.notificationService.smallBox({
+                content: error,
+                color: '#a90329',
+                timeout: 4000,
+                icon: 'fa fa-warning shake animated'
+            });
+        })
     }
 
     createCampaign() {

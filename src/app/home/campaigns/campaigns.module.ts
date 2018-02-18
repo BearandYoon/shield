@@ -11,6 +11,7 @@ import { CampaignsService } from './services/campaigns.service';
 import { NewCampaignComponent } from './new-campaign/new-campaign.component';
 import { SmartadminInputModule } from '../../shared/forms/input/smartadmin-input.module';
 import { DynamicDatatableModule } from '../../shared/dynamic-datatable/dynamic-datatable.module';
+import { I18nModule } from '../../shared/i18n/i18n.module';
 
 @NgModule({
     imports: [
@@ -22,7 +23,8 @@ import { DynamicDatatableModule } from '../../shared/dynamic-datatable/dynamic-d
         ModalModule.forRoot(),
         TagInputModule,
         SmartadminInputModule,
-        DynamicDatatableModule
+        DynamicDatatableModule,
+        I18nModule
     ],
     declarations: [
         CampaignsComponent,

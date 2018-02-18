@@ -11,10 +11,6 @@ export class CampaignsService {
     constructor(private http: HttpClient, private storage: UserStorageService) {
     }
 
-    getCampaigns() {
-        return this.http.get(environment.baseUrl + '/advertising.campaigns.get');
-    }
-
     getMerchants() {
         const userInfo = this.storage.get();
         return userInfo.user.entity.modules.advertising.map(advertising => advertising.merchant);
@@ -37,6 +33,14 @@ export class CampaignsService {
 
     getCalculation(data) {
         return this.http.post(environment.baseUrl + '/advertising.campaign.spa.optimization.genius.calculation.get', data)
+    }
+
+    getKeywords(data) {
+        return this.http.post(environment.baseUrl + '/advertising.campaign.spa.targeting.keywords.get', data);
+    }
+
+    getCompetitors(data) {
+        return this.http.post(environment.baseUrl + '/advertising.campaign.spa.targeting.competitors.get', data);
     }
 
 }
